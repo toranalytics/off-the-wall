@@ -1,0 +1,33 @@
+name: Bug report
+description: Something ownwords did wrong, or did not do
+labels: [bug]
+body:
+  - type: textarea
+    attributes:
+      label: What happened
+      description: What you saw, and what you expected instead.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Steps to reproduce
+      description: The smallest steps that show it.
+    validations:
+      required: true
+  - type: dropdown
+    attributes:
+      label: Host
+      options: [Claude Code, Codex, both]
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Versions
+      description: Output of `claude --version` or `codex --version`, `node --version`, and your OS.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Log
+      description: Run once with `OWNWORDS_DEBUG=1` and paste the related lines of `~/.ownwords/log.jsonl`. Remove anything private; the log can contain parts of your messages.
+      render: text

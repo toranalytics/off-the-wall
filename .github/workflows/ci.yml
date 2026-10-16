@@ -1,0 +1,32 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        node: [18, 20, 22]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      - run: node --test test/core.test.mjs
+      - name: Hook answers an event from stdin
+        shell: bash
+        env:
+          OWNWORDS_HOME: ${{ runner.temp }}/ownwords
+        run: |
+          out=$(echo '{"hook_event_name":"SessionStart","session_id":"ci"}' | node src/hook.mjs claude)
+          echo "$out" | grep -q "Subagent routing"
+      - name: Example report reads the example history
+        shell: bash
+        run: |
+          node -e "import('./src/transcripts.mjs').then(t => { const n = t.historyPairs({ days: 0, hosts: ['claude'], claudeDir: 'examples/claude-history' }).length; if (n !== 20) { console.error('pairs', n); process.exit(1) } })"

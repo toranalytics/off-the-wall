@@ -1,0 +1,14 @@
+{
+  "name": "ownwords",
+  "owner": {
+    "name": "ownwords"
+  },
+  "plugins": [
+    {
+      "name": "ownwords",
+      "source": "./",
+      "description": "Quotes your own past corrections back to the agent before it answers, reports how often you had to correct it, and makes the orchestrator name a model for every subagent. Claude Code and Codex."
+    }
+  ],
+  "description": "ownwords: your own past corrections quoted back to Claude Code and Codex, plus subagent model routing"
+}

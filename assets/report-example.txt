@@ -1,0 +1,18 @@
+Reading 20 turn ends with claude (haiku), 1 calls…
+All history: 20 times you answered the assistant, 9 of them (45%) correcting how it worked.
+
+   3×  stopped or asked when it should have continued
+        "stop asking me to choose, just pick one"
+        "yes obviously, I asked you to tag it"
+   2×  claimed done without checking
+        "Should pass? Run them and show me the output."
+        "you only looked at lint. the e2e job failed"
+   2×  shrank or changed the scope
+        "you missed the two call sites in cli.py"
+        "I only asked for the login page. revert the others"
+   1×  another complaint about how it worked
+        "way too long, five bullet points max"
+   1×  ignored an earlier instruction or decision
+        "did you deploy to production like I said earlier?"
+
+Run with --seed to start recall from these corrections.

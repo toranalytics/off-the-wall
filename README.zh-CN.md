@@ -3,10 +3,10 @@
 </p>
 
 <p align="center">
-  <img src="assets/hero.png" alt="ownwords：终端上的像素鹦鹉，引用你过去的纠正" width="100%" />
+  <img src="assets/hero.png" alt="Off the Wall：终端上的像素鹦鹉，引用你过去的纠正" width="100%" />
 </p>
 
-<h1 align="center">ownwords</h1>
+<h1 align="center">Off the Wall</h1>
 
 <p align="center">
   <strong>别再对编程智能体重复同一句话。</strong>
@@ -34,16 +34,16 @@
 
 **在智能体回答之前，逐字引用你的纠正。一分钟告诉你最常纠正什么。子智能体用更便宜的模型。**
 
-“别问了，自己选一个做”“你真的跑过测试了吗？”这类纠正，通常到下一个会话就被忘了。ownwords 保存这些消息，并在每次
+“别问了，自己选一个做”“你真的跑过测试了吗？”这类纠正，通常到下一个会话就被忘了。Off the Wall 保存这些消息，并在每次
 回答前，把最相关的几条以你自己的原话交给智能体。它使用你已经付费的 Claude 或 ChatGPT 订阅运行，不需要 API 密钥。
 
-> ownwords 是刚发布的 0.1 版本。下面的数字来自一个人的历史记录，请用你自己的记录运行报告。
+> Off the Wall 是刚发布的 0.1 版本。下面的数字来自一个人的历史记录，请用你自己的记录运行报告。
 
 ---
 
-## 为什么用 ownwords
+## 为什么用 Off the Wall
 
-| 问题 | 发生了什么 | ownwords |
+| 问题 | 发生了什么 | Off the Wall |
 | :-- | :-- | :-- |
 | 重复的纠正 | 这个月第十次说“别问了，直接做” | 把你过去的话放在下一次回答之前 |
 | 记不住的规则 | 把纠正总结成一行规则，效果很小 | 引用而不是总结。总结并不比随机规则好（[依据](#evidence)） |
@@ -58,29 +58,29 @@
 在 Claude Code 中输入：
 
 ```
-/plugin install ownwords --marketplace toranalytics/off-the-wall
+/plugin install off-the-wall --marketplace toranalytics/off-the-wall
 ```
 
 Codex：
 
 ```bash
 codex plugin marketplace add toranalytics/off-the-wall
-codex plugin add ownwords@ownwords
+codex plugin add off-the-wall@off-the-wall
 ```
 
-然后在 Codex 中打开一次 `/hooks` 并信任 ownwords 的钩子。在信任之前，Codex 不会运行插件钩子。
+然后在 Codex 中打开一次 `/hooks` 并信任 Off the Wall 的钩子。在信任之前，Codex 不会运行插件钩子。
 
 **2. 用示例历史试运行报告**（不需要你自己的记录）
 
 ```bash
 git clone https://github.com/toranalytics/off-the-wall && cd off-the-wall
-node bin/ownwords.mjs report --host claude --claude-dir examples/claude-history --days 0
+node bin/otw.mjs report --host claude --claude-dir examples/claude-history --days 0
 ```
 
 **3. 用你自己的历史运行，并从中开始引用**
 
 ```bash
-node bin/ownwords.mjs report --seed
+node bin/otw.mjs report --seed
 ```
 
 需要 Node 18 或更高版本。已在 macOS 上用 Claude Code 2.1.301 和 codex-cli 0.162.1 测试。
@@ -89,7 +89,7 @@ node bin/ownwords.mjs report --seed
 ## 你最常纠正什么
 
 <p align="center">
-  <img src="assets/report.svg" alt="ownwords report 输出：20 次回复中 9 次是纠正，按类型分组并附原话" width="92%" />
+  <img src="assets/report.svg" alt="Off the Wall report 输出：20 次回复中 9 次是纠正，按类型分组并附原话" width="92%" />
 </p>
 
 `report` 读取你机器上已有的 Claude Code 和 Codex 历史（`~/.claude/projects`、`~/.codex/sessions`），用一个小模型找出
@@ -100,7 +100,7 @@ node bin/ownwords.mjs report --seed
 ## 智能体看到什么
 
 <p align="center">
-  <img src="assets/context.svg" alt="回答前 ownwords 添加的内容：6 条过去纠正的原文，以及预测你会如何反对的指示" width="92%" />
+  <img src="assets/context.svg" alt="回答前 Off the Wall 添加的内容：6 条过去纠正的原文，以及预测你会如何反对的指示" width="92%" />
 </p>
 
 | 时机 | Claude Code | Codex |
@@ -126,14 +126,14 @@ node bin/ownwords.mjs report --seed
 | mid | 有明确目标和标准：调查、评审、实现、测试 | `sonnet` | 主力模型，`medium` |
 | large | 需要先判断问题是什么：根因、设计、迁移计划 | `opus` | 顶级模型，`high` |
 
-几步就能完成的工作，由主模型自己做最便宜。Codex 的模型名因账号而异，所以 ownwords 读取 Codex 保存的列表
+几步就能完成的工作，由主模型自己做最便宜。Codex 的模型名因账号而异，所以 Off the Wall 读取 Codex 保存的列表
 （`~/.codex/models_cache.json`），根据描述分成三个等级。
 
 <a id="evidence"></a>
 ## 依据
 
 <p align="center">
-  <img src="assets/evidence.svg" alt="与不附加任何内容相比的胜/平/负：真实纠正 36/3/0，ownwords 25/11/3，随机规则 18/15/6，总结规则 14/17/8" width="92%" />
+  <img src="assets/evidence.svg" alt="与不附加任何内容相比的胜/平/负：真实纠正 36/3/0，Off the Wall 25/11/3，随机规则 18/15/6，总结规则 14/17/8" width="92%" />
 </p>
 
 所有数字都来自一个人的真实历史，是初步结果而不是普遍规律。重放了 39 个真实请求，Opus 5.5 在每种条件下作答，Sonnet
@@ -143,8 +143,8 @@ node bin/ownwords.mjs report --seed
 <a id="privacy"></a>
 ## 隐私
 
-所有数据都保存在你机器上的 `~/.ownwords`。唯一离开机器的是判定调用，而且它通过你自己的 `claude` 或 `codex` CLI。
-删除 `~/.ownwords` 即可忘记一切。
+所有数据都保存在你机器上的 `~/.otw`。唯一离开机器的是判定调用，而且它通过你自己的 `claude` 或 `codex` CLI。
+删除 `~/.otw` 即可忘记一切。
 
 ## 限制
 

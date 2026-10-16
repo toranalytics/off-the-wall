@@ -11,7 +11,7 @@ try {
   const job = JSON.parse(raw)
   const rule = parseRule(await complete(job.host, job.model, judgePrompt(job.answer, job.reply), 90_000))
   if (rule) addCorrections([{ at: job.at, about: job.about, quote: String(job.reply).slice(0, 800), rule, host: job.host, src: 'live' }])
-  log({ host: job.host, kind: 'judge', correction: !!rule, ...(process.env.OWNWORDS_DEBUG ? { answer: String(job.answer).slice(0, 160), reply: String(job.reply).slice(0, 80) } : {}) })
+  log({ host: job.host, kind: 'judge', correction: !!rule, ...(process.env.OTW_DEBUG ? { answer: String(job.answer).slice(0, 160), reply: String(job.reply).slice(0, 80) } : {}) })
 } catch (err) {
   log({ kind: 'judge-error', message: String(err?.message ?? err) })
 }

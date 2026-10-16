@@ -3,10 +3,10 @@
 </p>
 
 <p align="center">
-  <img src="assets/hero.png" alt="ownwords: a pixel-art parrot on a terminal, quoting your past corrections" width="100%" />
+  <img src="assets/hero.png" alt="Off the Wall: a pixel-art parrot on a terminal, quoting your past corrections" width="100%" />
 </p>
 
-<h1 align="center">ownwords</h1>
+<h1 align="center">Off the Wall</h1>
 
 <p align="center">
   <strong>Stop telling your coding agent the same thing twice.</strong>
@@ -25,7 +25,7 @@
 
 <p align="center">
   <a href="#quick-start">Quick Start</a> ·
-  <a href="#why-ownwords">Why</a> ·
+  <a href="#why-off-the-wall">Why</a> ·
   <a href="#see-what-you-correct-most">Your report</a> ·
   <a href="#what-the-agent-sees">How it works</a> ·
   <a href="#cheaper-subagents">Routing</a> ·
@@ -37,16 +37,16 @@
 **Your corrections, quoted word for word before the agent answers. A one-minute report of what you correct most. Subagents on cheaper models.**
 
 Every correction you make ("stop asking, just pick one", "did you actually run the tests?") is usually forgotten by
-the next session. ownwords keeps those messages and quotes the most relevant ones back to the agent, in your own
+the next session. Off the Wall keeps those messages and quotes the most relevant ones back to the agent, in your own
 words, before each answer. It runs on the Claude or ChatGPT plan you already pay for and needs no API key.
 
-> ownwords is new (0.1). The numbers below come from one person's history; run the report on yours.
+> Off the Wall is new (0.1). The numbers below come from one person's history; run the report on yours.
 
 ---
 
-## Why ownwords?
+## Why Off the Wall?
 
-| Problem | What happens | ownwords |
+| Problem | What happens | Off the Wall |
 | :-- | :-- | :-- |
 | Repeated corrections | You say "stop asking, just do it" for the tenth time this month | Your past words go in front of the next answer |
 | Rules that do not stick | Corrections are summarised into neat one-line rules that change little | Quotes, not summaries. Summaries did no better than random rules ([evidence](#evidence)) |
@@ -60,29 +60,29 @@ words, before each answer. It runs on the Claude or ChatGPT plan you already pay
 Claude Code, at the prompt:
 
 ```
-/plugin install ownwords --marketplace toranalytics/off-the-wall
+/plugin install off-the-wall --marketplace toranalytics/off-the-wall
 ```
 
 Codex:
 
 ```bash
 codex plugin marketplace add toranalytics/off-the-wall
-codex plugin add ownwords@ownwords
+codex plugin add off-the-wall@off-the-wall
 ```
 
-Then open `/hooks` in Codex once and trust the ownwords hooks. Codex skips plugin hooks until they are trusted.
+Then open `/hooks` in Codex once and trust the Off the Wall hooks. Codex skips plugin hooks until they are trusted.
 
 **2. Try the report on the example history** (no history of your own needed)
 
 ```bash
 git clone https://github.com/toranalytics/off-the-wall && cd off-the-wall
-node bin/ownwords.mjs report --host claude --claude-dir examples/claude-history --days 0
+node bin/otw.mjs report --host claude --claude-dir examples/claude-history --days 0
 ```
 
 **3. Run it on your own history and start recall from it**
 
 ```bash
-node bin/ownwords.mjs report --seed
+node bin/otw.mjs report --seed
 ```
 
 Requires Node 18 or newer. Tested on macOS with Claude Code 2.1.301 and codex-cli 0.162.1.
@@ -90,7 +90,7 @@ Requires Node 18 or newer. Tested on macOS with Claude Code 2.1.301 and codex-cl
 ## See what you correct most
 
 <p align="center">
-  <img src="assets/report.svg" alt="ownwords report output: 9 of 20 replies were corrections, grouped by kind, with the quotes" width="92%" />
+  <img src="assets/report.svg" alt="Off the Wall report output: 9 of 20 replies were corrections, grouped by kind, with the quotes" width="92%" />
 </p>
 
 `report` reads the Claude Code and Codex history already on your machine (`~/.claude/projects`,
@@ -104,7 +104,7 @@ took about 50 s on Codex and 65 turns about 75 s on Claude.
 ## What the agent sees
 
 <p align="center">
-  <img src="assets/context.svg" alt="The block ownwords adds before the agent answers: six of your past corrections, verbatim, and an instruction to predict your objection" width="92%" />
+  <img src="assets/context.svg" alt="The block Off the Wall adds before the agent answers: six of your past corrections, verbatim, and an instruction to predict your objection" width="92%" />
 </p>
 
 | Event | Claude Code | Codex |
@@ -133,7 +133,7 @@ The main model acts as an orchestrator and picks the subagent's model by what th
 | large | the subagent decides what the problem is: root cause, design, migration | `opus` | the frontier model, `high` |
 
 Work that takes only a few steps is cheapest done by the main model itself. Codex model names differ by account,
-so ownwords reads the list Codex keeps for you (`~/.codex/models_cache.json`) and sorts it into the three classes
+so Off the Wall reads the list Codex keeps for you (`~/.codex/models_cache.json`) and sorts it into the three classes
 by each model's description. For Codex, the rule also says to pass `fork_turns: "none"` when the subagent does not
 need the conversation. Otherwise the whole history is copied into it, and on a different model none of it is
 cached.
@@ -141,7 +141,7 @@ cached.
 ## Evidence
 
 <p align="center">
-  <img src="assets/evidence.svg" alt="Wins, ties and losses against nothing attached: actual correction 36/3/0, ownwords 25/11/3, random rules 18/15/6, distilled rules 14/17/8" width="92%" />
+  <img src="assets/evidence.svg" alt="Wins, ties and losses against nothing attached: actual correction 36/3/0, Off the Wall 25/11/3, random rules 18/15/6, distilled rules 14/17/8" width="92%" />
 </p>
 
 All numbers come from one person's real history, so treat them as a first result, not a general law.
@@ -179,7 +179,7 @@ the same classes by analogy and has not been measured.
 
 ## Settings
 
-`~/.ownwords/config.json`, every key optional. What you set here wins over what is detected:
+`~/.otw/config.json`, every key optional. What you set here wins over what is detected:
 
 ```json
 {
@@ -194,17 +194,17 @@ the same classes by analogy and has not been measured.
 }
 ```
 
-`node bin/ownwords.mjs status` shows what is stored.
+`node bin/otw.mjs status` shows what is stored.
 
 ## Privacy
 
-Everything stays in `~/.ownwords` on your machine:
+Everything stays in `~/.otw` on your machine:
 - `corrections.jsonl`
 - per-session state
 - `log.jsonl`
 
 The only thing that leaves is the judge's call, which goes through your own `claude` or `codex` CLI. Delete
-`~/.ownwords` to forget everything.
+`~/.otw` to forget everything.
 
 ## Limits
 
@@ -218,7 +218,7 @@ The only thing that leaves is the judge's call, which goes through your own `cla
 ```bash
 npm test                          # node --test, no dependencies
 node scripts/make-assets.mjs      # redraws the README images from real outputs and the measured numbers
-OWNWORDS_DEBUG=1 claude ...       # logs every hook event to ~/.ownwords/log.jsonl
+OTW_DEBUG=1 claude ...       # logs every hook event to ~/.otw/log.jsonl
 ```
 
 See [CONTRIBUTING.md](CONTRIBUTING.md). Changes are listed in [CHANGELOG.md](CHANGELOG.md).

@@ -2,7 +2,7 @@
 // Draws the README images from real outputs and measured numbers, so they can be checked and redrawn:
 //   node scripts/make-assets.mjs
 // - assets/report.svg: assets/report-example.txt, the real output of
-//   `ownwords report --host claude --claude-dir examples/claude-history --days 0`
+//   `otw report --host claude --claude-dir examples/claude-history --days 0`
 // - assets/context.svg: the block the hook really attaches, built from the corrections in that example history
 // - assets/evidence.svg, assets/routing.svg: the numbers in the README's Evidence section
 import { readFileSync, writeFileSync } from 'node:fs'
@@ -36,7 +36,7 @@ ${rows}
 const report = readFileSync(`${root}assets/report-example.txt`, 'utf8').trimEnd().split('\n')
 writeFileSync(
   `${root}assets/report.svg`,
-  terminal('ownwords report --claude-dir examples/claude-history --days 0', report, {
+  terminal('otw report --claude-dir examples/claude-history --days 0', report, {
     color: l => (/×/.test(l) ? C.amber : /^\s+"/.test(l) ? C.teal : /^(All|Last)/.test(l) ? C.text : C.dim),
   }),
 )
@@ -56,7 +56,7 @@ const wrap = (s, n) => s.split('\n').flatMap(l => {
 writeFileSync(
   `${root}assets/context.svg`,
   terminal('added before the agent answers your next prompt', wrap(block, 92), {
-    color: l => (l.startsWith('[ownwords]') ? C.amber : l.startsWith('- "') ? C.teal : C.text),
+    color: l => (l.startsWith('[off-the-wall]') ? C.amber : l.startsWith('- "') ? C.teal : C.text),
   }),
 )
 
@@ -110,7 +110,7 @@ writeFileSync(
     ['39 real requests replayed · answers by Opus 5.5 · compared with nothing attached', 'blind pairwise grading, asked in both orders; a win needs both to agree'],
     [
       { name: 'the actual correction (ceiling)', parts: wtl(36, 3, 0) },
-      { name: 'ownwords: 6 quotes + predict', parts: wtl(25, 11, 3), strong: true },
+      { name: 'Off the Wall: 6 quotes + predict', parts: wtl(25, 11, 3), strong: true },
       { name: '3 random one-line rules', parts: wtl(18, 15, 6) },
       { name: '3 distilled one-line rules', parts: wtl(14, 17, 8) },
     ],

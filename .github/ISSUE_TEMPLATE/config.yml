@@ -2,7 +2,7 @@ blank_issues_enabled: true
 contact_links:
   - name: How it works
     url: https://github.com/toranalytics/off-the-wall#what-the-agent-sees
-    about: What ownwords adds to each prompt, and when
+    about: What Off the Wall adds to each prompt, and when
   - name: Evidence
     url: https://github.com/toranalytics/off-the-wall#evidence
     about: How the numbers in the README were measured

@@ -1,4 +1,4 @@
-// Everything ownwords keeps lives in one folder on the person's machine (OWNWORDS_HOME, default ~/.ownwords).
+// Everything Off the Wall keeps lives in one folder on the person's machine (OTW_HOME, default ~/.otw).
 // corrections.jsonl is append-only: the detached judges of several sessions may write at the same time, and a
 // single short append does not interleave.
 import { appendFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
@@ -6,7 +6,7 @@ import { homedir } from 'node:os'
 import { join } from 'node:path'
 import { codexClasses, DEFAULT_MODELS } from './policy.mjs'
 
-export const home = () => process.env.OWNWORDS_HOME || join(homedir(), '.ownwords')
+export const home = () => process.env.OTW_HOME || join(homedir(), '.otw')
 const ensure = d => (existsSync(d) || mkdirSync(d, { recursive: true }), d)
 
 export const DEFAULT_CONFIG = {

@@ -1,11 +1,11 @@
 {
-  "name": "ownwords",
+  "name": "off-the-wall",
   "interface": {
-    "displayName": "ownwords"
+    "displayName": "off-the-wall"
   },
   "plugins": [
     {
-      "name": "ownwords",
+      "name": "off-the-wall",
       "source": {
         "source": "local",
         "path": "./"

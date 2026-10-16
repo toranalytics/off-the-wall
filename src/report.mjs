@@ -1,4 +1,4 @@
-// `ownwords report`: how often, in the history already on this machine, the person had to correct how the
+// `otw report`: how often, in the history already on this machine, the person had to correct how the
 // assistant worked, and for what. With --seed the corrections found become the quotes recall starts from.
 import { complete } from './host.mjs'
 import { batchPrompt, CATEGORIES, parseBatch } from './judge.mjs'

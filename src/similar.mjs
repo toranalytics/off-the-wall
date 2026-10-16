@@ -91,11 +91,11 @@ export function pickCorrections(list, prompt, now, n = QUOTES) {
 // The Korean wording is the one that was measured; the English one says the same.
 const WORDING = {
   ko: {
-    head: '[ownwords] 이 사용자가 실제로 했던 지적 (원문, 이번 요청과 비슷한 것과 최근 것):',
+    head: '[off-the-wall] 이 사용자가 실제로 했던 지적 (원문, 이번 요청과 비슷한 것과 최근 것):',
     ask: '답하기 전에, 지금 쓰려는 답에 이 사용자가 무엇이라고 지적할지 한 줄로 예측하고, 그 지적을 받지 않게 답을 고쳐서 내라. 예측 문장 자체는 답에 쓰지 않는다.',
   },
   en: {
-    head: '[ownwords] What this user actually said when correcting earlier answers (verbatim; the most similar to this request, then the latest):',
+    head: '[off-the-wall] What this user actually said when correcting earlier answers (verbatim; the most similar to this request, then the latest):',
     ask: 'Before answering, predict in one line what this user would object to in the answer you are about to give, and change the answer so it does not draw that objection. Do not write the prediction in the answer.',
   },
 }

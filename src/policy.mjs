@@ -43,7 +43,7 @@ export const CODEX_EFFORT = { small: 'low', mid: 'medium', large: 'high' }
 export function policy(host, models = DEFAULT_MODELS[host]) {
   if (host === 'codex') {
     return [
-      '# Subagent routing (ownwords)',
+      '# Subagent routing (Off the Wall)',
       'You are the orchestrator. ' + SELF,
       'Every spawn_agent call names `model` and `reasoning_effort`, chosen by what the written task leaves the subagent to decide, not by how subtle the subject is:',
       ...['small', 'mid', 'large'].map(k => `- ${models[k]}, reasoning_effort ${CODEX_EFFORT[k]}: ${CLASSES[k]}`),
@@ -51,7 +51,7 @@ export function policy(host, models = DEFAULT_MODELS[host]) {
     ].join('\n')
   }
   return [
-    '# Subagent routing (ownwords)',
+    '# Subagent routing (Off the Wall)',
     'You are the orchestrator. ' + SELF,
     'Every Agent call that does not fork names `model`, chosen by what the written task leaves the subagent to decide, not by how subtle the subject is:',
     ...['small', 'mid', 'large'].map(k => `- ${models[k]}: ${CLASSES[k]}`),
@@ -78,6 +78,6 @@ export function subagentCall(host, toolName, input = {}) {
 
 export function denyReason(host) {
   return host === 'codex'
-    ? 'ownwords routing: name `model` and `reasoning_effort` for this subagent by the routing rule in your instructions, then call spawn_agent again.'
-    : 'ownwords routing: name the subagent `model` (haiku, sonnet or opus) by the routing rule in your instructions, then call Agent again.'
+    ? 'Off the Wall routing: name `model` and `reasoning_effort` for this subagent by the routing rule in your instructions, then call spawn_agent again.'
+    : 'Off the Wall routing: name the subagent `model` (haiku, sonnet or opus) by the routing rule in your instructions, then call Agent again.'
 }

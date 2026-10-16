@@ -4,7 +4,7 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { test } from 'node:test'
 
-process.env.OWNWORDS_HOME = mkdtempSync(join(tmpdir(), 'ownwords-test-'))
+process.env.OTW_HOME = mkdtempSync(join(tmpdir(), 'otw-test-'))
 const { correctionBlock, langOf, pickCorrections } = await import('../src/similar.mjs')
 const { parseBatch, parseRule, batchPrompt } = await import('../src/judge.mjs')
 const { handle, typed } = await import('../src/hook.mjs')
@@ -140,7 +140,7 @@ test('routing off: no rule, no send-back', () => {
 })
 
 const jsonl = rows => {
-  const f = join(process.env.OWNWORDS_HOME, `t${Math.random()}.jsonl`)
+  const f = join(process.env.OTW_HOME, `t${Math.random()}.jsonl`)
   writeFileSync(f, rows.map(r => JSON.stringify(r)).join('\n') + '\n{broken')
   return f
 }
@@ -208,7 +208,7 @@ test('the session file keeps the last answer for the next judge', () => {
 })
 
 test('history files are read in chunks; an oversized line is skipped, the lines around it are kept', () => {
-  const f = join(process.env.OWNWORDS_HOME, 'big.jsonl')
+  const f = join(process.env.OTW_HOME, 'big.jsonl')
   const big = JSON.stringify({ type: 'blob', data: 'x'.repeat(MAX_LINE + 10) })
   const small = n => JSON.stringify({ n, pad: 'y'.repeat(700_000) }) // lines that cross the 1 MB chunk edge
   writeFileSync(f, [small(1), big, small(2), small(3), '{broken', JSON.stringify({ n: 4 })].join('\n'))
@@ -243,7 +243,7 @@ test('config: detected Codex models, judge on the mid class, config.json wins', 
   process.env.CODEX_HOME = ch
   assert.deepEqual(config().models.codex, { small: 's', mid: 'w', large: 'f' })
   assert.equal(config().judge.codex, 'w')
-  writeFileSync(join(process.env.OWNWORDS_HOME, 'config.json'), JSON.stringify({ judge: { codex: 'mine' }, models: { codex: { large: 'L' } } }))
+  writeFileSync(join(process.env.OTW_HOME, 'config.json'), JSON.stringify({ judge: { codex: 'mine' }, models: { codex: { large: 'L' } } }))
   assert.equal(config().judge.codex, 'mine')
   assert.deepEqual(config().models.codex, { small: 's', mid: 'w', large: 'L' })
   assert.equal(config().models.claude.small, 'haiku')

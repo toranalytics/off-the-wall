@@ -3,10 +3,10 @@
 </p>
 
 <p align="center">
-  <img src="assets/hero.png" alt="ownwords: ターミナルの上で過去の指摘を引用するピクセルアートのオウム" width="100%" />
+  <img src="assets/hero.png" alt="Off the Wall: ターミナルの上で過去の指摘を引用するピクセルアートのオウム" width="100%" />
 </p>
 
-<h1 align="center">ownwords</h1>
+<h1 align="center">Off the Wall</h1>
 
 <p align="center">
   <strong>コーディングエージェントに同じことを二度言わない。</strong>
@@ -35,16 +35,16 @@
 **エージェントが答える前に、あなたの指摘を原文のまま引用します。何を一番よく指摘しているかを 1 分で示します。サブエージェントはより安いモデルで動かします。**
 
 「聞かずに選んで進めて」「本当にテストを実行した?」といった指摘は、たいてい次のセッションで忘れられます。
-ownwords はそうしたメッセージを保存し、毎回の回答の前に、最も関係のあるものをあなた自身の言葉でエージェントに
+Off the Wall はそうしたメッセージを保存し、毎回の回答の前に、最も関係のあるものをあなた自身の言葉でエージェントに
 見せます。すでに払っている Claude または ChatGPT のプランで動き、API キーは不要です。
 
-> ownwords は 0.1 の新しいプロジェクトです。以下の数値は一人の履歴から得たものなので、ぜひ自分の履歴でレポートを実行してください。
+> Off the Wall は 0.1 の新しいプロジェクトです。以下の数値は一人の履歴から得たものなので、ぜひ自分の履歴でレポートを実行してください。
 
 ---
 
-## なぜ ownwords か
+## なぜ Off the Wall か
 
-| 問題 | 起きること | ownwords |
+| 問題 | 起きること | Off the Wall |
 | :-- | :-- | :-- |
 | 繰り返す指摘 | 今月 10 回目の「聞かずにやって」 | 過去のあなたの言葉を次の回答の前に置く |
 | 定着しないルール | 指摘を一行ルールに要約しても変化が少ない | 要約ではなく引用。要約はランダムなルールより良くなかった([根拠](#evidence)) |
@@ -59,29 +59,29 @@ ownwords はそうしたメッセージを保存し、毎回の回答の前に�
 Claude Code のプロンプトで:
 
 ```
-/plugin install ownwords --marketplace toranalytics/off-the-wall
+/plugin install off-the-wall --marketplace toranalytics/off-the-wall
 ```
 
 Codex:
 
 ```bash
 codex plugin marketplace add toranalytics/off-the-wall
-codex plugin add ownwords@ownwords
+codex plugin add off-the-wall@off-the-wall
 ```
 
-その後 Codex で `/hooks` を一度開き、ownwords のフックを信頼してください。信頼されるまで Codex はプラグインのフックを実行しません。
+その後 Codex で `/hooks` を一度開き、Off the Wall のフックを信頼してください。信頼されるまで Codex はプラグインのフックを実行しません。
 
 **2. サンプル履歴でレポートを試す**(自分の履歴は不要)
 
 ```bash
 git clone https://github.com/toranalytics/off-the-wall && cd off-the-wall
-node bin/ownwords.mjs report --host claude --claude-dir examples/claude-history --days 0
+node bin/otw.mjs report --host claude --claude-dir examples/claude-history --days 0
 ```
 
 **3. 自分の履歴で実行し、そこから引用を始める**
 
 ```bash
-node bin/ownwords.mjs report --seed
+node bin/otw.mjs report --seed
 ```
 
 Node 18 以上が必要です。macOS の Claude Code 2.1.301 と codex-cli 0.162.1 でテストしました。
@@ -90,7 +90,7 @@ Node 18 以上が必要です。macOS の Claude Code 2.1.301 と codex-cli 0.16
 ## 何を一番よく指摘しているか
 
 <p align="center">
-  <img src="assets/report.svg" alt="ownwords report の出力: 20 回の返答のうち 9 回が指摘、種類ごとに原文付き" width="92%" />
+  <img src="assets/report.svg" alt="Off the Wall report の出力: 20 回の返答のうち 9 回が指摘、種類ごとに原文付き" width="92%" />
 </p>
 
 `report` はマシン上にすでにある Claude Code と Codex の履歴(`~/.claude/projects`、`~/.codex/sessions`)を読み、
@@ -101,7 +101,7 @@ Node 18 以上が必要です。macOS の Claude Code 2.1.301 と codex-cli 0.16
 ## エージェントに見えるもの
 
 <p align="center">
-  <img src="assets/context.svg" alt="回答前に ownwords が追加するブロック: 過去の指摘 6 件の原文と、指摘を予測せよという指示" width="92%" />
+  <img src="assets/context.svg" alt="回答前に Off the Wall が追加するブロック: 過去の指摘 6 件の原文と、指摘を予測せよという指示" width="92%" />
 </p>
 
 | タイミング | Claude Code | Codex |
@@ -134,7 +134,7 @@ Codex が保持する一覧(`~/.codex/models_cache.json`)を読み、説明か�
 ## 根拠
 
 <p align="center">
-  <img src="assets/evidence.svg" alt="何も付けない場合との勝ち・引き分け・負け: 実際の指摘 36/3/0、ownwords 25/11/3、ランダムなルール 18/15/6、要約ルール 14/17/8" width="92%" />
+  <img src="assets/evidence.svg" alt="何も付けない場合との勝ち・引き分け・負け: 実際の指摘 36/3/0、Off the Wall 25/11/3、ランダムなルール 18/15/6、要約ルール 14/17/8" width="92%" />
 </p>
 
 数値はすべて一人の実際の履歴から得たもので、一般法則ではなく最初の結果です。実際の依頼 39 件を再実行し、Opus 5.5 が
@@ -145,8 +145,8 @@ Codex が保持する一覧(`~/.codex/models_cache.json`)を読み、説明か�
 <a id="privacy"></a>
 ## プライバシー
 
-すべてのデータはあなたのマシンの `~/.ownwords` に残ります。外に出るのは判定の呼び出しだけで、それもあなた自身の
-`claude` / `codex` CLI を通ります。`~/.ownwords` を削除するとすべて忘れます。
+すべてのデータはあなたのマシンの `~/.otw` に残ります。外に出るのは判定の呼び出しだけで、それもあなた自身の
+`claude` / `codex` CLI を通ります。`~/.otw` を削除するとすべて忘れます。
 
 ## 制限
 

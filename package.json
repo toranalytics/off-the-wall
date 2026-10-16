@@ -1,5 +1,5 @@
 {
-  "name": "ownwords",
+  "name": "off-the-wall",
   "version": "0.1.0",
   "description": "Quotes your own past corrections back to the agent before it answers, reports how often you had to correct it, and makes the orchestrator name a model for every subagent. Claude Code and Codex.",
   "author": {
@@ -9,7 +9,7 @@
   "type": "module",
   "license": "MIT",
   "bin": {
-    "ownwords": "bin/ownwords.mjs"
+    "otw": "bin/otw.mjs"
   },
   "engines": {
     "node": ">=18"

@@ -3,10 +3,10 @@
 </p>
 
 <p align="center">
-  <img src="assets/hero.png" alt="ownwords: 터미널 위의 픽셀 앵무새가 과거 지적을 인용하는 그림" width="100%" />
+  <img src="assets/hero.png" alt="Off the Wall: 터미널 위의 픽셀 앵무새가 과거 지적을 인용하는 그림" width="100%" />
 </p>
 
-<h1 align="center">ownwords</h1>
+<h1 align="center">Off the Wall</h1>
 
 <p align="center">
   <strong>코딩 에이전트에게 같은 지적을 두 번 하지 마세요.</strong>
@@ -25,7 +25,7 @@
 
 <p align="center">
   <a href="#빠른-시작">빠른 시작</a> ·
-  <a href="#왜-ownwords인가">왜</a> ·
+  <a href="#왜-off-the-wall인가">왜</a> ·
   <a href="#무엇을-가장-많이-지적했나">보고</a> ·
   <a href="#에이전트가-보는-것">작동 방식</a> ·
   <a href="#더-싼-하위-에이전트">라우팅</a> ·
@@ -36,17 +36,17 @@
 
 **에이전트가 답하기 전에 사용자의 지적을 원문 그대로 인용합니다. 무엇을 가장 많이 지적했는지 1분 만에 보여 줍니다. 하위 에이전트는 더 싼 모델로 돌립니다.**
 
-"묻지 말고 골라서 해", "테스트 진짜 돌려 본 거 맞아?" 같은 지적은 보통 다음 세션이면 잊힙니다. ownwords는 그런
+"묻지 말고 골라서 해", "테스트 진짜 돌려 본 거 맞아?" 같은 지적은 보통 다음 세션이면 잊힙니다. Off the Wall은 그런
 메시지를 모아 두었다가, 답할 때마다 가장 관련 있는 것을 사용자의 말 그대로 에이전트에게 다시 보여 줍니다. 이미
 내고 있는 Claude나 ChatGPT 구독으로 돌고, API 키는 필요 없습니다.
 
-> ownwords는 이제 막 나온 0.1 버전입니다. 아래 숫자는 한 사람의 기록에서 나왔으니, 직접 자기 기록으로 보고를 돌려 보세요.
+> Off the Wall은 이제 막 나온 0.1 버전입니다. 아래 숫자는 한 사람의 기록에서 나왔으니, 직접 자기 기록으로 보고를 돌려 보세요.
 
 ---
 
-## 왜 ownwords인가
+## 왜 Off the Wall인가
 
-| 문제 | 일어나는 일 | ownwords |
+| 문제 | 일어나는 일 | Off the Wall |
 | :-- | :-- | :-- |
 | 반복되는 지적 | 이번 달에만 "묻지 말고 그냥 해"를 열 번째 말함 | 사용자가 예전에 한 말을 다음 답 앞에 둠 |
 | 남지 않는 규칙 | 지적을 깔끔한 한 줄 규칙으로 요약해도 바뀌는 게 적음 | 요약이 아니라 인용. 요약은 무작위 규칙보다 낫지 않았음([근거](#근거)) |
@@ -60,29 +60,29 @@
 Claude Code 입력창에서:
 
 ```
-/plugin install ownwords --marketplace toranalytics/off-the-wall
+/plugin install off-the-wall --marketplace toranalytics/off-the-wall
 ```
 
 Codex:
 
 ```bash
 codex plugin marketplace add toranalytics/off-the-wall
-codex plugin add ownwords@ownwords
+codex plugin add off-the-wall@off-the-wall
 ```
 
-그다음 Codex에서 `/hooks`를 한 번 열어 ownwords 훅을 승인하세요. Codex는 승인 전까지 플러그인 훅을 실행하지 않습니다.
+그다음 Codex에서 `/hooks`를 한 번 열어 Off the Wall 훅을 승인하세요. Codex는 승인 전까지 플러그인 훅을 실행하지 않습니다.
 
 **2. 예시 기록으로 보고 돌려 보기** (자기 기록이 없어도 됩니다)
 
 ```bash
 git clone https://github.com/toranalytics/off-the-wall && cd off-the-wall
-node bin/ownwords.mjs report --host claude --claude-dir examples/claude-history --days 0
+node bin/otw.mjs report --host claude --claude-dir examples/claude-history --days 0
 ```
 
 **3. 자기 기록으로 돌리고, 거기서부터 인용 시작**
 
 ```bash
-node bin/ownwords.mjs report --seed
+node bin/otw.mjs report --seed
 ```
 
 Node 18 이상이 필요합니다. macOS의 Claude Code 2.1.301과 codex-cli 0.162.1에서 시험했습니다.
@@ -90,7 +90,7 @@ Node 18 이상이 필요합니다. macOS의 Claude Code 2.1.301과 codex-cli 0.1
 ## 무엇을 가장 많이 지적했나
 
 <p align="center">
-  <img src="assets/report.svg" alt="ownwords 보고 출력: 답 20개 중 9개가 지적, 종류별 묶음과 원문 인용" width="92%" />
+  <img src="assets/report.svg" alt="Off the Wall 보고 출력: 답 20개 중 9개가 지적, 종류별 묶음과 원문 인용" width="92%" />
 </p>
 
 `report`는 컴퓨터에 이미 있는 Claude Code와 Codex 대화 기록(`~/.claude/projects`, `~/.codex/sessions`)을 읽고,
@@ -103,7 +103,7 @@ Node 18 이상이 필요합니다. macOS의 Claude Code 2.1.301과 codex-cli 0.1
 ## 에이전트가 보는 것
 
 <p align="center">
-  <img src="assets/context.svg" alt="에이전트가 답하기 전에 ownwords가 붙이는 문구: 과거 지적 원문 6개와 지적을 예측하라는 지시" width="92%" />
+  <img src="assets/context.svg" alt="에이전트가 답하기 전에 Off the Wall이 붙이는 문구: 과거 지적 원문 6개와 지적을 예측하라는 지시" width="92%" />
 </p>
 
 | 시점 | Claude Code | Codex |
@@ -139,7 +139,7 @@ Node 18 이상이 필요합니다. macOS의 Claude Code 2.1.301과 codex-cli 0.1
 ## 근거
 
 <p align="center">
-  <img src="assets/evidence.svg" alt="아무것도 안 붙인 경우 대비 승·무·패: 실제 지적 36/3/0, ownwords 25/11/3, 무작위 규칙 18/15/6, 요약 규칙 14/17/8" width="92%" />
+  <img src="assets/evidence.svg" alt="아무것도 안 붙인 경우 대비 승·무·패: 실제 지적 36/3/0, Off the Wall 25/11/3, 무작위 규칙 18/15/6, 요약 규칙 14/17/8" width="92%" />
 </p>
 
 모든 숫자는 한 사람의 실제 기록에서 나왔습니다. 일반 법칙이 아니라 첫 결과로 봐 주세요.
@@ -176,7 +176,7 @@ Node 18 이상이 필요합니다. macOS의 Claude Code 2.1.301과 codex-cli 0.1
 
 ## 설정
 
-`~/.ownwords/config.json`이며 모든 항목은 생략 가능합니다. 여기 적은 값이 자동 감지보다 우선합니다.
+`~/.otw/config.json`이며 모든 항목은 생략 가능합니다. 여기 적은 값이 자동 감지보다 우선합니다.
 
 ```json
 {
@@ -191,16 +191,16 @@ Node 18 이상이 필요합니다. macOS의 Claude Code 2.1.301과 codex-cli 0.1
 }
 ```
 
-`node bin/ownwords.mjs status`로 저장 상태를 볼 수 있습니다.
+`node bin/otw.mjs status`로 저장 상태를 볼 수 있습니다.
 
 ## 개인정보
 
-모든 자료는 사용자 컴퓨터의 `~/.ownwords`에 남습니다.
+모든 자료는 사용자 컴퓨터의 `~/.otw`에 남습니다.
 - `corrections.jsonl`
 - 세션별 상태
 - `log.jsonl`
 
-밖으로 나가는 것은 판정 호출뿐이고, 그것도 사용자 본인의 `claude`나 `codex` 명령을 거칩니다. `~/.ownwords`를
+밖으로 나가는 것은 판정 호출뿐이고, 그것도 사용자 본인의 `claude`나 `codex` 명령을 거칩니다. `~/.otw`를
 지우면 전부 잊습니다.
 
 ## 한계
@@ -215,7 +215,7 @@ Node 18 이상이 필요합니다. macOS의 Claude Code 2.1.301과 codex-cli 0.1
 ```bash
 npm test                          # node --test, 의존성 없음
 node scripts/make-assets.mjs      # 실제 출력과 측정 숫자로 README 그림을 다시 그림
-OWNWORDS_DEBUG=1 claude ...       # 모든 훅 이벤트를 ~/.ownwords/log.jsonl에 기록
+OTW_DEBUG=1 claude ...       # 모든 훅 이벤트를 ~/.otw/log.jsonl에 기록
 ```
 
 [CONTRIBUTING.md](CONTRIBUTING.md)를 참고하세요. 변경 내역은 [CHANGELOG.md](CHANGELOG.md)에 있습니다.

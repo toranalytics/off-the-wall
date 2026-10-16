@@ -76,14 +76,14 @@ export function handle(host, e, { now = Date.now(), cfg = config(), spawnJudge =
 }
 
 function detachedJudge(job) {
-  const p = spawn(process.execPath, [WORKER], { detached: true, stdio: ['pipe', 'ignore', 'ignore'], env: { ...process.env, OWNWORDS_CHILD: '1' } })
+  const p = spawn(process.execPath, [WORKER], { detached: true, stdio: ['pipe', 'ignore', 'ignore'], env: { ...process.env, OTW_CHILD: '1' } })
   p.stdin.end(JSON.stringify(job))
   p.unref()
 }
 
 async function main() {
   const host = process.argv[2] === 'codex' ? 'codex' : 'claude'
-  if (process.env.OWNWORDS_CHILD === '1') {
+  if (process.env.OTW_CHILD === '1') {
     // The judge's own CLI run: Stop on Codex wants JSON, everything else wants nothing.
     process.stdout.write('{}')
     return
@@ -93,7 +93,7 @@ async function main() {
   let out = null
   try {
     const e = JSON.parse(raw)
-    if (process.env.OWNWORDS_DEBUG) log({ host, kind: 'event', event: e.hook_event_name, tool: e.tool_name ?? null, input: e.tool_input ? Object.keys(e.tool_input) : null })
+    if (process.env.OTW_DEBUG) log({ host, kind: 'event', event: e.hook_event_name, tool: e.tool_name ?? null, input: e.tool_input ? Object.keys(e.tool_input) : null })
     out = handle(host, e)
   } catch (err) {
     log({ host, kind: 'error', message: String(err?.message ?? err) })

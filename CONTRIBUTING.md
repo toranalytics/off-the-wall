@@ -14,10 +14,10 @@ To run the plugin from your checkout:
 
 ```sh
 claude --plugin-dir .                       # Claude Code
-codex plugin marketplace add "$PWD"         # Codex, then: codex plugin add ownwords@ownwords
+codex plugin marketplace add "$PWD"         # Codex, then: codex plugin add off-the-wall@off-the-wall
 ```
 
-`OWNWORDS_HOME=/tmp/ow` keeps your test runs away from your real `~/.ownwords`, and `OWNWORDS_DEBUG=1` logs every
+`OTW_HOME=/tmp/ow` keeps your test runs away from your real `~/.otw`, and `OTW_DEBUG=1` logs every
 hook event to its `log.jsonl`.
 
 ## What a change needs

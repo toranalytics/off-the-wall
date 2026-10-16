@@ -22,7 +22,7 @@ jobs:
       - name: Hook answers an event from stdin
         shell: bash
         env:
-          OWNWORDS_HOME: ${{ runner.temp }}/ownwords
+          OTW_HOME: ${{ runner.temp }}/otw
         run: |
           out=$(echo '{"hook_event_name":"SessionStart","session_id":"ci"}' | node src/hook.mjs claude)
           echo "$out" | grep -q "Subagent routing"

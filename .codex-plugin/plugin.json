@@ -1,5 +1,5 @@
 {
-  "name": "ownwords",
+  "name": "off-the-wall",
   "version": "0.1.0",
   "description": "Quotes your own past corrections back to the agent before it answers, reports how often you had to correct it, and makes the orchestrator name a model for every subagent. Claude Code and Codex.",
   "author": {
@@ -8,7 +8,7 @@
   },
   "hooks": "./hooks/codex.json",
   "interface": {
-    "displayName": "ownwords",
+    "displayName": "Off the Wall",
     "shortDescription": "Stop repeating the same correction to your agent"
   }
 }

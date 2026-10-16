@@ -1,11 +1,11 @@
 blank_issues_enabled: true
 contact_links:
   - name: How it works
-    url: https://github.com/toranalytics/ownwords#what-the-agent-sees
+    url: https://github.com/toranalytics/off-the-wall#what-the-agent-sees
     about: What ownwords adds to each prompt, and when
   - name: Evidence
-    url: https://github.com/toranalytics/ownwords#evidence
+    url: https://github.com/toranalytics/off-the-wall#evidence
     about: How the numbers in the README were measured
   - name: Settings
-    url: https://github.com/toranalytics/ownwords#settings
+    url: https://github.com/toranalytics/off-the-wall#settings
     about: Turning features off and choosing models

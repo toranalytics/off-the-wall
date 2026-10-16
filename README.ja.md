@@ -15,8 +15,8 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/toranalytics/ownwords/actions/workflows/ci.yml"><img alt="tests" src="https://img.shields.io/github/actions/workflow/status/toranalytics/ownwords/ci.yml?branch=main&label=tests&style=flat-square"></a>
-  <a href="https://github.com/toranalytics/ownwords/releases"><img alt="release" src="https://img.shields.io/github/v/release/toranalytics/ownwords?style=flat-square"></a>
+  <a href="https://github.com/toranalytics/off-the-wall/actions/workflows/ci.yml"><img alt="tests" src="https://img.shields.io/github/actions/workflow/status/toranalytics/off-the-wall/ci.yml?branch=main&label=tests&style=flat-square"></a>
+  <a href="https://github.com/toranalytics/off-the-wall/releases"><img alt="release" src="https://img.shields.io/github/v/release/toranalytics/off-the-wall?style=flat-square"></a>
   <a href="LICENSE"><img alt="MIT license" src="https://img.shields.io/badge/license-MIT-green?style=flat-square"></a>
   <img alt="Claude Code plugin" src="https://img.shields.io/badge/Claude%20Code-plugin-d97757?style=flat-square">
   <img alt="Codex plugin" src="https://img.shields.io/badge/Codex-plugin-10a37f?style=flat-square">
@@ -59,13 +59,13 @@ ownwords はそうしたメッセージを保存し、毎回の回答の前に�
 Claude Code のプロンプトで:
 
 ```
-/plugin install ownwords --marketplace toranalytics/ownwords
+/plugin install ownwords --marketplace toranalytics/off-the-wall
 ```
 
 Codex:
 
 ```bash
-codex plugin marketplace add toranalytics/ownwords
+codex plugin marketplace add toranalytics/off-the-wall
 codex plugin add ownwords@ownwords
 ```
 
@@ -74,7 +74,7 @@ codex plugin add ownwords@ownwords
 **2. サンプル履歴でレポートを試す**(自分の履歴は不要)
 
 ```bash
-git clone https://github.com/toranalytics/ownwords && cd ownwords
+git clone https://github.com/toranalytics/off-the-wall && cd off-the-wall
 node bin/ownwords.mjs report --host claude --claude-dir examples/claude-history --days 0
 ```
 

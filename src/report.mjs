@@ -48,6 +48,25 @@ export function summary(pairs, found, { days, failed = 0, batches = 0 }) {
   return lines.join('\n')
 }
 
+// A prefilled "Show and tell" discussion carrying only the counts and category names, never the quoted replies,
+// so a user can post their #1 back to the project in one click.
+export function shareLink(pairs, found, { days }) {
+  const by = new Map()
+  for (const c of found) by.set(c.category, (by.get(c.category) ?? 0) + 1)
+  const ranked = [...by.entries()].sort((a, b) => b[1] - a[1]).slice(0, 3)
+  if (!ranked.length) return null
+  const title = `My #1: ${CATEGORIES[ranked[0][0]]} (${ranked[0][1]}×)`
+  const body = [
+    `\`otw report\`, ${days > 0 ? `last ${days} days` : 'all history'}: ${found.length} corrections in ${pairs.length} replies.`,
+    '',
+    ...ranked.map(([k, n], i) => `${i + 1}. ${CATEGORIES[k]}: ${n}×`),
+    '',
+    'Same as yours?',
+  ].join('\n')
+  const q = new URLSearchParams({ category: 'show-and-tell', title, body })
+  return `https://github.com/toranalytics/off-the-wall/discussions/new?${q}`
+}
+
 export async function report({ days = 30, hosts, max = 400, seed = false, host, claudeDir, codexDir, log = console.log } = {}) {
   const cfg = config()
   const pairs = historyPairs({ days, hosts, claudeDir, codexDir }).slice(-max)
@@ -57,6 +76,8 @@ export async function report({ days = 30, hosts, max = 400, seed = false, host, 
   const res = await judgeAll(pairs, { host: judgeHost, model: cfg.judge[judgeHost], onProgress: (d, n) => process.stderr.write(`\r  ${d}/${n}`) })
   process.stderr.write('\n')
   log(summary(pairs, res.found, { days, failed: res.failed, batches: res.batches }))
+  const share = shareLink(pairs, res.found, { days })
+  if (share) log(`\nCompare your #1 with other people's (counts only, nothing quoted):\n${share}`)
   if (seed) {
     const have = new Set(corrections().map(c => `${c.at}|${c.quote}`))
     const fresh = res.found

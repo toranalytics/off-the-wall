@@ -96,6 +96,10 @@ node bin/otw.mjs report --seed
 你纠正智能体做事方式的回复。上图是在[示例历史](examples/claude-history)上的真实输出。加上 `--seed` 会保存找到的
 纠正，从下一个提示开始就会引用。
 
+最后会打印一个链接，打开本仓库 [Discussions](https://github.com/toranalytics/off-the-wall/discussions/categories/show-and-tell)
+中预填好的帖子，内容是你最常纠正的前三类及次数。只包含次数和类型名称，不包含任何被引用的原话。是否发布由你决定；
+这是告诉我你的第一名是否和我一样的最快方式。
+
 <a id="how"></a>
 ## 智能体看到什么
 

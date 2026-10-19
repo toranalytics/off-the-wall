@@ -97,6 +97,10 @@ Node 18 以上が必要です。macOS の Claude Code 2.1.301 と codex-cli 0.16
 小さなモデルで、エージェントの仕事の仕方を指摘した返答を見分けます。上の画像は[サンプル履歴](examples/claude-history)
 での実際の出力です。`--seed` を付けると見つけた指摘を保存し、次のプロンプトからすぐに引用が始まります。
 
+最後に、このリポジトリの [Discussions](https://github.com/toranalytics/off-the-wall/discussions/categories/show-and-tell)
+への投稿リンクが表示されます。多かった指摘の種類トップ3と回数が入力済みで、引用されたあなたの言葉は含まれません。
+投稿するかどうかはあなた次第です。あなたの1位が私と同じかどうか、教えてもらえるとうれしいです。
+
 <a id="how"></a>
 ## エージェントに見えるもの
 

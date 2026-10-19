@@ -10,7 +10,7 @@ const { parseBatch, parseRule, batchPrompt } = await import('../src/judge.mjs')
 const { handle, typed } = await import('../src/hook.mjs')
 const { addCorrections, session } = await import('../src/store.mjs')
 const { claudePairs, codexPairs, lines, MAX_LINE, typedPart } = await import('../src/transcripts.mjs')
-const { judgeAll, summary } = await import('../src/report.mjs')
+const { judgeAll, summary, shareLink } = await import('../src/report.mjs')
 const { DEFAULT_CONFIG } = await import('../src/store.mjs')
 
 const T = Date.UTC(2026, 0, 10)
@@ -200,6 +200,22 @@ test('report: batches of 20, failed calls counted, categories ranked with quotes
   assert.match(s, /4×  stopped or asked/)
   assert.match(s, /1 of 3 judge calls failed/)
   assert.ok(s.indexOf('stopped') < s.indexOf('claimed done'))
+})
+
+test('the share link carries counts and category names, never the quoted replies', () => {
+  const pairs = Array.from({ length: 10 }, (_, i) => ({ at: i }))
+  const found = [
+    { category: 'scope', reply: 'SECRET-REPLY-1' }, { category: 'scope', reply: 'SECRET-REPLY-2' },
+    { category: 'unverified', reply: 'SECRET-REPLY-3' },
+  ]
+  const link = shareLink(pairs, found, { days: 30 })
+  assert.ok(link.startsWith('https://github.com/toranalytics/off-the-wall/discussions/new?'))
+  const q = new URL(link).searchParams
+  assert.equal(q.get('category'), 'show-and-tell')
+  assert.equal(q.get('title'), 'My #1: shrank or changed the scope (2×)')
+  assert.match(q.get('body'), /3 corrections in 10 replies/)
+  assert.doesNotMatch(link + q.get('body'), /SECRET-REPLY/)
+  assert.equal(shareLink(pairs, [], { days: 30 }), null)
 })
 
 test('the session file keeps the last answer for the next judge', () => {

@@ -100,6 +100,10 @@ Node 18 이상이 필요합니다. macOS의 Claude Code 2.1.301과 codex-cli 0.1
 
 `--seed`를 붙이면 찾은 지적을 저장합니다. 그래서 몇 주를 써 볼 필요 없이 다음 요청부터 바로 인용이 붙습니다.
 
+마지막에는 이 저장소의 [Discussions](https://github.com/toranalytics/off-the-wall/discussions/categories/show-and-tell)에
+가장 많이 지적한 종류 세 가지와 횟수를 채운 글쓰기 링크가 나옵니다. 들어가는 것은 횟수와 종류 이름뿐이고, 인용된
+사용자의 말은 들어가지 않습니다. 올릴지는 사용자가 정합니다. 내 1위와 같은지 알려 주는 가장 빠른 방법입니다.
+
 ## 에이전트가 보는 것
 
 <p align="center">

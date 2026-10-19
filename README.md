@@ -101,6 +101,11 @@ took about 50 s on Codex and 65 turns about 75 s on Claude.
 
 `--seed` saves what it found, so recall starts with your next prompt instead of after weeks of use.
 
+At the end it prints a link that opens a prefilled post in this repo's
+[Discussions](https://github.com/toranalytics/off-the-wall/discussions/categories/show-and-tell) with your top three
+kinds and their counts. Only the counts and kind names go in; none of your quoted words. Posting it is up to you, and
+it is the quickest way to tell me whether your #1 matches mine.
+
 ## What the agent sees
 
 <p align="center">

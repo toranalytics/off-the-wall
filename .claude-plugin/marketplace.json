@@ -9,7 +9,7 @@
       "name": "off-the-wall",
       "source": "./",
       "description": "Quotes your own past corrections back to the agent before it answers, reports how often you had to correct it, and makes the orchestrator name a model for every subagent. Claude Code and Codex.",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "category": "productivity",
       "homepage": "https://github.com/toranalytics/off-the-wall",
       "tags": [

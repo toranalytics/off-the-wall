@@ -1,7 +1,10 @@
 # Changelog
 
-## Unreleased
+## 0.1.1 - 2026-10-20
 
+- Renamed to Off the Wall: plugin `off-the-wall`, CLI `bin/otw.mjs`, data in `~/.otw` (`OTW_HOME`). 0.1.0 kept its
+  data in `~/.ownwords`; to keep your corrections, move it once: `mv ~/.ownwords ~/.otw`.
+- Plugin manifests carry homepage, repository, license and keywords; the Codex manifest fills its publishable fields.
 - `otw report` ends with a link to a prefilled Show and tell discussion carrying your top three kinds and their
   counts (no quoted words), so results can be compared across users.
 

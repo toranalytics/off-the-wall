@@ -114,13 +114,13 @@ it is the quickest way to tell me whether your #1 matches mine.
 
 | Event | Claude Code | Codex |
 | :-- | :-- | :-- |
-| Each prompt | up to 6 past corrections quoted: the 3 most like the request, then the latest | same |
+| Each prompt | up to 6 past corrections quoted, each cut at 200 characters: the 3 most like the request, then the latest | same |
 | Each prompt | the previous answer and your new message are judged in a detached process; a correction is saved | same |
 | Turn end | the end of the answer is kept for that judge | same |
 | Session start | the routing rule is added | the routing rule is added |
-| Subagent start | an `Agent` call with no `model` is sent back once per turn | a `spawn_agent` call with no `model` or `reasoning_effort` is sent back once per turn |
+| Subagent start | a general-purpose `Agent` call with no `model` is sent back once per turn (forks and named agent types pass) | a `spawn_agent` call with no `model` or `reasoning_effort` is sent back once per turn |
 
-Nothing waits on a model call: the judge runs after your prompt has already gone on. The block is written in
+Nothing waits on a model call: the judge runs in a detached process next to your prompt, which never waits for it. The block is written in
 Korean when your prompt is in Korean (the wording that was measured) and in English otherwise.
 
 ## Cheaper subagents
@@ -149,12 +149,15 @@ cached.
   <img src="assets/evidence.svg" alt="Wins, ties and losses against nothing attached: actual correction 36/3/0, Off the Wall 25/11/3, random rules 18/15/6, distilled rules 14/17/8" width="92%" />
 </p>
 
-All numbers come from one person's real history, so treat them as a first result, not a general law.
+All measured numbers come from one person's real history, so treat them as a first result, not a general law. The
+9-of-20 report above comes from the made-up example session.
 
 **Quoting beats summarising.** 39 real requests were replayed. In reality, each was followed by a correction that
 can be judged from the text. Opus 5.5 answered each request under each condition. A Sonnet grader compared two
 answers at a time, blind, and was asked twice with the order swapped; a win needed both orders to agree. Quotes
-against random rules: 17 wins, 14 ties, 8 losses. The distilled rules did not beat the random ones.
+with the "predict the objection" line: 25 wins, 11 ties, 3 losses against nothing attached (p < 0.001), and 17 wins,
+14 ties, 8 losses against random rules (p = 0.11 on 39 cases: a lean, not yet a settled result). The distilled rules
+did not beat the random ones.
 
 **Routing.** On 30 held-out real delegations, Opus following the three classes picked the hand-labelled model 28
 times and never a weaker one. The "do small work yourself" line was added after that measurement. The cost

@@ -156,6 +156,13 @@ node bin/otw.mjs report --seed
 - 判定有时会漏掉（Claude Haiku：精确率 0.82，召回率 0.72）。
 - 引用只对模型可见，会话中不会显示给你。
 
+## 收录于
+
+- [awesome-codex-plugins](https://github.com/hashgraph-online/awesome-codex-plugins)
+- [awesome-ai-plugins](https://github.com/hashgraph-online/awesome-ai-plugins)
+- [awesome-ai-agent-tools](https://github.com/michielhdoteth/awesome-ai-agent-tools)
+- [Awesome-Vibe-Coding](https://github.com/0xWelt/Awesome-Vibe-Coding)
+
 ## 许可证
 
 MIT © [Junebeom Seo](https://github.com/toranalytics)

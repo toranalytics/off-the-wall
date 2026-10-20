@@ -231,6 +231,13 @@ OTW_DEBUG=1 claude ...       # logs every hook event to ~/.otw/log.jsonl
 
 See [CONTRIBUTING.md](CONTRIBUTING.md). Changes are listed in [CHANGELOG.md](CHANGELOG.md).
 
+## Listed in
+
+- [awesome-codex-plugins](https://github.com/hashgraph-online/awesome-codex-plugins)
+- [awesome-ai-plugins](https://github.com/hashgraph-online/awesome-ai-plugins)
+- [awesome-ai-agent-tools](https://github.com/michielhdoteth/awesome-ai-agent-tools)
+- [Awesome-Vibe-Coding](https://github.com/0xWelt/Awesome-Vibe-Coding)
+
 ## License
 
 MIT © [Junebeom Seo](https://github.com/toranalytics)

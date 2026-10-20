@@ -226,6 +226,13 @@ OTW_DEBUG=1 claude ...       # 모든 훅 이벤트를 ~/.otw/log.jsonl에 기�
 
 [CONTRIBUTING.md](CONTRIBUTING.md)를 참고하세요. 변경 내역은 [CHANGELOG.md](CHANGELOG.md)에 있습니다.
 
+## 등재된 목록
+
+- [awesome-codex-plugins](https://github.com/hashgraph-online/awesome-codex-plugins)
+- [awesome-ai-plugins](https://github.com/hashgraph-online/awesome-ai-plugins)
+- [awesome-ai-agent-tools](https://github.com/michielhdoteth/awesome-ai-agent-tools)
+- [Awesome-Vibe-Coding](https://github.com/0xWelt/Awesome-Vibe-Coding)
+
 ## 라이선스
 
 MIT © [Junebeom Seo](https://github.com/toranalytics)

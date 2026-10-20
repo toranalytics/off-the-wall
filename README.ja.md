@@ -158,6 +158,13 @@ Codex が保持する一覧(`~/.codex/models_cache.json`)を読み、説明か�
 - 判定は見逃すことがあります(Claude Haiku: 適合率 0.82、再現率 0.72)。
 - 引用はモデルにだけ見え、セッション中に画面には表示されません。
 
+## 掲載先
+
+- [awesome-codex-plugins](https://github.com/hashgraph-online/awesome-codex-plugins)
+- [awesome-ai-plugins](https://github.com/hashgraph-online/awesome-ai-plugins)
+- [awesome-ai-agent-tools](https://github.com/michielhdoteth/awesome-ai-agent-tools)
+- [Awesome-Vibe-Coding](https://github.com/0xWelt/Awesome-Vibe-Coding)
+
 ## ライセンス
 
 MIT © [Junebeom Seo](https://github.com/toranalytics)

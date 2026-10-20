@@ -6,5 +6,15 @@
     "name": "Junebeom Seo",
     "url": "https://github.com/toranalytics"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "homepage": "https://github.com/toranalytics/off-the-wall",
+  "repository": "https://github.com/toranalytics/off-the-wall",
+  "keywords": [
+    "corrections",
+    "memory",
+    "hooks",
+    "subagents",
+    "model-routing",
+    "codex"
+  ]
 }

@@ -163,6 +163,7 @@ node bin/otw.mjs report --seed
 - [awesome-ai-agent-tools](https://github.com/michielhdoteth/awesome-ai-agent-tools)
 - [Awesome-Vibe-Coding](https://github.com/0xWelt/Awesome-Vibe-Coding)
 - [awesome-vibe-coding-resources](https://github.com/acvnace/awesome-vibe-coding-resources)
+- [awesome-coding-agents](https://github.com/kailiu42/awesome-coding-agents)
 
 ## 许可证
 

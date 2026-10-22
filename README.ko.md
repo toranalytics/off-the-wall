@@ -233,6 +233,7 @@ OTW_DEBUG=1 claude ...       # 모든 훅 이벤트를 ~/.otw/log.jsonl에 기�
 - [awesome-ai-agent-tools](https://github.com/michielhdoteth/awesome-ai-agent-tools)
 - [Awesome-Vibe-Coding](https://github.com/0xWelt/Awesome-Vibe-Coding)
 - [awesome-vibe-coding-resources](https://github.com/acvnace/awesome-vibe-coding-resources)
+- [awesome-coding-agents](https://github.com/kailiu42/awesome-coding-agents)
 
 ## 라이선스
 

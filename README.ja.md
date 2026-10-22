@@ -165,6 +165,7 @@ Codex が保持する一覧(`~/.codex/models_cache.json`)を読み、説明か�
 - [awesome-ai-agent-tools](https://github.com/michielhdoteth/awesome-ai-agent-tools)
 - [Awesome-Vibe-Coding](https://github.com/0xWelt/Awesome-Vibe-Coding)
 - [awesome-vibe-coding-resources](https://github.com/acvnace/awesome-vibe-coding-resources)
+- [awesome-coding-agents](https://github.com/kailiu42/awesome-coding-agents)
 
 ## ライセンス
 

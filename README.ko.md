@@ -42,6 +42,8 @@
 
 > Off the Wall은 이제 막 나온 0.1 버전입니다. 아래 숫자는 한 사람의 기록에서 나왔으니, 직접 자기 기록으로 보고를 돌려 보세요.
 
+> 초기 버전 안내: 효과 근거는 한 사람의 텍스트 재생 실험이며, 반복 지적 감소·비용 절감·업무 완수 개선을 일반적으로 보장하지 않습니다. 호스트나 플러그인의 자동 알림이 사용자 답변으로 잘못 처리될 수 있으므로, 집계를 공유하기 전에 원문을 로컬에서 확인하세요.
+
 ---
 
 ## 왜 Off the Wall인가
@@ -234,7 +236,12 @@ OTW_DEBUG=1 claude ...       # 모든 훅 이벤트를 ~/.otw/log.jsonl에 기�
 - [Awesome-Vibe-Coding](https://github.com/0xWelt/Awesome-Vibe-Coding)
 - [awesome-vibe-coding-resources](https://github.com/acvnace/awesome-vibe-coding-resources)
 - [awesome-coding-agents](https://github.com/kailiu42/awesome-coding-agents)
+- [awesome-agent-memory](https://github.com/mnemoverse/awesome-agent-memory)
+
+커뮤니티 플러그인 디렉터리: [Claude & Codex Plugins](https://claudecodexplugins.com/plugins/toranalytics/off-the-wall/off-the-wall).
 
 ## 라이선스
 
 MIT © [Junebeom Seo](https://github.com/toranalytics)
+
+[Privacy](https://github.com/toranalytics/off-the-wall#privacy)

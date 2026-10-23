@@ -40,6 +40,8 @@ Off the Wall はそうしたメッセージを保存し、毎回の回答の前�
 
 > Off the Wall は 0.1 の新しいプロジェクトです。以下の数値は一人の履歴から得たものなので、ぜひ自分の履歴でレポートを実行してください。
 
+> 初期版の注意: 効果の根拠は1人のテキスト再生実験であり、指摘の減少、費用削減、業務完了の改善を一般的に保証するものではありません。ホストやプラグインの自動通知がユーザーの返答と誤認される場合があります。集計を共有する前に、元のメッセージをローカルで確認してください。
+
 ---
 
 ## なぜ Off the Wall か
@@ -166,7 +168,12 @@ Codex が保持する一覧(`~/.codex/models_cache.json`)を読み、説明か�
 - [Awesome-Vibe-Coding](https://github.com/0xWelt/Awesome-Vibe-Coding)
 - [awesome-vibe-coding-resources](https://github.com/acvnace/awesome-vibe-coding-resources)
 - [awesome-coding-agents](https://github.com/kailiu42/awesome-coding-agents)
+- [awesome-agent-memory](https://github.com/mnemoverse/awesome-agent-memory)
+
+コミュニティのプラグインディレクトリ: [Claude & Codex Plugins](https://claudecodexplugins.com/plugins/toranalytics/off-the-wall/off-the-wall).
 
 ## ライセンス
 
 MIT © [Junebeom Seo](https://github.com/toranalytics)
+
+[Privacy](https://github.com/toranalytics/off-the-wall#privacy)

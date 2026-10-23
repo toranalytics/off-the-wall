@@ -39,6 +39,8 @@
 
 > Off the Wall 是刚发布的 0.1 版本。下面的数字来自一个人的历史记录，请用你自己的记录运行报告。
 
+> 早期版本说明：效果证据来自单个用户的文本回放实验，不保证普遍减少纠正、降低成本或改善任务完成。宿主或插件的自动通知可能被误判为用户回复。分享报告汇总前，请在本地核对原始消息。
+
 ---
 
 ## 为什么用 Off the Wall
@@ -164,7 +166,12 @@ node bin/otw.mjs report --seed
 - [Awesome-Vibe-Coding](https://github.com/0xWelt/Awesome-Vibe-Coding)
 - [awesome-vibe-coding-resources](https://github.com/acvnace/awesome-vibe-coding-resources)
 - [awesome-coding-agents](https://github.com/kailiu42/awesome-coding-agents)
+- [awesome-agent-memory](https://github.com/mnemoverse/awesome-agent-memory)
+
+社区插件目录: [Claude & Codex Plugins](https://claudecodexplugins.com/plugins/toranalytics/off-the-wall/off-the-wall).
 
 ## 许可证
 
 MIT © [Junebeom Seo](https://github.com/toranalytics)
+
+[Privacy](https://github.com/toranalytics/off-the-wall#privacy)

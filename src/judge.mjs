@@ -17,7 +17,8 @@ If it does not count, answer exactly: NONE
 If it counts, answer with one line in the language of the user's message: a rule the assistant should follow next time, generalised beyond this task (e.g. "Carry out the next step of an approved plan without asking."). No preamble.`
 
 export function judgePrompt(answer, reply) {
-  return JUDGE_PROMPT.replace('{answer}', String(answer).slice(-600)).replace('{reply}', String(reply).slice(0, 800))
+  const excerpts = { answer: String(answer).slice(-600), reply: String(reply).slice(0, 800) }
+  return JUDGE_PROMPT.replace(/\{(answer|reply)\}/g, (_, key) => excerpts[key])
 }
 
 // The judge's reply as a rule, or null for NONE or anything that is not one plausible line.

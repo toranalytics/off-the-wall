@@ -48,7 +48,8 @@ export function corrections() {
       .filter(Boolean)
       .flatMap(l => {
         try {
-          return [JSON.parse(l)]
+          const c = JSON.parse(l)
+          return c && typeof c === 'object' && !Array.isArray(c) ? [c] : []
         } catch {
           return []
         }
@@ -67,7 +68,8 @@ const sessionFile = (host, id) => join(ensure(join(home(), 'sessions')), `${host
 
 export function session(host, id) {
   try {
-    return JSON.parse(readFileSync(sessionFile(host, id), 'utf8'))
+    const s = JSON.parse(readFileSync(sessionFile(host, id), 'utf8'))
+    return s && typeof s === 'object' && !Array.isArray(s) ? s : {}
   } catch {
     return {}
   }

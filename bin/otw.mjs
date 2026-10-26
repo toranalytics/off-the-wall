@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { recallable } from '../src/similar.mjs'
 import { report } from '../src/report.mjs'
 import { config, corrections, home } from '../src/store.mjs'
 
@@ -23,11 +24,14 @@ if (cmd === 'report') {
   const cs = corrections()
   const cfg = config()
   console.log(`folder ${home()}\ncorrections ${cs.length} (live ${cs.filter(c => c.src === 'live').length}, from history ${cs.filter(c => c.src === 'history').length})`)
+  const scoped = cs.filter(recallable).length
+  console.log(`scoped/origin-tagged ${scoped} · quarantined ${cs.length - scoped} (not automatically recalled)`)
   console.log(`recall ${cfg.recall ? 'on' : 'off'} · capture ${cfg.capture ? 'on' : 'off'} · routing ${cfg.routing ? 'on' : 'off'}`)
 } else {
   console.log(`otw report [--days 30 | --days 0] [--max 400] [--host claude|codex] [--seed] [--claude-dir DIR] [--codex-dir DIR]
   Reads your Claude Code and Codex history on this machine and shows how often you corrected how the assistant
-  worked, and for what. --seed saves those corrections so they are quoted back from the next prompt on.
+  worked, and for what (model labels, not verified outcomes). --seed saves only origin-tagged corrections with
+  an explicit history workspace; recall requires a relevant match in that same working directory.
   --days 0 reads all history. Try it without your own history: --host claude --claude-dir examples/claude-history --days 0
 otw status`)
 }

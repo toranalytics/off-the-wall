@@ -1,5 +1,5 @@
-Reading 20 turn ends with claude (haiku), 1 calls…
-All history: 20 times you answered the assistant, 9 of them (45%) correcting how it worked.
+SYNTHETIC EXAMPLE - archived labels, current formatting
+All history: 20 candidate user replies; the judge labelled 9 (45%) as possible corrections.
 
    3×  stopped or asked when it should have continued
         "stop asking me to choose, just pick one"

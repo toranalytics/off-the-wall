@@ -209,7 +209,7 @@ Discussions 链接只预填次数和类型名称，发布前由你自己审阅�
 
 ## 限制
 
-- Windows：早期版本曾在 CI 中通过测试和钩子运行检查（Node 18–22），但尚未在 Windows 上运行真实的 Claude Code 或 Codex 会话。这个 0.2.0 候选版本没有新的 Windows CI 结果，也不声称最新源码已通过 CI。
+- Windows：CI 覆盖 Windows、Linux、macOS 的 Node 18/20/22，当前结果请查看 PR 检查。尚未验证 Windows 上真实的 Claude Code/Codex 会话；两个 POSIX 模拟提供商集成测试在 Windows 上跳过。
 - 判定有时会漏掉（Claude Haiku：精确率 0.82，召回率 0.72，基于一位用户的标注）。
 - 输入分类器和相关性门槛都是过滤器。自动化文本仍可能被当作回复，相关的纠正也可能被漏掉。
 - 范围精确到同一工作目录。相关文件夹、移动后的项目和 worktree 之间不共享引用。

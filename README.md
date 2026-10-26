@@ -274,7 +274,7 @@ link only prefills counts and kind names, and you review it before publishing.
 
 ## Limits
 
-- Windows: historically, tests and a hook smoke run passed in CI (Node 18–22) for an earlier version, with no live Claude Code or Codex session on Windows. This 0.2.0 candidate has no new Windows CI result, and nothing here claims the latest source has passed CI.
+- Windows: CI covers Node 18/20/22 on Windows, Linux and macOS; see the current PR checks for results. Live Windows Claude Code/Codex sessions remain unverified. The two POSIX configured fake-provider tests are skipped on Windows.
 - The judge sometimes misses (Claude Haiku: precision 0.82, recall 0.72, on one user's labels). Historically, on Codex, live
   sessions of an earlier version installed from this repository caught 2 of 2 corrections with the default judge; the earlier gpt-6-luna
   judge caught 1 of 2. That is two cases, not a rate.

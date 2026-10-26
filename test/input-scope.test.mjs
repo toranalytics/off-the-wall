@@ -3,6 +3,7 @@ import { test, after } from 'node:test'
 import { mkdtempSync, mkdirSync, symlinkSync, writeFileSync, rmSync, readFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { typedPart, isUserInput, isNonhumanMetadata } from '../src/input.mjs'
 import { projectKey, isProjectKey } from '../src/scope.mjs'
 import { claudePairs, codexPairs, historyPairs, lines, MAX_LINE, typedPart as legacyTypedPart } from '../src/transcripts.mjs'
@@ -140,7 +141,7 @@ test('Codex turn_context updates explicit scope and cross-directory answers are 
 
 test('bundled public example retains exactly 20 history-user pairs without guessing cwd', () => {
   const dir = new URL('../examples/claude-history/', import.meta.url)
-  const pairs = historyPairs({ days: 0, hosts: ['claude'], claudeDir: dir.pathname })
+  const pairs = historyPairs({ days: 0, hosts: ['claude'], claudeDir: fileURLToPath(dir) })
   assert.equal(pairs.length, 20)
   assert.ok(pairs.every(p => p.origin === 'history-user' && !Object.hasOwn(p, 'project')))
 })

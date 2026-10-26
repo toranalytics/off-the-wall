@@ -258,7 +258,7 @@ Node 18 이상이 필요합니다. 과거 기록: 이전 버전을 macOS의 Clau
 
 ## 한계
 
-- Windows: 과거에 이전 버전은 CI에서 테스트와 훅 실행 시험을 통과했습니다(Node 18~22). Windows에서 실제 Claude Code나 Codex 세션을 돌려 보지는 않았습니다. 이 0.2.0 후보에는 새 Windows CI 결과가 없으며, 최신 소스가 CI를 통과했다고 주장하지 않습니다.
+- Windows: CI는 Windows·Linux·macOS에서 Node 18/20/22를 검사하며, 현재 결과는 PR 검사를 확인하세요. Windows의 실제 Claude Code/Codex 세션은 아직 미검증입니다. POSIX용 가짜 제공자 연동 검사 2개는 Windows에서 건너뜁니다.
 - 판정기가 놓칠 때가 있습니다(Claude Haiku: 정밀도 0.82, 재현율 0.72, 한 사용자의 라벨 기준). 과거에 Codex에서는 이 저장소에서
   설치한 이전 버전 플러그인으로 실제 세션을 돌려 기본 판정 모델이 지적 2번을 모두 잡았습니다. 이전의 gpt-6-luna 판정기는 2번
   중 1번이었습니다. 두 건일 뿐 비율이 아닙니다.

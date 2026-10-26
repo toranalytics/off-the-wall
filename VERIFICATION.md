@@ -13,7 +13,7 @@ after the fix. The final 12-check safety file was also rerun against a pristine 
 11 failed, 1 passed. All 12 pass in this candidate. This is a regression demonstration, not a
 measured occurrence rate in real user traffic.
 
-## Current checks
+## Local checks at the 2026-10-25 checkpoint
 
 - **96/96 tests pass** on macOS on each of Node **18.20.8, 20.20.2, 22.23.4 and 26.5.0**.
   These are the same cases repeated for compatibility, not 384 independent behavioral cases.
@@ -71,3 +71,10 @@ node scripts/render-banners.mjs /path/to/@resvg/resvg-wasm /path/to/DejaVuSans.t
 
 Do not substitute `otw report` on real history without reviewing provider processing and usage
 implications. A tagged stable release, package publication, or claim of live benefit requires a separate decision.
+
+## Publication follow-up: 2026-10-26
+
+PR #4 publishes the candidate source for review. The first cross-platform CI run exposed a Windows-only
+fixture-path bug: URL.pathname is not a Windows filesystem path. The fixture now uses Node
+`fileURLToPath`; no assertion or behavioral guard was weakened. Current CI results are tracked on
+PR #4. This CI work does not validate live-host sessions or user effects.

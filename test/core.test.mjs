@@ -13,8 +13,10 @@ const { claudePairs, codexPairs, lines, MAX_LINE, typedPart } = await import('..
 const { judgeAll, summary, shareLink } = await import('../src/report.mjs')
 const { DEFAULT_CONFIG } = await import('../src/store.mjs')
 
+const { projectKey } = await import('../src/scope.mjs')
+const project = projectKey(process.env.OTW_HOME)
 const T = Date.UTC(2026, 0, 10)
-const C = (dt, about, quote) => ({ at: T + dt, about, quote })
+const C = (dt, about, quote) => ({ at: T + dt, about, quote, project, origin: 'history-user' })
 const list = [
   C(1, 'migrate the billing tables to the new schema and backfill', 'you said migrated but never ran the backfill, run it'),
   C(2, 'fix the flaky login test', 'stop asking me which option, just pick and do it'),
@@ -26,12 +28,12 @@ const list = [
   C(1000, 'a correction from the future', 'not yet said'),
 ]
 
-test('similar corrections come first, then the latest, distinct, nothing from after now', () => {
-  const got = pickCorrections(list, 'backfill the billing schema migration on staging', T + 100)
+test('only relevant scoped corrections, distinct and never from after now', () => {
+  const got = pickCorrections(list, 'backfill the billing schema migration on staging', T + 100, 6, project)
   assert.equal(got[0].quote, list[0].quote)
-  assert.equal(got.length, 6)
+  assert.ok(got.length >= 1 && got.length < 6)
   assert.ok(!got.some(c => c.quote === 'not yet said'))
-  assert.equal(got.filter(c => c.quote.startsWith('stop asking')).length, 1)
+  assert.equal(got.filter(c => c.quote.startsWith('stop asking')).length, 0)
   assert.deepEqual(pickCorrections([], 'x', T), [])
 })
 
@@ -59,7 +61,7 @@ test('typed text only: slash commands and injected text are not the person', () 
 })
 
 const cfg = DEFAULT_CONFIG
-const ev = (host, sid, e) => ({ session_id: sid, ...e })
+const ev = (host, sid, e) => ({ session_id: sid, cwd: process.env.OTW_HOME, ...e })
 
 test('session start carries the routing rule for each host', () => {
   const c = handle('claude', ev('claude', 's1', { hook_event_name: 'SessionStart' }), { cfg })
@@ -145,7 +147,7 @@ const jsonl = rows => {
   return f
 }
 
-test('Claude history: typed messages after an answer; tool results, meta, sidechains and commands skipped', () => {
+test('Claude history: active meta and commands invalidate pending answers', () => {
   const ts = '2026-01-10T00:00:00Z'
   const f = jsonl([
     { type: 'user', timestamp: ts, message: { content: 'build the thing' } },
@@ -158,8 +160,7 @@ test('Claude history: typed messages after an answer; tool results, meta, sidech
     { type: 'user', timestamp: ts, message: { content: [{ type: 'text', text: 'you did not run the tests' }] } },
   ])
   const p = claudePairs(f)
-  assert.equal(p.length, 1)
-  assert.deepEqual([p[0].answer, p[0].reply, p[0].about], ['Built it.', 'you did not run the tests', 'build the thing'])
+  assert.equal(p.length, 0) // do not attribute an answer across active meta or /clear
 })
 
 test('Codex history: the final answer of a turn, then the next typed message; injected instructions skipped', () => {
@@ -196,7 +197,7 @@ test('report: batches of 20, failed calls counted, categories ranked with quotes
   assert.equal(res.failed, 1)
   assert.equal(res.found.length, 6)
   const s = summary(pairs, res.found, { days: 30, failed: res.failed, batches: res.batches })
-  assert.match(s, /45 times you answered the assistant, 6 of them \(13%\)/)
+  assert.match(s, /45 candidate user replies; the judge labelled 6 \(13%\)/)
   assert.match(s, /4×  stopped or asked/)
   assert.match(s, /1 of 3 judge calls failed/)
   assert.ok(s.indexOf('stopped') < s.indexOf('claimed done'))
@@ -212,13 +213,14 @@ test('the share link carries counts and category names, never the quoted replies
   assert.ok(link.startsWith('https://github.com/toranalytics/off-the-wall/discussions/new?'))
   const q = new URL(link).searchParams
   assert.equal(q.get('category'), 'show-and-tell')
-  assert.equal(q.get('title'), 'My #1: shrank or changed the scope (2×)')
-  assert.match(q.get('body'), /3 corrections in 10 replies/)
+  assert.equal(q.get('title'), 'My #1 (model-labelled): shrank or changed the scope (2×)')
+  assert.match(q.get('body'), /3 model-labelled possible corrections in 10 candidate replies/)
   assert.doesNotMatch(link + q.get('body'), /SECRET-REPLY/)
   assert.equal(shareLink(pairs, [], { days: 30 }), null)
 })
 
-test('the session file keeps the last answer for the next judge', () => {
+test('the session file keeps a scoped human-turn answer for the next judge', () => {
+  handle('codex', ev('codex', 's7', { hook_event_name: 'UserPromptSubmit', prompt: 'a synthetic fixture request' }), { cfg, spawnJudge: () => {} })
   handle('codex', ev('codex', 's7', { hook_event_name: 'Stop', last_assistant_message: 'x'.repeat(900) }), { cfg })
   assert.equal(session('codex', 's7').lastAnswer.length, 600)
 })

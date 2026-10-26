@@ -1,10 +1,15 @@
 #!/usr/bin/env node
-// Draws the README images from real outputs and measured numbers, so they can be checked and redrawn:
+// Draws the README images from the example report output and recorded numbers, so they can be checked and redrawn.
+// Labels here are deliberately scoped: the report runs on a synthetic example history, the context image only
+// illustrates the block format, and the two charts are one user's historical experiments (no general claim).
 //   node scripts/make-assets.mjs
-// - assets/report.svg: assets/report-example.txt, the real output of
-//   `otw report --host claude --claude-dir examples/claude-history --days 0`
-// - assets/context.svg: the block the hook really attaches, built from the corrections in that example history
-// - assets/evidence.svg, assets/routing.svg: the numbers in the README's Evidence section
+// - assets/report.svg: assets/report-example.txt, formatted from ARCHIVED classifications of the synthetic example
+//   history (examples/claude-history). It is NOT a fresh run of the current CLI or a new model call; the 9 labels and
+//   quotes are unchanged archived data shown in the current report format, with a "SYNTHETIC EXAMPLE" preface.
+// - assets/context.svg: ILLUSTRATION of the block format. correctionBlock is called directly on quotes from that
+//   example report, so it does NOT show a real selection by relevance, working directory or match guard.
+// - assets/evidence.svg, assets/routing.svg: the recorded numbers in the README's Evidence section (one user's
+//   historical, model-judged experiments; not a benchmark, replication or guarantee)
 import { readFileSync, writeFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { correctionBlock } from '../src/similar.mjs'
@@ -36,14 +41,20 @@ ${rows}
 const report = readFileSync(`${root}assets/report-example.txt`, 'utf8').trimEnd().split('\n')
 writeFileSync(
   `${root}assets/report.svg`,
-  terminal('otw report --claude-dir examples/claude-history --days 0', report, {
-    color: l => (/×/.test(l) ? C.amber : /^\s+"/.test(l) ? C.teal : /^(All|Last)/.test(l) ? C.text : C.dim),
+  terminal('SYNTHETIC EXAMPLE: archived labels, current report formatting (not a fresh run)', report, {
+    color: l => (/×/.test(l) ? C.amber : /^\s+"/.test(l) ? C.teal : /^(All|Last|SYNTHETIC)/.test(l) ? C.text : C.dim),
   }),
 )
 
 // The context block for a new prompt, from the corrections found in the example history.
 const quotes = report.filter(l => /^\s+"/.test(l)).map((l, i) => ({ at: i, about: '', quote: l.trim().slice(1, -1) }))
 const block = correctionBlock(quotes.slice(0, 6), 'en')
+// Honest label: these are just the first six quotes of the example report, not picked by relevance or project.
+const note = [
+  'Illustration only. These are the first six quotes from the example report,',
+  'not chosen by relevance. A real block holds up to 6 corrections from the same',
+  'working directory that pass the match guard, and may hold fewer or none.',
+]
 const wrap = (s, n) => s.split('\n').flatMap(l => {
   const out = []
   let cur = ''
@@ -55,12 +66,12 @@ const wrap = (s, n) => s.split('\n').flatMap(l => {
 })
 writeFileSync(
   `${root}assets/context.svg`,
-  terminal('added before the agent answers your next prompt', wrap(block, 92), {
-    color: l => (l.startsWith('[off-the-wall]') ? C.amber : l.startsWith('- "') ? C.teal : C.text),
+  terminal('ILLUSTRATION: recall block format (example quotes, not a real selection)', [...wrap(block, 92), '', ...note], {
+    color: l => (l.startsWith('[off-the-wall]') ? C.amber : l.startsWith('- "') ? C.teal : note.includes(l) ? C.dim : C.text),
   }),
 )
 
-// Measured comparison: wins / ties / losses against nothing attached (39 replayed requests).
+// Recorded comparison: wins / ties / losses against nothing attached (39 selected requests replayed as text).
 function bars(title, subtitle, rows, legend) {
   const w = 1000
   const sub = Array.isArray(subtitle) ? subtitle : [subtitle]
@@ -106,11 +117,15 @@ const wtl = (w, t, l) => [{ v: w, c: C.teal }, { v: t, c: C.line, label: t }, { 
 writeFileSync(
   `${root}assets/evidence.svg`,
   bars(
-    'Quoting your words beats summarising them',
-    ['39 real requests replayed · answers by Opus 5.5 · compared with nothing attached', 'blind pairwise grading, asked in both orders; a win needs both to agree'],
+    'One user\'s text replay: 39 selected requests',
+    [
+      'answers by Opus 5.5 · compared with nothing attached · blind pairwise grading by a model (Sonnet),',
+      'both orders must agree for a win. Quote + predict-objection was tested together. Not a replication,',
+      'not a live-product result, and not evidence that quoting alone causes the difference.',
+    ],
     [
       { name: 'the actual correction (ceiling)', parts: wtl(36, 3, 0) },
-      { name: 'Off the Wall: 6 quotes + predict', parts: wtl(25, 11, 3), strong: true },
+      { name: '6 quotes + predict (combined)', parts: wtl(25, 11, 3), strong: true },
       { name: '3 random one-line rules', parts: wtl(18, 15, 6) },
       { name: '3 distilled one-line rules', parts: wtl(14, 17, 8) },
     ],
@@ -121,13 +136,16 @@ writeFileSync(
 writeFileSync(
   `${root}assets/routing.svg`,
   bars(
-    'Same delegation, cheaper subagent',
-    ['Claude Code · main model Opus 5.5 · one task: a subagent lists 27 exported functions', '2 runs each · all 4 runs listed all 27'],
+    'One historical task, 2 runs per arm',
     [
-      { name: 'routing on, run 1 (Haiku)', parts: [{ v: 0.171, c: C.teal, label: '$0.171' }], strong: true },
-      { name: 'routing on, run 2 (Haiku)', parts: [{ v: 0.173, c: C.teal, label: '$0.173' }], strong: true },
-      { name: 'routing off, run 1 (Opus)', parts: [{ v: 0.3, c: C.red, label: '$0.300' }] },
-      { name: 'routing off, run 2 (Opus)', parts: [{ v: 0.439, c: C.red, label: '$0.439' }] },
+      'Limited, model-labelled experiment: Claude Code, main model Opus 5.5, one task (a subagent lists 27 functions).',
+      'All 4 runs listed all 27. Not an average, and no current or general cost-saving guarantee.',
+    ],
+    [
+      { name: 'model rule on, run 1 (Haiku)', parts: [{ v: 0.171, c: C.teal, label: '$0.171' }], strong: true },
+      { name: 'model rule on, run 2 (Haiku)', parts: [{ v: 0.173, c: C.teal, label: '$0.173' }], strong: true },
+      { name: 'model rule off, run 1 (Opus)', parts: [{ v: 0.3, c: C.red, label: '$0.300' }] },
+      { name: 'model rule off, run 2 (Opus)', parts: [{ v: 0.439, c: C.red, label: '$0.439' }] },
     ],
     [{ c: C.teal, t: 'subagent on Haiku' }, { c: C.red, t: 'subagent inherits Opus' }],
   ),

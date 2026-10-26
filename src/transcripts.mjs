@@ -3,7 +3,9 @@
 import { closeSync, openSync, readdirSync, readSync, statSync } from 'node:fs'
 import { homedir } from 'node:os'
 import { join } from 'node:path'
-import { typed } from './hook.mjs'
+import { typedPart, isUserInput, isNonhumanMetadata, isPassiveContext } from './input.mjs'
+import { projectKey } from './scope.mjs'
+export { typedPart } from './input.mjs'
 
 function files(dir, keep, out = []) {
   let entries = []
@@ -22,9 +24,11 @@ function files(dir, keep, out = []) {
 }
 
 // Read in chunks: a long Codex session can pass 500 MB, more than one string can hold. A line over MAX_LINE is an
-// image or a tool dump, never typed text or a final answer, and is skipped without parsing.
+// image or a tool dump. It may still carry cwd/source metadata, so parsers treat
+// unreadable rows as boundaries rather than silently inheriting an earlier scope.
 export const MAX_LINE = 1 << 20
-export function* lines(p) {
+const UNREADABLE_RECORD = Symbol('unreadable transcript record')
+export function* lines(p, { boundaries = false } = {}) {
   const fd = openSync(p, 'r')
   const buf = Buffer.alloc(1 << 20)
   let parts = []
@@ -33,8 +37,10 @@ export function* lines(p) {
     if (size > 0 && size <= MAX_LINE) {
       try {
         yield JSON.parse(Buffer.concat(parts).toString('utf8'))
-      } catch {}
-    }
+      } catch {
+        if (boundaries) yield UNREADABLE_RECORD
+      }
+    } else if (size > MAX_LINE && boundaries) yield UNREADABLE_RECORD
     parts = []
     size = 0
   }
@@ -65,56 +71,141 @@ const textOf = content =>
       ? content.filter(c => c?.type === 'text' || c?.type === 'input_text' || c?.type === 'output_text').map(c => c.text).join('\n')
       : ''
 
-// Claude Code: ~/.claude/projects/<folder>/<session>.jsonl
-export function claudePairs(file) {
-  const out = []
-  let answer = ''
-  let request = ''
-  for (const d of lines(file)) {
-    if (d.isSidechain) continue
-    const at = Date.parse(d.timestamp ?? '') || 0
-    if (d.type === 'assistant') {
-      const t = textOf(d.message?.content)
-      if (t.trim()) answer = t
-    } else if (d.type === 'user' && !d.isMeta && !d.isCompactSummary && !d.toolUseResult) {
-      const c = d.message?.content
-      if (Array.isArray(c) && c.some(x => x?.type === 'tool_result')) continue
-      const t = textOf(c)
-      if (!typed(t)) continue
-      if (answer) out.push({ at, answer: answer.slice(-600), reply: t.slice(0, 800), about: request.slice(0, 300), host: 'claude' })
-      request = t
-      answer = ''
-    }
+// isMeta also labels passive instruction injection. It is not by itself an
+// actionable automated turn when the body is an explicit passive envelope.
+function passiveMetadata(meta) {
+  if (!meta || typeof meta !== 'object') return meta
+  const clean = { ...meta, isMeta: false }
+  for (const key of ['message', 'payload', 'metadata']) {
+    if (meta[key] && meta[key] !== meta) clean[key] = passiveMetadata(meta[key])
   }
-  return out
+  return clean
 }
 
-// Codex: ~/.codex/sessions/YYYY/MM/DD/rollout-*.jsonl. Each turn's final answer is task_complete's
-// last_agent_message; user-role messages that start with injected instructions are not typed.
-const CODEX_INJECTED = /^(#\s*AGENTS\.md|<|\[)/
-// With attachments Codex sends "# Files mentioned by the user: … ## My request: <what was typed>".
-const MY_REQUEST = /^\s*#\s*Files mentioned by the user:[\s\S]*?\n##\s*My request[^\n]*:\s*\n/
-export const typedPart = t => t.replace(MY_REQUEST, '')
-export function codexPairs(file) {
+// Shared exchange state: only an answer following a human request can form a pair.
+function exchange(host) {
+  let answer = '', request = '', scope, acceptingAnswer = false
   const out = []
-  let answer = ''
-  let request = ''
-  for (const d of lines(file)) {
-    const p = d.payload ?? {}
-    // Threads Codex starts itself (approval reviews, spawned subagents) carry a subagent source or a non-user
-    // thread source; their "user" messages are written by Codex. Seen 2026-10: 68 of 100 recent rollouts.
-    if (d.type === 'session_meta' && (typeof p.source === 'object' || (p.thread_source && p.thread_source !== 'user'))) return []
-    const at = Date.parse(d.timestamp ?? '') || 0
-    if (d.type === 'event_msg' && p.type === 'task_complete' && p.last_agent_message) answer = p.last_agent_message
-    else if (d.type === 'response_item' && p.type === 'message' && p.role === 'user') {
-      const t = typedPart(textOf(p.content))
-      if (!typed(t) || CODEX_INJECTED.test(t.trim())) continue
-      if (answer) out.push({ at, answer: answer.slice(-600), reply: t.slice(0, 800), about: request.slice(0, 300), host: 'codex' })
-      request = t
+  return {
+    out,
+    reset() { answer = ''; request = ''; scope = undefined; acceptingAnswer = false },
+    passive() { acceptingAnswer = false },
+    answer(text) { if (acceptingAnswer && typeof text === 'string' && text.trim()) answer = text },
+    user(text, meta, at, project) {
+      if (!isUserInput(text, meta)) {
+        // Explicit automation metadata takes precedence over a passive-looking body.
+        if (isPassiveContext(text) && !isNonhumanMetadata(passiveMetadata(meta))) this.passive()
+        else this.reset()
+        return
+      }
+      // Changing cwd cannot turn an answer from another working directory into recall.
+      if (answer && scope === project) out.push({ at, answer: answer.slice(-600), reply: text.slice(0, 800), about: request.slice(0, 300), host, ...(scope ? { project: scope } : {}), origin: 'history-user' })
+      request = text
       answer = ''
+      scope = project
+      acceptingAnswer = true
+    },
+  }
+}
+
+// Only explicit record markers count as compaction, not prose mentioning a summary.
+function isCompaction(d, host) {
+  const records = [d, d.message, d.payload].filter(x => x && typeof x === 'object')
+  const markers = host === 'claude'
+    ? ['compact_boundary', 'compacted', 'summary']
+    : ['context_compacted', 'compacted']
+  return records.some(r => r.isCompactSummary || r.compacted === true ||
+    [r.type, r.subtype].some(value => markers.includes(value)))
+}
+
+// Provenance recovery must come from an authoritative context, not a user-shaped
+// payload inside an automated turn. Missing/unknown context never clears a latch.
+function contextSource(d) {
+  const records = [d, d.payload, d.metadata, d.payload?.metadata].filter(x => x && typeof x === 'object')
+  const entries = records.flatMap(r => ['source', 'origin', 'thread_source', 'threadSource', 'input_source', 'inputSource', 'role']
+    .filter(k => Object.hasOwn(r, k)).map(k => [k, r[k]]))
+  return {
+    signature: entries.length ? JSON.stringify(entries) : undefined,
+    interactive: records.some(r => ['cli', 'vscode', 'user'].includes(r.source) || r.thread_source === 'user' || r.threadSource === 'user'),
+  }
+}
+
+// Claude Code: cwd comes only from explicit transcript records, never the filename.
+export function claudePairs(file) {
+  const state = exchange('claude')
+  let project
+  for (const d of lines(file, { boundaries: true })) {
+    if (d === UNREADABLE_RECORD || !d || typeof d !== 'object' || Array.isArray(d)) {
+      state.reset()
+      project = undefined
+      continue
+    }
+    if (Object.hasOwn(d, 'cwd')) {
+      const next = projectKey(d.cwd)
+      // Explicit invalid cwd is a boundary too; omission alone preserves context.
+      if (!next || next !== project) state.reset()
+      project = next
+    }
+    if (isCompaction(d, 'claude')) { state.reset(); continue }
+    const at = Date.parse(d.timestamp ?? '') || 0
+    if (d.type === 'assistant') {
+      if (isNonhumanMetadata(d, { allowAssistantRole: true })) state.reset()
+      else state.answer(textOf(d.message?.content))
+    } else if (d.type === 'user') {
+      const c = d.message?.content
+      // Tool-result messages continue the human turn, including mixed hook notes.
+      if (Array.isArray(c) && c.some(x => x?.type === 'tool_result')) continue
+      state.user(typedPart(textOf(c)), d, at, project)
+    } else if (d.type === 'session_meta' && isNonhumanMetadata(d)) return []
+  }
+  return state.out
+}
+
+// Codex session_meta / turn_context are the sole cwd authorities.
+export function codexPairs(file) {
+  const state = exchange('codex')
+  let project, sourceSignature
+  let blockedContext = false
+  for (const d of lines(file, { boundaries: true })) {
+    if (d === UNREADABLE_RECORD || !d || typeof d !== 'object' || Array.isArray(d)) {
+      state.reset()
+      project = undefined
+      continue
+    }
+    const p = d.payload ?? {}
+    if (d.type === 'session_meta' || d.type === 'turn_context') {
+      if (Object.hasOwn(p, 'cwd')) {
+        const next = projectKey(p.cwd)
+        if (!next || next !== project) state.reset()
+        project = next
+      }
+      const source = contextSource(d)
+      if (source.signature !== undefined) {
+        if (source.signature !== sourceSignature) state.reset()
+        sourceSignature = source.signature
+      }
+      if (isNonhumanMetadata(d)) {
+        blockedContext = true
+        state.reset()
+      } else if (source.interactive && blockedContext) {
+        blockedContext = false
+        state.reset()
+      }
+    }
+    if (isCompaction(d, 'codex')) { state.reset(); continue }
+    if (blockedContext) continue
+    const at = Date.parse(d.timestamp ?? '') || 0
+    if (d.type === 'event_msg' && p.type === 'task_complete') {
+      if (isNonhumanMetadata(d, { allowAssistantRole: true })) state.reset()
+      else state.answer(p.last_agent_message)
+    } else if (d.type === 'response_item' && p.type === 'message' && p.role === 'assistant') {
+      if (isNonhumanMetadata(d, { allowAssistantRole: true })) state.reset()
+    } else if (d.type === 'response_item' && p.type === 'message' && p.role === 'user') {
+      if (Array.isArray(p.content) && p.content.some(x => x?.type === 'tool_result')) continue
+      state.user(typedPart(textOf(p.content)), d, at, project)
     }
   }
-  return out
+  return state.out
 }
 
 export function historyPairs({ days = 30, hosts = ['claude', 'codex'], claudeDir, codexDir } = {}) {

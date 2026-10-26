@@ -1,93 +1,96 @@
 #!/usr/bin/env node
-// The one hook program for both hosts: `node hook.mjs claude` or `node hook.mjs codex`. It reads the event on stdin
-// and prints its answer on stdout. Every failure lets the session go on untouched.
+// Shared Claude Code/Codex hook. Failures never block the host session.
 import { spawn } from 'node:child_process'
 import { fileURLToPath } from 'node:url'
+import { isMain } from './main.mjs'
 import { config, corrections, log, saveSession, session } from './store.mjs'
 import { correctionBlock, langOf, pickCorrections } from './similar.mjs'
 import { denyReason, policy, subagentCall } from './policy.mjs'
+import { isNonhumanMetadata, isPassiveContext, isUserInput, typedPart } from './input.mjs'
+import { projectKey } from './scope.mjs'
 
 const WORKER = fileURLToPath(new URL('./worker.mjs', import.meta.url))
-
-// Text that arrives as a prompt but nobody typed: slash commands, command output, injected reminders.
-export const typed = text => {
-  const t = String(text ?? '').trim()
-  return t.length > 0 && !/^(\/|<|\[Request interrupted|Caveat:)/.test(t)
-}
-
+export const typed = (text, meta = {}) => isUserInput(text, meta)
 const context = (event, text) => ({ hookSpecificOutput: { hookEventName: event, additionalContext: text } })
+const emptyPair = () => ({ lastPrompt: '', lastAnswer: '', pairable: false, captureTurn: false })
 
-// One event in, the answer out (an object to print, or null for nothing). `spawnJudge` is a seam for tests.
 export function handle(host, e, { now = Date.now(), cfg = config(), spawnJudge = detachedJudge } = {}) {
   const ev = e.hook_event_name
-  const id = e.session_id ?? 'unknown'
-
+  const knownId = typeof e.session_id === 'string' && e.session_id.trim() !== '' && e.session_id !== 'unknown'
+  const id = knownId ? e.session_id : 'unknown'
+  const project = projectKey(e.cwd)
   if (ev === 'SessionStart') {
     const s = session(host, id)
-    saveSession(host, id, { ...s, primed: cfg.routing })
+    const nonhumanSession = !!s.nonhumanSession || isNonhumanMetadata({ ...e, source: ['startup', 'resume', 'clear', 'compact'].includes(e.source) ? undefined : e.source })
+    const keep = !nonhumanSession && cfg.capture && knownId && project && s.project === project && s.memoryVersion === 2 && !['clear', 'compact'].includes(e.source)
+    saveSession(host, id, { ...s, ...(!keep ? emptyPair() : {}), project, memoryVersion: 2, nonhumanSession, primed: cfg.routing })
     return cfg.routing ? context('SessionStart', policy(host, cfg.models[host])) : null
   }
-
   if (ev === 'PostCompact') {
-    // The routing text may be gone with the compacted history: the next prompt carries it again.
-    saveSession(host, id, { ...session(host, id), primed: false })
+    saveSession(host, id, { ...session(host, id), ...emptyPair(), memoryVersion: 2, primed: false })
     return null
   }
-
   if (ev === 'UserPromptSubmit') {
-    const prompt = String(e.prompt ?? '')
+    const prompt = typedPart(typeof e.prompt === 'string' ? e.prompt : '')
     const s = session(host, id)
-    const next = { ...s, turn: (s.turn ?? 0) + 1 }
-    if (typed(prompt)) {
-      if (cfg.capture && s.lastAnswer) spawnJudge({ host, model: cfg.judge[host], answer: s.lastAnswer, reply: prompt, about: s.lastPrompt ?? '', at: now })
+    const same = !!project && s.project === project && s.memoryVersion === 2
+    const human = !s.nonhumanSession && isUserInput(prompt, e)
+    const canCapture = cfg.capture && human && knownId && !!project
+    const next = { ...s, ...emptyPair(), project, memoryVersion: 2, turn: (s.turn ?? 0) + 1 }
+    if (canCapture) {
+      if (same && s.pairable && s.lastAnswer) spawnJudge({ host, model: cfg.judge[host], answer: s.lastAnswer, reply: prompt, about: s.lastPrompt ?? '', at: now, project, origin: 'interactive-user', sessionId: id })
       next.lastPrompt = prompt.slice(0, 300)
+      next.pairable = true
+      next.captureTurn = true
+    } else if (!human && cfg.capture && same && knownId && !s.nonhumanSession && !isNonhumanMetadata(e) && isPassiveContext(prompt)) {
+      // Passive context is not a new turn. Freeze later assistant updates.
+      next.lastPrompt = s.lastPrompt ?? ''
+      next.lastAnswer = s.lastAnswer ?? ''
+      next.pairable = !!s.pairable
     }
     const parts = []
-    if (cfg.routing && !s.primed) {
+    if (human && cfg.routing && !s.primed) {
       parts.push(policy(host, cfg.models[host]))
       next.primed = true
     }
-    if (cfg.recall && typed(prompt)) {
-      const cs = pickCorrections(corrections(), prompt, now)
+    if (human && cfg.recall && project) {
+      const cs = pickCorrections(corrections(), prompt, now, undefined, project)
       if (cs.length) parts.push(correctionBlock(cs, langOf(prompt)))
     }
     saveSession(host, id, next)
     return parts.length ? context('UserPromptSubmit', parts.join('\n\n')) : null
   }
-
   if (ev === 'Stop') {
+    const s = session(host, id)
     const answer = String(e.last_assistant_message ?? '')
-    if (answer) saveSession(host, id, { ...session(host, id), lastAnswer: answer.slice(-600) })
+    const same = !!project && s.project === project && s.memoryVersion === 2
+    const nonhuman = s.nonhumanSession || isNonhumanMetadata(e, { allowAssistantRole: true })
+    if (cfg.capture && knownId && same && s.pairable && s.captureTurn && !nonhuman) {
+      if (answer) saveSession(host, id, { ...s, lastAnswer: answer.slice(-600) })
+    } else if (!cfg.capture || !same || nonhuman) saveSession(host, id, { ...s, ...emptyPair() })
     return {}
   }
-
   if (ev === 'PreToolUse' && cfg.routing) {
     const call = subagentCall(host, e.tool_name, e.tool_input)
     if (!call) return null
     const s = session(host, id)
     log({ host, kind: 'subagent', named: call.named, model: call.model ?? null, effort: call.effort ?? null })
-    // Sent back once per turn; a second unnamed call runs as asked rather than block the work.
     if (call.named || s.deniedTurn === s.turn) return null
     saveSession(host, id, { ...s, deniedTurn: s.turn })
     return { hookSpecificOutput: { hookEventName: 'PreToolUse', permissionDecision: 'deny', permissionDecisionReason: denyReason(host) } }
   }
-
   return null
 }
-
 function detachedJudge(job) {
   const p = spawn(process.execPath, [WORKER], { detached: true, stdio: ['pipe', 'ignore', 'ignore'], env: { ...process.env, OTW_CHILD: '1' } })
+  p.on('error', err => log({ kind: 'judge-spawn-error', code: err.code ?? 'spawn-error' }))
+  p.stdin.on('error', () => {})
   p.stdin.end(JSON.stringify(job))
   p.unref()
 }
-
 async function main() {
   const host = process.argv[2] === 'codex' ? 'codex' : 'claude'
-  if (process.env.OTW_CHILD === '1') {
-    // The judge's own CLI run: Stop on Codex wants JSON, everything else wants nothing.
-    process.stdout.write('{}')
-    return
-  }
+  if (process.env.OTW_CHILD === '1') { process.stdout.write('{}'); return }
   let raw = ''
   for await (const chunk of process.stdin) raw += chunk
   let out = null
@@ -95,10 +98,7 @@ async function main() {
     const e = JSON.parse(raw)
     if (process.env.OTW_DEBUG) log({ host, kind: 'event', event: e.hook_event_name, tool: e.tool_name ?? null, input: e.tool_input ? Object.keys(e.tool_input) : null })
     out = handle(host, e)
-  } catch (err) {
-    log({ host, kind: 'error', message: String(err?.message ?? err) })
-  }
+  } catch (err) { log({ host, kind: 'error', name: err?.name ?? 'Error', ...(process.env.OTW_DEBUG ? { message: String(err?.message ?? err) } : {}) }) }
   process.stdout.write(out ? JSON.stringify(out) : '{}')
 }
-
-if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) main()
+if (isMain(import.meta.url)) main()

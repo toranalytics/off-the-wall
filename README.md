@@ -303,6 +303,8 @@ See [CONTRIBUTING.md](CONTRIBUTING.md). Changes are listed in [CHANGELOG.md](CHA
 - [awesome-vibe-coding-resources](https://github.com/acvnace/awesome-vibe-coding-resources)
 - [awesome-coding-agents](https://github.com/kailiu42/awesome-coding-agents)
 - [awesome-agent-memory](https://github.com/mnemoverse/awesome-agent-memory)
+- [awesome-context-engineering](https://github.com/yzfly/awesome-context-engineering)
+- [awesome-agent-memory](https://github.com/mnemoverse/awesome-agent-memory)
 
 Community plugin directory: [Claude & Codex Plugins](https://claudecodexplugins.com/plugins/toranalytics/off-the-wall/off-the-wall).
 

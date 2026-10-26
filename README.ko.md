@@ -286,6 +286,8 @@ OTW_DEBUG=1 claude ...       # 모든 훅 이벤트를 ~/.otw/log.jsonl에 기�
 - [awesome-vibe-coding-resources](https://github.com/acvnace/awesome-vibe-coding-resources)
 - [awesome-coding-agents](https://github.com/kailiu42/awesome-coding-agents)
 - [awesome-agent-memory](https://github.com/mnemoverse/awesome-agent-memory)
+- [awesome-context-engineering](https://github.com/yzfly/awesome-context-engineering)
+- [awesome-agent-memory](https://github.com/mnemoverse/awesome-agent-memory)
 
 커뮤니티 플러그인 디렉터리: [Claude & Codex Plugins](https://claudecodexplugins.com/plugins/toranalytics/off-the-wall/off-the-wall).
 

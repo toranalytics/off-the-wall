@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2.2 - Unreleased
+
+- Avoid duplicate routing context on `SessionStart` resume when the saved session is already primed; compact still re-injects, and startup/clear and unknown or missing sources retain their behavior.
+- Document the OTW feature switches for stopping already-trusted Codex exec hooks.
+
 ## 0.2.1 - Unreleased privacy candidate
 
 - Add read-only hook activity (session-file mtimes) and best-effort Codex trusted-entry counts to `otw status`, with a `/hooks` trust hint when no activity is recorded.

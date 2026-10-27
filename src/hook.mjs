@@ -24,7 +24,9 @@ export function handle(host, e, { now = Date.now(), cfg = config(), spawnJudge =
     const nonhumanSession = !!s.nonhumanSession || isNonhumanMetadata({ ...e, source: ['startup', 'resume', 'clear', 'compact'].includes(e.source) ? undefined : e.source })
     const keep = !nonhumanSession && cfg.capture && knownId && project && s.project === project && s.memoryVersion === 2 && !['clear', 'compact'].includes(e.source)
     saveSession(host, id, { ...s, ...(!keep ? emptyPair() : {}), project, memoryVersion: 2, nonhumanSession, primed: cfg.routing })
-    return cfg.routing ? context('SessionStart', policy(host, cfg.models[host])) : null
+    // Resume replays the primed context; compact/clear may have discarded it.
+    const injectRouting = cfg.routing && !(e.source === 'resume' && s.primed)
+    return injectRouting ? context('SessionStart', policy(host, cfg.models[host])) : null
   }
   if (ev === 'PostCompact') {
     const s = session(host, id)

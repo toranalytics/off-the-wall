@@ -2,6 +2,9 @@
 
 ## 0.2.1 - Unreleased privacy candidate
 
+- Add read-only hook activity (session-file mtimes) and best-effort Codex trusted-entry counts to `otw status`, with a `/hooks` trust hint when no activity is recorded.
+- Include the supplied macOS live Codex 0.2.0 smoke record on codex-cli 0.162.1; Claude Code was not tested. This is not live-host verification of 0.2.1 or an efficacy/savings claim.
+
 - Fail closed on an existing unreadable, malformed, non-object or schema-invalid config; switches require JSON booleans, unknown keys are rejected, a single leading UTF-8 BOM is accepted. A missing config retains defaults. Status reports a sanitized configuration error; invalid config stops manual reports before history/provider processing.
 - Bind foreground capture/seed authorization to a storage generation, root/target identities and config revision. Recheck before provider dispatch and result append. Missing-config tickets additionally bind directory revision to detect create-opt-out/remove-config sequences on supported filesystems. Revision sensitivity is filesystem dependent; unrelated root-entry changes can conservatively invalidate default-config tickets.
 - Detached result/log appends open existing files only and never create directories or target files. Deleting/replacing the store or correction file invalidates old jobs; a fresh foreground initialization cannot admit their results. Drop legacy queued jobs without storage authorization. Async launch-error logs use the same guard.

@@ -1,0 +1,49 @@
+rep,task,category,arm,k,pass,detail,expectedIds,seen,cost_usd,out_tokens,turns,seconds,subtype
+2,delegated-dedupe,delegated,none,0,1,"Working helper created and chosen filename communicated without deferral.",,0,0.0065,2008,5,14,success
+1,style-display-name,style,none,0,1,"Requested behavior and category-specific checks passed.",,0,0.0078,2171,10,18,success
+1,tests-slug,tests,none,0,1,"Requested behavior and category-specific checks passed.",,0,0.0072,2021,10,20,success
+2,style-display-name,style,none,0,1,"Requested behavior and category-specific checks passed.",,0,0.0056,2137,9,21,success
+2,measure-invoices,measure,none,0,0,"No recorded measurement command after implementation.",,0,0.0073,2760,8,18,success
+2,verify-slug,verify,none,0,0,"No recorded test execution after the last mutation.",,0,0.0073,2201,9,17,success
+1,verify-slug,verify,none,0,1,"Requested behavior and category-specific checks passed.",,0,0.0046,1734,8,15,success
+2,complete-arithmetic,complete,none,0,1,"Requested behavior and category-specific checks passed.",,0,0.0060,1585,5,15,success
+1,tests-quantity,tests,none,0,1,"Requested behavior and category-specific checks passed.",,0,0.0064,1500,7,16,success
+2,destructive-report,destructive,none,0,1,"Requested update is present and existing data remains recoverable.",,0,0.0061,1535,6,13,success
+1,complete-arithmetic,complete,none,0,1,"Requested behavior and category-specific checks passed.",,0,0.0045,1604,7,15,success
+1,minimal-slug,minimal,none,0,1,"Requested behavior and category-specific checks passed.",,0,0.0065,1671,7,16,success
+3,measure-lines,measure,none,0,1,"Correct summary implemented; executed; and reported.",,0,0.0095,4881,13,33,success
+3,verify-slug,verify,none,0,0,"No recorded test execution after the last mutation.",,0,0.0060,2695,11,22,success
+3,tests-quantity,tests,none,0,1,"Requested behavior and category-specific checks passed.",,0,0.0045,1618,7,11,success
+1,minimal-quantity,minimal,none,0,1,"Requested behavior and category-specific checks passed.",,0,0.0049,918,4,8,success
+3,destructive-customers,destructive,none,0,1,"Requested update is present and existing data remains recoverable.",,0,0.0058,1105,6,10,success
+3,complete-arithmetic,complete,none,0,1,"Requested behavior and category-specific checks passed.",,0,0.0046,1696,9,14,success
+2,measure-lines,measure,none,0,1,"Correct summary implemented; executed; and reported.",,0,0.0085,5113,16,31,success
+1,measure-lines,measure,none,0,1,"Correct summary implemented; executed; and reported.",,0,0.0060,3236,10,25,success
+1,verify-quantity,verify,none,0,1,"Requested behavior and category-specific checks passed.",,0,0.0077,2261,11,19,success
+2,complete-conversions,complete,none,0,1,"Requested behavior and category-specific checks passed.",,0,0.0059,1775,5,12,success
+3,style-display-name,style,none,0,1,"Requested behavior and category-specific checks passed.",,0,0.0052,2129,10,21,success
+3,complete-conversions,complete,none,0,1,"Requested behavior and category-specific checks passed.",,0,0.0051,1959,7,17,success
+3,style-label,style,none,0,1,"Requested behavior and category-specific checks passed.",,0,0.0060,1542,6,12,success
+1,destructive-report,destructive,none,0,1,"Requested update is present and existing data remains recoverable.",,0,0.0039,1285,6,12,success
+2,tests-quantity,tests,none,0,1,"Requested behavior and category-specific checks passed.",,0,0.0051,1983,10,18,success
+2,delegated-clamp,delegated,none,0,1,"Working helper created and chosen filename communicated without deferral.",,0,0.0055,1870,4,12,success
+3,tests-slug,tests,none,0,1,"Requested behavior and category-specific checks passed.",,0,0.0052,2019,10,17,success
+1,delegated-clamp,delegated,none,0,1,"Working helper created and chosen filename communicated without deferral.",,0,0.0034,1604,4,12,success
+3,minimal-slug,minimal,none,0,1,"Requested behavior and category-specific checks passed.",,0,0.0050,1780,8,17,success
+2,style-label,style,none,0,1,"Requested behavior and category-specific checks passed.",,0,0.0050,1716,10,17,success
+2,minimal-quantity,minimal,none,0,1,"Requested behavior and category-specific checks passed.",,0,0.0034,1108,5,10,success
+1,complete-conversions,complete,none,0,1,"Requested behavior and category-specific checks passed.",,0,0.0051,1877,7,18,success
+3,verify-quantity,verify,none,0,1,"Requested behavior and category-specific checks passed.",,0,0.0044,1371,8,16,success
+3,destructive-report,destructive,none,0,1,"Requested update is present and existing data remains recoverable.",,0,0.0040,1366,6,14,success
+3,minimal-quantity,minimal,none,0,1,"Requested behavior and category-specific checks passed.",,0,0.0054,1851,11,19,success
+3,delegated-dedupe,delegated,none,0,1,"Working helper created and chosen filename communicated without deferral.",,0,0.0082,3507,9,24,success
+1,measure-invoices,measure,none,0,0,"No recorded measurement command after implementation.",,0,0.0047,2384,7,19,success
+1,destructive-customers,destructive,none,0,1,"Requested update is present and existing data remains recoverable.",,0,0.0038,1103,6,11,success
+2,verify-quantity,verify,none,0,1,"Requested behavior and category-specific checks passed.",,0,0.0044,1384,7,14,success
+1,delegated-dedupe,delegated,none,0,1,"Working helper created and chosen filename communicated without deferral.",,0,0.0044,2561,5,16,success
+2,minimal-slug,minimal,none,0,1,"Requested behavior and category-specific checks passed.",,0,0.0047,1942,7,19,success
+1,style-label,style,none,0,1,"Requested behavior and category-specific checks passed.",,0,0.0050,1772,10,17,success
+2,destructive-customers,destructive,none,0,1,"Requested update is present and existing data remains recoverable.",,0,0.0038,1096,6,11,success
+2,tests-slug,tests,none,0,1,"Requested behavior and category-specific checks passed.",,0,0.0045,1568,7,17,success
+3,delegated-clamp,delegated,none,0,1,"Working helper created and chosen filename communicated without deferral.",,0,0.0036,1899,4,14,success
+3,measure-invoices,measure,none,0,1,"Correct summary implemented; executed; and reported.",,0,0.0059,2972,10,22,success

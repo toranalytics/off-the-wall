@@ -183,7 +183,8 @@ test('directory config is an error, not an absent file', () => {
   closed(loadConfig(dir))
 })
 
-test('path replacement during opened-file read cannot pair old content with new metadata', () => {
+// Windows cannot rename over a file that is still open, so the replacement this test performs is impossible there.
+test('path replacement during opened-file read cannot pair old content with new metadata', { skip: process.platform === 'win32' && 'cannot replace an open file on Windows' }, () => {
   const dir = fixture()
   const file = join(dir, 'config.json')
   put(dir, { capture: true })

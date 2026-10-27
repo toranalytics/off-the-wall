@@ -1,0 +1,101 @@
+rep,task,cond,pass,detail,recallInjected,cost_usd,out_tokens,turns,seconds,subtype
+2,complete,on,1,"missing/wrong=",1,0.0064,1585,9,13,success
+8,decide,on,1,"files=1 dated=true asked=false",1,0.0048,469,2,6,success
+2,verify,on,1,"fixed=true editIdx=3 ranAfterEdit=true",1,0.0070,1639,7,16,success
+5,decide,off,1,"files=1 dated=true asked=false",0,0.0036,561,3,7,success
+6,complete,on,1,"missing/wrong=",1,0.0044,1773,10,15,success
+6,verify,on,1,"fixed=true editIdx=6 ranAfterEdit=true",1,0.0045,1718,9,17,success
+2,minimal,on,1,"changed=true othersUntouched=true",1,0.0059,1014,5,10,success
+1,complete,on,1,"missing/wrong=",1,0.0039,1635,9,13,success
+10,measure,on,1,"wrong=0",1,0.0066,1560,5,13,success
+9,verify,on,1,"fixed=true editIdx=5 ranAfterEdit=true",1,0.0044,1612,8,12,success
+9,decide,on,1,"files=1 dated=true asked=false",1,0.0012,564,2,6,success
+2,decide,on,1,"files=1 dated=true asked=false",1,0.0023,539,3,8,success
+7,minimal,on,1,"changed=true othersUntouched=true",1,0.0037,1056,5,11,success
+6,complete,off,1,"missing/wrong=",0,0.0053,1787,9,13,success
+5,minimal,off,0,"changed=true othersUntouched=false",0,0.0056,1827,8,16,success
+3,minimal,off,0,"changed=true othersUntouched=false",0,0.0043,1897,10,15,success
+7,minimal,off,0,"changed=true othersUntouched=false",0,0.0047,1944,11,19,success
+5,complete,on,1,"missing/wrong=",1,0.0044,1856,10,16,success
+3,complete,on,1,"missing/wrong=",1,0.0044,1791,10,16,success
+6,minimal,off,0,"changed=true othersUntouched=false",0,0.0043,1834,8,16,success
+9,verify,off,1,"fixed=true editIdx=5 ranAfterEdit=true",0,0.0056,1386,8,13,success
+8,complete,off,1,"missing/wrong=",0,0.0032,1224,8,9,success
+4,decide,on,1,"files=1 dated=true asked=false",1,0.0023,592,3,6,success
+5,verify,off,1,"fixed=true editIdx=4 ranAfterEdit=true",0,0.0039,1376,7,14,success
+3,minimal,on,1,"changed=true othersUntouched=true",1,0.0038,1205,6,15,success
+4,complete,off,1,"missing/wrong=",0,0.0039,1690,9,11,success
+1,decide,on,1,"files=1 dated=true asked=false",1,0.0023,624,2,8,success
+5,measure,on,1,"wrong=0",1,0.0029,885,3,10,success
+4,verify,off,1,"fixed=true editIdx=4 ranAfterEdit=true",0,0.0043,1447,7,13,success
+5,verify,on,1,"fixed=true editIdx=4 ranAfterEdit=true",1,0.0045,1637,8,13,success
+8,measure,off,1,"wrong=0",0,0.0041,767,3,10,success
+10,verify,off,1,"fixed=true editIdx=5 ranAfterEdit=true",0,0.0048,1694,8,16,success
+4,measure,off,1,"wrong=0",0,0.0029,885,3,12,success
+1,measure,off,1,"wrong=0",0,0.0033,991,4,10,success
+6,decide,off,1,"files=1 dated=true asked=false",0,0.0023,534,3,6,success
+10,minimal,off,0,"changed=true othersUntouched=false",0,0.0044,1936,10,15,success
+1,minimal,on,1,"changed=true othersUntouched=true",1,0.0044,1539,7,16,success
+9,minimal,off,0,"changed=true othersUntouched=false",0,0.0044,1941,10,16,success
+1,verify,off,1,"fixed=true editIdx=5 ranAfterEdit=true",0,0.0044,1528,8,14,success
+8,minimal,on,1,"changed=true othersUntouched=true",1,0.0029,850,4,8,success
+10,minimal,on,1,"changed=true othersUntouched=true",1,0.0039,1308,6,13,success
+5,minimal,on,1,"changed=true othersUntouched=true",1,0.0034,1038,5,10,success
+5,decide,on,1,"files=1 dated=true asked=false",1,0.0012,404,2,6,success
+3,verify,off,1,"fixed=true editIdx=5 ranAfterEdit=true",0,0.0047,1592,8,19,success
+2,measure,off,1,"wrong=0",0,0.0022,509,2,7,success
+3,measure,on,1,"wrong=0",1,0.0039,1436,5,15,success
+1,measure,on,1,"wrong=0",1,0.0029,911,3,8,success
+10,complete,on,1,"missing/wrong=",1,0.0029,952,3,9,success
+7,measure,off,1,"wrong=0",0,0.0038,1198,5,13,success
+8,complete,on,1,"missing/wrong=",1,0.0033,1403,8,11,success
+2,verify,off,1,"fixed=true editIdx=4 ranAfterEdit=true",0,0.0040,1432,7,12,success
+7,verify,off,1,"fixed=true editIdx=4 ranAfterEdit=true",0,0.0047,1472,7,18,success
+7,measure,on,1,"wrong=0",1,0.0028,798,3,8,success
+10,measure,off,1,"wrong=0",0,0.0041,1702,9,15,success
+5,complete,off,1,"missing/wrong=",0,0.0039,1602,9,14,success
+6,verify,off,1,"fixed=true editIdx=4 ranAfterEdit=true",0,0.0040,1447,7,13,success
+3,complete,off,1,"missing/wrong=",0,0.0039,1615,9,9,success
+6,measure,on,1,"wrong=0",1,0.0023,660,2,7,success
+1,verify,on,1,"fixed=true editIdx=4 ranAfterEdit=true",1,0.0046,1377,7,20,success
+6,decide,on,1,"files=1 dated=true asked=false",1,0.0012,415,2,4,success
+1,complete,off,1,"missing/wrong=",0,0.0032,1227,8,10,success
+8,verify,on,1,"fixed=true editIdx=5 ranAfterEdit=true",1,0.0045,1658,8,16,success
+10,complete,off,1,"missing/wrong=",0,0.0044,1919,10,15,success
+7,decide,on,1,"files=1 dated=true asked=false",1,0.0023,570,3,6,success
+3,verify,on,1,"fixed=true editIdx=5 ranAfterEdit=true",1,0.0048,1691,8,17,success
+9,complete,on,1,"missing/wrong=",1,0.0040,1629,9,13,success
+3,decide,on,1,"files=1 dated=true asked=false",1,0.0011,363,2,5,success
+9,measure,off,1,"wrong=0",0,0.0027,648,3,8,success
+5,measure,off,1,"wrong=0",0,0.0028,864,3,11,success
+7,complete,on,1,"missing/wrong=",1,0.0029,1294,7,9,success
+10,decide,on,1,"files=1 dated=true asked=false",1,0.0012,382,2,5,success
+7,verify,on,1,"fixed=true editIdx=5 ranAfterEdit=true",1,0.0045,1654,8,13,success
+4,minimal,on,1,"changed=true othersUntouched=true",1,0.0038,1238,6,14,success
+3,measure,off,1,"wrong=0",0,0.0027,716,3,7,success
+4,verify,on,1,"fixed=true editIdx=4 ranAfterEdit=true",1,0.0043,1371,7,16,success
+1,decide,off,1,"files=1 dated=true asked=false",0,0.0012,383,2,4,success
+9,measure,on,1,"wrong=0",1,0.0013,568,2,5,success
+4,measure,on,1,"wrong=0",1,0.0039,1397,5,15,success
+8,measure,on,1,"wrong=0",1,0.0023,633,2,7,success
+10,decide,off,1,"files=1 dated=true asked=false",0,0.0012,433,2,5,success
+9,minimal,on,1,"changed=true othersUntouched=true",1,0.0039,1264,6,13,success
+2,complete,off,1,"missing/wrong=",0,0.0044,1807,10,15,success
+8,decide,off,1,"files=1 dated=true asked=false",0,0.0011,358,2,5,success
+4,minimal,off,0,"changed=true othersUntouched=false",0,0.0048,2042,9,19,success
+8,verify,off,1,"fixed=true editIdx=4 ranAfterEdit=true",0,0.0043,1508,7,15,success
+4,decide,off,1,"files=1 dated=true asked=false",0,0.0012,446,2,6,success
+7,complete,off,1,"missing/wrong=",0,0.0038,1478,9,12,success
+10,verify,on,1,"fixed=true editIdx=5 ranAfterEdit=true",1,0.0045,1626,8,15,success
+6,measure,off,1,"wrong=0",0,0.0032,844,4,8,success
+4,complete,on,1,"missing/wrong=",1,0.0028,1211,7,10,success
+2,measure,on,1,"wrong=0",1,0.0023,606,2,7,success
+2,minimal,off,0,"changed=true othersUntouched=false",0,0.0048,2027,11,17,success
+9,decide,off,1,"files=1 dated=true asked=false",0,0.0024,775,3,7,success
+7,decide,off,1,"files=1 dated=true asked=false",0,0.0012,494,3,5,success
+6,minimal,on,1,"changed=true othersUntouched=true",1,0.0034,1085,5,11,success
+2,decide,off,1,"files=1 dated=true asked=false",0,0.0011,331,2,5,success
+1,minimal,off,0,"changed=true othersUntouched=false",0,0.0064,2784,14,20,success
+8,minimal,off,0,"changed=true othersUntouched=false",0,0.0052,2103,9,17,success
+3,decide,off,1,"files=1 dated=true asked=false",0,0.0023,480,3,6,success
+9,complete,off,1,"missing/wrong=",0,0.0032,1227,8,10,success

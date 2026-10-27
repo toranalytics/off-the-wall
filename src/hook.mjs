@@ -3,7 +3,7 @@
 import { spawn } from 'node:child_process'
 import { fileURLToPath } from 'node:url'
 import { isMain } from './main.mjs'
-import { config, corrections, log, saveSession, session } from './store.mjs'
+import { authorizeCapture, captureAuthorized, config, corrections, log, logCaptured, saveSession, session } from './store.mjs'
 import { correctionBlock, langOf, pickCorrections } from './similar.mjs'
 import { denyReason, policy, subagentCall } from './policy.mjs'
 import { isNonhumanMetadata, isPassiveContext, isUserInput, typedPart } from './input.mjs'
@@ -12,7 +12,7 @@ import { projectKey } from './scope.mjs'
 const WORKER = fileURLToPath(new URL('./worker.mjs', import.meta.url))
 export const typed = (text, meta = {}) => isUserInput(text, meta)
 const context = (event, text) => ({ hookSpecificOutput: { hookEventName: event, additionalContext: text } })
-const emptyPair = () => ({ lastPrompt: '', lastAnswer: '', pairable: false, captureTurn: false })
+const emptyPair = () => ({ lastPrompt: '', lastAnswer: '', pairable: false, captureTurn: false, captureAuthorization: undefined })
 
 export function handle(host, e, { now = Date.now(), cfg = config(), spawnJudge = detachedJudge } = {}) {
   const ev = e.hook_event_name
@@ -27,7 +27,8 @@ export function handle(host, e, { now = Date.now(), cfg = config(), spawnJudge =
     return cfg.routing ? context('SessionStart', policy(host, cfg.models[host])) : null
   }
   if (ev === 'PostCompact') {
-    saveSession(host, id, { ...session(host, id), ...emptyPair(), memoryVersion: 2, primed: false })
+    const s = session(host, id)
+    if (Object.keys(s).length) saveSession(host, id, { ...s, ...emptyPair(), memoryVersion: 2, primed: false })
     return null
   }
   if (ev === 'UserPromptSubmit') {
@@ -35,18 +36,21 @@ export function handle(host, e, { now = Date.now(), cfg = config(), spawnJudge =
     const s = session(host, id)
     const same = !!project && s.project === project && s.memoryVersion === 2
     const human = !s.nonhumanSession && isUserInput(prompt, e)
-    const canCapture = cfg.capture && human && knownId && !!project
+    const ticket = cfg.capture === true && human && knownId && project ? authorizeCapture() : null
+    const canCapture = !!ticket
     const next = { ...s, ...emptyPair(), project, memoryVersion: 2, turn: (s.turn ?? 0) + 1 }
     if (canCapture) {
-      if (same && s.pairable && s.lastAnswer) spawnJudge({ host, model: cfg.judge[host], answer: s.lastAnswer, reply: prompt, about: s.lastPrompt ?? '', at: now, project, origin: 'interactive-user', sessionId: id })
+      if (same && s.pairable && s.lastAnswer && captureAuthorized(s.captureAuthorization)) spawnJudge({ host, model: cfg.judge[host], answer: s.lastAnswer, reply: prompt, about: s.lastPrompt ?? '', at: now, project, origin: 'interactive-user', sessionId: id, captureAuthorization: s.captureAuthorization })
       next.lastPrompt = prompt.slice(0, 300)
       next.pairable = true
       next.captureTurn = true
+      next.captureAuthorization = ticket
     } else if (!human && cfg.capture && same && knownId && !s.nonhumanSession && !isNonhumanMetadata(e) && isPassiveContext(prompt)) {
       // Passive context is not a new turn. Freeze later assistant updates.
       next.lastPrompt = s.lastPrompt ?? ''
       next.lastAnswer = s.lastAnswer ?? ''
       next.pairable = !!s.pairable
+      next.captureAuthorization = s.captureAuthorization
     }
     const parts = []
     if (human && cfg.routing && !s.primed) {
@@ -65,9 +69,9 @@ export function handle(host, e, { now = Date.now(), cfg = config(), spawnJudge =
     const answer = String(e.last_assistant_message ?? '')
     const same = !!project && s.project === project && s.memoryVersion === 2
     const nonhuman = s.nonhumanSession || isNonhumanMetadata(e, { allowAssistantRole: true })
-    if (cfg.capture && knownId && same && s.pairable && s.captureTurn && !nonhuman) {
+    if (cfg.capture === true && knownId && same && s.pairable && s.captureTurn && !nonhuman && captureAuthorized(s.captureAuthorization)) {
       if (answer) saveSession(host, id, { ...s, lastAnswer: answer.slice(-600) })
-    } else if (!cfg.capture || !same || nonhuman) saveSession(host, id, { ...s, ...emptyPair() })
+    } else if (Object.keys(s).length && (!cfg.capture || !same || nonhuman || !captureAuthorized(s.captureAuthorization))) saveSession(host, id, { ...s, ...emptyPair() })
     return {}
   }
   if (ev === 'PreToolUse' && cfg.routing) {
@@ -83,7 +87,7 @@ export function handle(host, e, { now = Date.now(), cfg = config(), spawnJudge =
 }
 function detachedJudge(job) {
   const p = spawn(process.execPath, [WORKER], { detached: true, stdio: ['pipe', 'ignore', 'ignore'], env: { ...process.env, OTW_CHILD: '1' } })
-  p.on('error', err => log({ kind: 'judge-spawn-error', code: err.code ?? 'spawn-error' }))
+  p.on('error', err => logCaptured({ kind: 'judge-spawn-error', code: err.code ?? 'spawn-error' }, job.captureAuthorization))
   p.stdin.on('error', () => {})
   p.stdin.end(JSON.stringify(job))
   p.unref()

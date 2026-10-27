@@ -23,6 +23,7 @@ if (cmd === 'report') {
 } else if (cmd === 'status') {
   const cs = corrections()
   const cfg = config()
+  if (cfg.configIssue) console.log('configuration error ' + cfg.configIssue + ': recall, capture and routing are disabled; fix config.json')
   console.log(`folder ${home()}\ncorrections ${cs.length} (live ${cs.filter(c => c.src === 'live').length}, from history ${cs.filter(c => c.src === 'history').length})`)
   const scoped = cs.filter(recallable).length
   console.log(`scoped/origin-tagged ${scoped} · quarantined ${cs.length - scoped} (not automatically recalled)`)

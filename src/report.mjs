@@ -3,21 +3,24 @@
 import { complete } from './host.mjs'
 import { batchPrompt, CATEGORIES, parseBatch } from './judge.mjs'
 import { one, recallable } from './similar.mjs'
-import { addCorrections, config, corrections } from './store.mjs'
+import { appendCaptured, authorizeCapture, captureAuthorized, config, corrections } from './store.mjs'
 import { historyPairs } from './transcripts.mjs'
 
 export const BATCH = 20
 
-export async function judgeAll(pairs, { host, model, onProgress = () => {}, completeFn = complete, parallel = 4, batch = BATCH, effort }) {
+export async function judgeAll(pairs, { host, model, onProgress = () => {}, completeFn = complete, parallel = 4, batch = BATCH, effort, authorized = () => true }) {
   const batches = []
   for (let i = 0; i < pairs.length; i += batch) batches.push(pairs.slice(i, i + batch))
   const found = []
   let done = 0
   let failed = 0
+  let cancelled = 0
+  let revoked = false
   const queue = batches.map((b, k) => ({ b, k }))
   await Promise.all(
     Array.from({ length: Math.min(parallel, queue.length) }, async () => {
       for (let job = queue.shift(); job; job = queue.shift()) {
+        if (revoked || !authorized()) { revoked = true; cancelled++; onProgress(++done, batches.length); continue }
         try {
           const tags = parseBatch(await completeFn(host, model, batchPrompt(job.b), 180_000, effort), job.b.length)
           for (const [i, category] of tags) found.push({ ...job.b[i], category })
@@ -28,16 +31,17 @@ export async function judgeAll(pairs, { host, model, onProgress = () => {}, comp
       }
     }),
   )
-  return { found: found.sort((a, b) => a.at - b.at), failed, batches: batches.length }
+  return { found: found.sort((a, b) => a.at - b.at), failed, cancelled, batches: batches.length }
 }
 
-export function summary(pairs, found, { days, failed = 0, batches = 0 }) {
+export function summary(pairs, found, { days, failed = 0, cancelled = 0, batches = 0 }) {
   const by = new Map()
   for (const c of found) by.set(c.category, [...(by.get(c.category) ?? []), c])
   const ranked = [...by.entries()].sort((a, b) => b[1].length - a[1].length)
   const pct = pairs.length ? Math.round((found.length / pairs.length) * 100) : 0
   const lines = [
     `${days > 0 ? `Last ${days} days` : 'All history'}: ${pairs.length} candidate user replies; the judge labelled ${found.length} (${pct}%) as possible corrections.`,
+    ...(cancelled ? [`(${cancelled} of ${batches} batches were not sent after revocation; this report is partial.)`] : []),
     ...(failed ? [`(${failed} of ${batches} judge calls failed; those turns are not counted.)`] : []),
     '',
     ...ranked.flatMap(([k, cs]) => [
@@ -89,19 +93,22 @@ export function seedCorrections(found, existing = corrections()) {
 export async function report({ days = 30, hosts, max = 400, seed = false, host, claudeDir, codexDir, completeFn = complete, log = console.log } = {}) {
   if (!Number.isInteger(days) || days < 0 || !Number.isInteger(max) || max < 1 || (host && !['claude', 'codex'].includes(host)) || (hosts && (!Array.isArray(hosts) || hosts.some(h => !['claude', 'codex'].includes(h))))) throw new Error('Invalid report days, max, or host')
   const cfg = config()
+  if (cfg.configIssue) throw new Error('OTW configuration is invalid: ' + cfg.configIssue)
   const pairs = historyPairs({ days, hosts, claudeDir, codexDir }).slice(-max)
   if (pairs.length === 0) return log(`No turn ends found${days > 0 ? ` in the last ${days} days` : ''}.`)
   const judgeHost = host ?? (pairs.filter(p => p.host === 'claude').length >= pairs.length / 2 ? 'claude' : 'codex')
+  const ticket = seed ? authorizeCapture() : null
+  if (seed && !ticket) throw new Error('Cannot seed: capture is disabled or storage authorization failed')
   log(`Reading ${pairs.length} turn ends with ${judgeHost} (${cfg.judge[judgeHost]}), ${Math.ceil(pairs.length / BATCH)} calls…`)
-  const res = await judgeAll(pairs, { host: judgeHost, model: cfg.judge[judgeHost], completeFn, onProgress: (d, n) => process.stderr.write(`\r  ${d}/${n}`) })
+  const res = await judgeAll(pairs, { host: judgeHost, model: cfg.judge[judgeHost], completeFn, authorized: seed ? () => captureAuthorized(ticket) : () => true, onProgress: (d, n) => process.stderr.write(`\r  ${d}/${n}`) })
   process.stderr.write('\n')
-  log(summary(pairs, res.found, { days, failed: res.failed, batches: res.batches }))
-  const share = shareLink(pairs, res.found, { days })
+  log(summary(pairs, res.found, { days, failed: res.failed, cancelled: res.cancelled, batches: res.batches }))
+  const share = res.cancelled ? null : shareLink(pairs, res.found, { days })
   if (share) log(`\nCompare your #1 with other people's (counts only, nothing quoted):\n${share}`)
   if (seed) {
     const { fresh, skipped } = seedCorrections(res.found)
-    addCorrections(fresh)
+    if (res.cancelled || !appendCaptured(fresh, ticket)) return log('\nNot saved: configuration or storage changed while the report was running.')
     log(`\nSaved ${fresh.length} scoped, origin-tagged corrections. Only relevant matches in the same working directory can be recalled.`)
     if (skipped) log(`Skipped ${skipped} corrections without usable workspace/input provenance; report only, not saved for recall.`)
-  } else log('\nRun with --seed to start recall from these corrections.')
+  } else log(cfg.capture === true ? '\nRun with --seed to start recall from these corrections.' : '\nCapture is off; enable it before running --seed to save corrections.')
 }

@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.2.1 - Unreleased privacy candidate
+
+- Fail closed on an existing unreadable, malformed, non-object or schema-invalid config; switches require JSON booleans, unknown keys are rejected, a single leading UTF-8 BOM is accepted. A missing config retains defaults. Status reports a sanitized configuration error; invalid config stops manual reports before history/provider processing.
+- Bind foreground capture/seed authorization to a storage generation, root/target identities and config revision. Recheck before provider dispatch and result append. Missing-config tickets additionally bind directory revision to detect create-opt-out/remove-config sequences on supported filesystems. Revision sensitivity is filesystem dependent; unrelated root-entry changes can conservatively invalidate default-config tickets.
+- Detached result/log appends open existing files only and never create directories or target files. Deleting/replacing the store or correction file invalidates old jobs; a fresh foreground initialization cannot admit their results. Drop legacy queued jobs without storage authorization. Async launch-error logs use the same guard.
+- Report seeding requires capture enabled, checks authorization before each queued batch, stops dispatch after observed revocation and refuses late saves. Already-dispatched provider calls can still finish and consume usage; sent text cannot be retracted. Non-seeding reports remain explicit provider-processing actions.
+- Session reads no longer create folders; missing-session Stop/compact events do not restore deleted storage. Session JSON replacement uses a temporary file and rename. New POSIX files/directories request 0600/0700; existing permissions are not globally migrated.
+- Limits: in-place correction-file editing/truncation is not a revocation command; this is not atomic ordering of all external file edits, exact-once capture, corrupt-session provenance recovery, native CLI tool isolation, host reload verification or live-effect evidence. No public push, PR, release, tag, npm publication or installed-plugin change is part of this local candidate.
+
 ## 0.2.0 - Unreleased
 
 - **Safety behavior change:** recall requires an explicit normalized working-directory key and a known input-origin tag. Legacy records remain on disk but are not automatically recalled. No silent migration or deletion. Subdirectories, moves and worktrees are separate scopes.

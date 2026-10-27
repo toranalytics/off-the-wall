@@ -5,6 +5,7 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 process.env.OTW_HOME = mkdtempSync(join(tmpdir(), 'otw-worker-test-'))
 process.env.CODEX_HOME = join(process.env.OTW_HOME, 'absent-models')
+const { authorizeCapture } = await import('../src/store.mjs')
 const { projectKey } = await import('../src/scope.mjs')
 const { build, search, pickCorrections, correctionBlock, recallable } = await import('../src/similar.mjs')
 const { judgeJob } = await import('../src/worker.mjs')
@@ -47,7 +48,7 @@ test('judge placeholders and replacement tokens cannot rewrite an excerpt', () =
   assert.ok(prompt.includes('[assistant answer, end]\nanswer contains {reply} and $&'))
   assert.ok(prompt.includes("[user's next message]\nreply contains {answer} and $`"))
 })
-const validJob = () => ({ host: 'claude', model: 'stub-model', at: now - 1, answer: 'Synthetic migration done.', reply: 'You did not run the invoice database backfill.', about, project, origin: 'interactive-user', sessionId: 'synthetic-session' })
+const validJob = () => ({ host: 'claude', model: 'stub-model', at: now - 1, answer: 'Synthetic migration done.', reply: 'You did not run the invoice database backfill.', about, project, origin: 'interactive-user', sessionId: 'synthetic-session', captureAuthorization: authorizeCapture() })
 test('worker rejects unknown or nonhuman provenance before any provider call', async () => {
   let calls = 0
   const seam = { completeFn: async () => { calls++; throw Error('MUST NOT CALL') }, saveFn: () => assert.fail('MUST NOT SAVE'), logFn: () => {} }

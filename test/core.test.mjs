@@ -8,7 +8,7 @@ process.env.OTW_HOME = mkdtempSync(join(tmpdir(), 'otw-test-'))
 const { correctionBlock, langOf, pickCorrections } = await import('../src/similar.mjs')
 const { parseBatch, parseRule, batchPrompt } = await import('../src/judge.mjs')
 const { handle, typed } = await import('../src/hook.mjs')
-const { addCorrections, session } = await import('../src/store.mjs')
+const { appendCaptured, authorizeCapture, session } = await import('../src/store.mjs')
 const { claudePairs, codexPairs, lines, MAX_LINE, typedPart } = await import('../src/transcripts.mjs')
 const { judgeAll, summary, shareLink } = await import('../src/report.mjs')
 const { DEFAULT_CONFIG } = await import('../src/store.mjs')
@@ -73,7 +73,7 @@ test('session start carries the routing rule for each host', () => {
 })
 
 test('a prompt after an answer is judged in the background; the prompt carries the quotes', () => {
-  addCorrections(list.slice(0, 3))
+  assert.equal(appendCaptured(list.slice(0, 3), authorizeCapture()), true)
   const jobs = []
   const spawnJudge = j => jobs.push(j)
   const now = T + 500

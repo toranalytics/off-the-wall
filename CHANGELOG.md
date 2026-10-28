@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Docs: state that the match guard is a low lexical floor and does not keep unrelated prompts from receiving quotes (small synthetic test); add experiment records under docs/. No behaviour change.
+
 ## 0.2.2 - Unreleased
 
 - Avoid duplicate routing context on `SessionStart` resume when the saved session is already primed; compact still re-injects, and startup/clear and unknown or missing sources retain their behavior.

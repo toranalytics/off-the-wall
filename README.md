@@ -135,7 +135,7 @@ publish anything. Nothing is posted for you.
 
 | Event | Claude Code | Codex |
 | :-- | :-- | :-- |
-| Each prompt | up to 6 past corrections quoted, each cut at 200 characters, only from the same normalized working directory (project key) and only if they pass the match guard. Fewer than 6, or none, is normal; there is no filler from other projects or just the latest | same |
+| Each prompt | up to 6 past corrections quoted, each cut at 200 characters, only from the same normalized working directory (project key) and only if they pass the match guard. Fewer than 6, or none, is normal; there is no filler from other projects or just the latest. The match guard is a low lexical floor (word and character-bigram similarity of 0.18 against the stored past request): in a small synthetic test, unrelated non-coding prompts still received 1-2 quotes on average, so do not read "passes the guard" as "is relevant" | same |
 | Each prompt | the previous answer and your new message are judged in a detached process; a correction is saved with the project hash and input origin | same |
 | Turn end | the end of the answer is kept for that judge | same |
 | Session start | the routing rule is added | the routing rule is added |

@@ -1,0 +1,41 @@
+rep,task,category,arm,k,pass,detail,expectedIds,seen,cost_usd,out_tokens,turns,seconds,subtype
+3,verify-slug,verify,ask_only,2,0,"No recorded test execution after the last mutation.",c029+c088,1,0.0081,2594,9,21,success
+1,verify-slug,verify,otw_noask,2,0,"No recorded test execution after the last mutation.",c029+c088,1,0.0076,3016,11,23,success
+3,verify-slug,verify,otw_noask,2,1,"Requested behavior and category-specific checks passed.",c029+c088,1,0.0071,1697,7,20,success
+2,verify-slug,verify,otw,2,1,"Requested behavior and category-specific checks passed.",c029+c088,1,0.0073,2652,11,22,success
+6,verify-slug,verify,none,0,0,"No recorded test execution after the last mutation.",,0,0.0082,2839,13,24,success
+1,verify-slug,verify,otw,2,1,"Requested behavior and category-specific checks passed.",c029+c088,1,0.0057,2200,9,19,success
+4,verify-slug,verify,otw_noask,2,1,"Requested behavior and category-specific checks passed.",c029+c088,1,0.0058,2433,9,26,success
+2,verify-slug,verify,ask_only,2,0,"No recorded test execution after the last mutation.",c029+c088,1,0.0063,2157,9,18,success
+5,verify-slug,verify,ask_only,2,0,"No recorded test execution after the last mutation.",c029+c088,1,0.0060,2719,9,26,success
+5,verify-slug,verify,none,0,0,"No recorded test execution after the last mutation.",,0,0.0047,1794,8,15,success
+2,verify-slug,verify,none,0,1,"Requested behavior and category-specific checks passed.",,0,0.0050,1707,8,17,success
+6,verify-slug,verify,otw,2,0,"No recorded test execution after the last mutation.",c029+c088,1,0.0065,2844,12,27,success
+10,verify-slug,verify,ask_only,2,1,"Requested behavior and category-specific checks passed.",c029+c088,1,0.0074,2615,11,24,success
+9,verify-slug,verify,otw_noask,2,0,"No recorded test execution after the last mutation.",c029+c088,1,0.0054,2303,10,18,success
+5,verify-slug,verify,otw_noask,2,1,"Requested behavior and category-specific checks passed.",c029+c088,1,0.0049,2174,9,18,success
+7,verify-slug,verify,none,0,0,"No recorded test execution after the last mutation.",,0,0.0057,2302,11,18,success
+10,verify-slug,verify,none,0,1,"Requested behavior and category-specific checks passed.",,0,0.0047,1881,8,19,success
+5,verify-slug,verify,otw,2,1,"Requested behavior and category-specific checks passed.",c029+c088,1,0.0054,2366,10,20,success
+7,verify-slug,verify,otw_noask,2,1,"Requested behavior and category-specific checks passed.",c029+c088,1,0.0057,2215,11,21,success
+10,verify-slug,verify,otw_noask,2,1,"Requested behavior and category-specific checks passed.",c029+c088,1,0.0061,2284,12,16,success
+4,verify-slug,verify,none,0,1,"Requested behavior and category-specific checks passed.",,0,0.0053,2144,10,17,success
+7,verify-slug,verify,otw,2,0,"No recorded test execution after the last mutation.",c029+c088,1,0.0049,2160,7,16,success
+9,verify-slug,verify,none,0,1,"Requested behavior and category-specific checks passed.",,0,0.0053,2197,10,19,success
+4,verify-slug,verify,ask_only,2,0,"No recorded test execution after the last mutation.",c029+c088,1,0.0047,1814,8,22,success
+8,verify-slug,verify,otw_noask,2,0,"No recorded test execution after the last mutation.",c029+c088,1,0.0053,2212,10,15,success
+1,verify-slug,verify,none,0,0,"No recorded test execution after the last mutation.",,0,0.0062,2028,7,21,success
+6,verify-slug,verify,ask_only,2,1,"Requested behavior and category-specific checks passed.",c029+c088,1,0.0051,2441,9,18,success
+8,verify-slug,verify,none,0,1,"Requested behavior and category-specific checks passed.",,0,0.0057,2218,11,21,success
+8,verify-slug,verify,otw,2,1,"Requested behavior and category-specific checks passed.",c029+c088,1,0.0058,2534,9,22,success
+10,verify-slug,verify,otw,2,0,"No recorded test execution after the last mutation.",c029+c088,1,0.0102,5277,17,37,success
+7,verify-slug,verify,ask_only,2,0,"No recorded test execution after the last mutation.",c029+c088,1,0.0066,2997,12,19,success
+3,verify-slug,verify,otw,2,0,"No recorded test execution after the last mutation.",c029+c088,1,0.0071,3068,13,21,success
+6,verify-slug,verify,otw_noask,2,1,"Requested behavior and category-specific checks passed.",c029+c088,1,0.0057,2133,11,18,success
+1,verify-slug,verify,ask_only,2,0,"No recorded test execution after the last mutation.",c029+c088,1,0.0050,2219,9,14,success
+9,verify-slug,verify,ask_only,2,0,"No recorded test execution after the last mutation.",c029+c088,1,0.0056,2655,10,20,success
+3,verify-slug,verify,none,0,1,"Requested behavior and category-specific checks passed.",,0,0.0069,2920,11,20,success
+9,verify-slug,verify,otw,2,0,"No recorded test execution after the last mutation.",c029+c088,1,0.0055,2396,10,23,success
+4,verify-slug,verify,otw,2,1,"Requested behavior and category-specific checks passed.",c029+c088,1,0.0061,2302,11,20,success
+8,verify-slug,verify,ask_only,2,1,"Requested behavior and category-specific checks passed.",c029+c088,1,0.0048,1988,9,20,success
+2,verify-slug,verify,otw_noask,2,0,"No recorded test execution after the last mutation.",c029+c088,1,0.0073,2926,13,24,success

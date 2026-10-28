@@ -21,7 +21,7 @@ All differences are within noise at n=5 per cell (for example 3/5 vs 0/5 has Fis
 
 ## What it does and does not show
 - No evidence that OTW's ranking beats random corrections, no recall, or a plain rules file on these tasks.
-- On verify-slug, OTW's picks were of the wrong categories (complete, tests) in all 5 runs and the arm passed 0/5 versus 3/5 without recall. This is within noise, but it is the pattern one would expect if irrelevant quotes plus the block's generic "predict what this user would object to" instruction distract rather than help. Not shown; worth testing directly.
+- On verify-slug, OTW's picks were of the wrong categories (complete, tests) in all 5 runs and the arm passed 0/5 versus 3/5 without recall. This is within noise. It was tested directly afterwards (see below) and not reproduced.
 - The "none" arm passed 3/5 and 5/5 in the main stage after 1/3 and 1/3 in the pilot: selection on a noisy pilot regresses to the mean, so the kept tasks were mostly not hard.
 - The main limit is that haiku 5.5 rarely makes these mistakes by default on small tasks (14 of 16 at ceiling). The premise of OTW, repeated mistakes the user keeps correcting, did not hold for this model on these tasks. That says nothing about longer, messier real sessions or weaker models.
 - Synthetic store and tasks, one model, headless, one machine, 5 reps per cell.
@@ -38,3 +38,6 @@ Three variants were fixed in advance: V0 current (score the new prompt against e
 | dev (16) | V0 / V1 / V2 | 0.50 / 0.06 / 0.56 | 0.43 / 0.17 / 0.34 | 0.81 / 0.25 / 0.88 |
 | holdout (64) | V0 / V1 / V2 | 0.89 / 0.52 / 0.88 | 0.40 / 0.39 / 0.38 | 0.98 / 0.67 / 0.98 |
 No variant qualifies, so the selector is unchanged: no improvement was found. The holdout hit rate is much higher than the dev one because its prompts and store were written in one pass by one model and share domains; the dev figure is the conservative one. Hit rate means a same-category correction is among the picks, a proxy for relevance, not for whether it would prevent the mistake.
+
+## Follow-up: does the block's "predict an objection" sentence matter? (experiment 3b, `data/exp2/ablate.csv`)
+verify-slug only, 10 runs per arm, fixed in advance: no recall 6/10; the current block (quotes + predict sentence) 5/10; quotes without the predict sentence 6/10; the predict sentence without quotes 3/10. Fisher p-values are 1.00, 1.00 and 0.37 against no recall, and 1.00 between the first two block variants. Nothing is detectable at n=10, the earlier 0/5 was not reproduced, and no product change follows. The test switch existed only in an isolated test copy of the plugin.

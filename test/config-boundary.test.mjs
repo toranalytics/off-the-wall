@@ -130,6 +130,9 @@ test('detected Codex defaults and mid-class judge survive partial overrides', ()
   } finally { fs.unlinkSync(cache) }
 })
 
+// Windows file times tick coarsely (about 16 ms): writes inside one tick can share a change time, so the test waits across ticks.
+const tick = (ms = 40) => { const end = Date.now() + ms; while (Date.now() < end) {} }
+
 test('stable reads have stable revisions; edit-away-and-back and same-content replacement invalidate them', () => {
   const dir = fixture()
   const file = join(dir, 'config.json')
@@ -140,13 +143,17 @@ test('stable reads have stable revisions; edit-away-and-back and same-content re
   assert.match(first.configRevision, /^file:[a-f0-9]{64}$/)
   assert.equal(loadConfig(dir).configRevision, first.configRevision)
   const old = fs.statSync(file, { bigint: true })
+  tick()
   put(dir, { capture: false })
+  tick()
   put(dir, { capture: true })
+  tick()
   // Even restoring mtime must not restore the revision: ctime remains changed.
   fs.utimesSync(file, 946684800, 946684800)
   assert.equal(fs.statSync(file, { bigint: true }).mtimeNs, old.mtimeNs)
   assert.notEqual(loadConfig(dir).configRevision, first.configRevision)
   const beforeReplace = loadConfig(dir).configRevision
+  tick()
   const replacement = join(dir, 'replacement')
   fs.writeFileSync(replacement, fs.readFileSync(file))
   fs.renameSync(replacement, file)
@@ -158,6 +165,7 @@ test('same-content rewrite changes revision without relying on a content hash', 
   const file = join(dir, 'config.json')
   put(dir, {})
   const first = loadConfig(dir).configRevision
+  tick()
   put(dir, {})
   const later = new Date(Date.now() + 2000)
   fs.utimesSync(file, later, later)

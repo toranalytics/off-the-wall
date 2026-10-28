@@ -46,7 +46,7 @@ Model runs, 11 kept tasks x 3 reps (99 runs, USD 0.43):
 | OTW no floor (recallWide) | 17/33 |
 - Sign tests across tasks: no floor vs none 8 better, 0 worse, p = 0.008; default vs none 5/0/6, p = 0.063; no floor vs default 3/0/8, p = 0.25.
 - The no-floor advantage replicated: 16/33 vs 8/33 in 4b, 17/33 vs 9/33 here (pooled 33/66 vs 17/66, Fisher p = 0.007; runs not independent, indicative).
-- Better offline retrieval did not translate into more default-floor passes (9/33 vs 8/33 before). Retrieval is not the only lever: two tasks (c004, c006) failed in every arm even with the target family in the block, i.e. the model sometimes does not follow a shown correction.
+- Better offline retrieval did not translate into more default-floor passes (9/33 vs 8/33 before). Retrieval is not the only lever: task c004 failed in every arm although the target was shown (its one-sentence answer format is very strict), and task c006 also stayed at 0/3 because of a scoring defect found afterwards: the scorer required the answer to start with `fix(` and rejected answers wrapped in a markdown code fence. Re-read from the transcripts (post hoc), 5 of 6 c006 runs that saw the correction followed it and 0 of 3 that did not. The tables in this document keep the original, uncorrected scores; the defect understates the effect.
 - Limits: repeats are written by a model; 3 reps per cell; one small model; headless.
 
 ## Follow-up: does always showing 6 quotes hurt tasks where no preference applies? (experiment 6, `data/exp6/harm.csv`)
@@ -54,3 +54,8 @@ Wide recall adds 6 quotes to every prompt. The 14 tasks the default model alread
 - Passes: no recall 40/42, wide recall 41/42. No task lost 2 or more of 3 (0 tasks); pooled Fisher p = 1.0.
 - Mean turns 7.6 vs 7.8, output tokens 2,026 vs 2,210 (+9%), seconds 16.5 vs 17.8: a small overhead, not tested for significance.
 - Reading: no harm detected here (not proof). All synthetic, one small model, headless, prompts of normal length; short follow-ups ("ok") were not tested.
+
+## Correction (2026-10-28, found while checking why two tasks stayed at 0/3)
+- c006 (conventional commit message): the scorer used `t.trim()` with a start-anchored pattern, so a correct message in a code fence scored as a failure. Original scores were left unchanged in every table. Post hoc recount from the 9 saved c006 transcripts of experiment 5: with the correction in the block 5 of 6 followed it; without 0 of 3. The scorer was written by another model and was not changed after seeing results; a fixed scorer will be used in any rerun.
+- c004 (explain a regex in one sentence plus an example): the answers were 3 to 7 lines with several sentences, so this is a genuine non-follow (or an overly strict format); not changed.
+- Consequence for earlier statements: "2 of 11 tasks stayed at 0/3 although the target was shown" was wrong for c006.

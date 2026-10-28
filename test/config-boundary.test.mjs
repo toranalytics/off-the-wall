@@ -24,7 +24,7 @@ const fixture = () => {
 const put = (dir, value) => fs.writeFileSync(join(dir, 'config.json'), JSON.stringify(value))
 const closed = cfg => {
   assert.equal(cfg.configIssue, 'config-invalid')
-  for (const key of ['capture', 'recall', 'routing']) assert.equal(cfg[key], false)
+  for (const key of ['capture', 'recall', 'routing', 'recallWide']) assert.equal(cfg[key], false)
   assert.match(cfg.configRevision, /^error:(?:unreadable|[a-f0-9]{64})$/)
 }
 const patch = (key, replacement, run) => {
@@ -35,7 +35,7 @@ const patch = (key, replacement, run) => {
 
 test('original defaults are retained; missing config and missing parent are normal, read-only defaults', () => {
   assert.deepEqual(DEFAULT_CONFIG, {
-    capture: true, recall: true, routing: true,
+    capture: true, recall: true, routing: true, recallWide: false,
     judge: { claude: 'haiku', codex: 'gpt-6.1-sol' },
     models: { claude: { small: 'haiku', mid: 'sonnet', large: 'opus' }, codex: { small: 'gpt-6-luna', mid: 'gpt-6.1-sol', large: 'gpt-6-astra' } },
   })
@@ -63,6 +63,7 @@ test('boolean false remains false, while omitted flags retain defaults', () => {
 })
 
 for (const [name, value] of [
+  ['wide string', { recallWide: 'true' }], ['wide number', { recallWide: 1 }], ['wide null', { recallWide: null }],
   ['stringfalse', { capture: 'false' }], ['stringtrue', { recall: 'true' }],
   ['numeric', { routing: 0 }], ['null flag', { capture: null }],
   ['null root', null], ['array root', []], ['string root', 'false'], ['boolean root', false], ['number root', 7],
@@ -254,4 +255,20 @@ test('errors finding pathname metadata are closed and deterministic', () => {
     assert.equal(cfg.configRevision, 'error:unreadable')
     assert.deepEqual(loadConfig(dir), cfg)
   })
+})
+
+test('recallWide accepts only booleans, defaults off, and participates in revisions', () => {
+  const dir = fixture()
+  assert.equal(loadConfig(dir).recallWide, false)
+  put(dir, { recallWide: false })
+  const off = loadConfig(dir)
+  assert.equal(off.configIssue, null)
+  assert.equal(off.recallWide, false)
+  put(dir, { recallWide: true, recall: false })
+  const wide = loadConfig(dir)
+  assert.equal(wide.configIssue, null)
+  assert.equal(wide.recallWide, true)
+  assert.equal(wide.recall, false)
+  assert.notEqual(wide.configRevision, off.configRevision)
+  assert.equal(loadConfig(dir).configRevision, wide.configRevision)
 })

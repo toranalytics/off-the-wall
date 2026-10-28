@@ -60,7 +60,7 @@ export function handle(host, e, { now = Date.now(), cfg = config(), spawnJudge =
       next.primed = true
     }
     if (human && cfg.recall && project) {
-      const cs = pickCorrections(corrections(), prompt, now, undefined, project)
+      const cs = pickCorrections(corrections(), prompt, now, undefined, project, cfg.recallWide)
       if (cs.length) parts.push(correctionBlock(cs, langOf(prompt)))
     }
     saveSession(host, id, next)

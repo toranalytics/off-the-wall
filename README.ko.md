@@ -226,11 +226,12 @@ Node 18 이상이 필요합니다. 과거 기록: 이전 버전을 macOS의 Clau
 
 ## 설정
 
-`~/.otw/config.json`은 선택 사항이며, 파일이 없으면 기본값을 씁니다. 유효한 부분 설정의 스키마는 그대로이고, 명시한 값이 자동 감지보다 우선합니다. `recall`, `capture`, `routing`은 문자열이 아닌 실제 JSON 불리언이어야 합니다. 맨 앞의 UTF-8 BOM 하나는 허용합니다. 기존 파일을 읽을 수 없거나 JSON이 잘못되었거나 객체가 아니거나, 자료형·알 수 없는 키·중첩 값이 잘못되면 안전하게 거부하여 세 플래그를 모두 `false`로 둡니다. 수동 `report`도 기록을 읽거나 제공자를 호출하기 전에 멈춥니다. `node bin/otw.mjs status`는 원래 설정값이나 오류 대신 정제된 `config-invalid`만 표시합니다.
+`~/.otw/config.json`은 선택 사항이며, 파일이 없으면 기본값을 씁니다. 유효한 부분 설정의 스키마는 그대로이고, 명시한 값이 자동 감지보다 우선합니다. `recall`, `recallWide`, `capture`, `routing`은 문자열이 아닌 실제 JSON 불리언이어야 합니다. 맨 앞의 UTF-8 BOM 하나는 허용합니다. 기존 파일을 읽을 수 없거나 JSON이 잘못되었거나 객체가 아니거나, 자료형·알 수 없는 키·중첩 값이 잘못되면 안전하게 거부하여 네 플래그를 모두 `false`로 둡니다. 수동 `report`도 기록을 읽거나 제공자를 호출하기 전에 멈춥니다. `node bin/otw.mjs status`는 원래 설정값이나 오류 대신 정제된 `config-invalid`만 표시합니다.
 
 ```json
 {
   "recall": true,
+  "recallWide": false,
   "capture": true,
   "routing": true,
   "judge": { "claude": "haiku", "codex": "gpt-6.1-sol" },
@@ -242,6 +243,10 @@ Node 18 이상이 필요합니다. 과거 기록: 이전 버전을 macOS의 Clau
 ```
 
 `node bin/otw.mjs status`로 저장 상태를 볼 수 있습니다.
+
+### 선택적 넓은 회상
+
+`~/.otw/config.json`의 `"recallWide": true`(기본값 `false`)는 0.18 대신 아주 작은 양의 유사도 하한으로 같은 프로젝트의 적격 인용을 최대 6개 순위순으로 고르며 중복·겹침 없는 기록을 제외하고 `recall: false`를 존중하지만, 개인 선호 작업 11개를 각 3회 시험한 단일 합성 실험(Claude Code, haiku)에서 기본값 8/33 대비 16/33 통과, 작업별 부호 검정 p = 0.063이었고 무관한 요청에도 매번 약 6개를 주입하므로 기본 비활성이며 실제 기록에서의 이득을 입증하지 않습니다 ([실험](docs/preference-experiment-2026-10-28.md), [데이터](docs/data/exp4)).
 
 ## 개인정보
 

@@ -4,6 +4,11 @@
 
 - Docs: state that the match guard is a low lexical floor and does not keep unrelated prompts from receiving quotes (small synthetic test); add experiment records under docs/. No behaviour change.
 
+## 0.2.3 - Unreleased
+
+- Add opt-in `recallWide` (default `false`) to rank up to six same-project, origin-tagged corrections below the normal similarity floor, while excluding zero overlap and retaining all input/provenance filters; `recall: false` still disables recall. Default behavior is unchanged.
+- Show `recall wide` in status only when enabled; validate the boolean setting and document its limited synthetic evidence.
+
 ## 0.2.2 - Unreleased
 
 - Avoid duplicate routing context on `SessionStart` resume when the saved session is already primed; compact still re-injects, and startup/clear and unknown or missing sources retain their behavior.

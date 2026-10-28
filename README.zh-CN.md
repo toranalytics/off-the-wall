@@ -197,11 +197,15 @@ Codex 的模型对应是按同样等级类比得出的，没有测量。判定�
 <a id="settings"></a>
 ## 设置
 
-`~/.otw/config.json` 是可选的；文件不存在时使用正常默认值。有效的部分设置仍使用原有结构，显式值优先于自动检测。`recall`、`capture` 和 `routing` 必须是真正的 JSON 布尔值，不能是字符串。支持文件开头的一个 UTF-8 BOM。已有文件若无法读取、JSON 格式错误、不是对象，或含错误类型、未知键、无效嵌套值，会安全关闭：三个标志全部变为 `false`，手动 `report` 也会在读取历史或调用提供商之前停止。`node bin/otw.mjs status` 仅显示经过安全处理的 `config-invalid`，不显示原始配置值或错误。
+`~/.otw/config.json` 是可选的；文件不存在时使用正常默认值。有效的部分设置仍使用原有结构，显式值优先于自动检测。`recall`、`recallWide`、`capture` 和 `routing` 必须是真正的 JSON 布尔值，不能是字符串。支持文件开头的一个 UTF-8 BOM。已有文件若无法读取、JSON 格式错误、不是对象，或含错误类型、未知键、无效嵌套值，会安全关闭：四个标志全部变为 `false`，手动 `report` 也会在读取历史或调用提供商之前停止。`node bin/otw.mjs status` 仅显示经过安全处理的 `config-invalid`，不显示原始配置值或错误。
 
 `recall` 控制引用，`capture` 控制新摘录的保存与纠正记录，`routing` 控制模型选择指引。所有键均可省略。配置示例见 [English README](README.md#settings)。
 
 <a id="privacy"></a>
+### 可选的宽泛召回
+
+在 `~/.otw/config.json` 中设置 `"recallWide": true`（默认 `false`）会用极小的正相似度下限替代 0.18，按排名选择同一项目中最多6条合格引用，仍去重、排除零重叠记录并遵守 `recall: false`，但在一次包含11项个人偏好任务、每项运行3次的合成测试中（Claude Code，haiku），宽泛召回通过16/33，默认模式通过8/33，按任务的符号检验 p = 0.063，而且每个提示（包括无关提示）都会注入约6条引用，因此仍默认关闭，这并不能证明对真实历史有益（[实验](docs/preference-experiment-2026-10-28.md)、[数据](docs/data/exp4)）。
+
 ## 隐私
 
 存储是本地的，但本地存储并不意味着没有任何内容离开你的机器。Off the Wall 在 `~/.otw` 中保存：

@@ -68,12 +68,14 @@ export const one = (s, n) => {
   return t.length > n ? `${t.slice(0, n)}…` : t
 }
 
-export function pickCorrections(list, prompt, now, n = QUOTES, project) {
+export function pickCorrections(list, prompt, now, n = QUOTES, project, recallWide = false) {
   if (!isProjectKey(project) || !isUserInput(prompt) || !Number.isFinite(now) || !Number.isFinite(n) || n < 1) return []
   const past = list.filter(c => recallable(c) && c.project === project && c.at < now)
   if (!past.length) return []
   const texts = past.map(c => String(c.about || c.quote).slice(0, 300))
-  const ranked = search(build(texts), prompt, MIN_SIMILAR, past.length).map(i => past[i])
+  // Wide recall relaxes relevance, never the zero-overlap or provenance boundary.
+  const floor = recallWide === true ? 1e-6 : MIN_SIMILAR
+  const ranked = search(build(texts), prompt, floor, past.length).map(i => past[i])
   const out = [], seen = new Set()
   for (const c of ranked) {
     const key = one(c.quote, 800)

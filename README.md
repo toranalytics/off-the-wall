@@ -247,11 +247,12 @@ mapping follows the same classes by analogy and has not been measured.
 
 ## Settings
 
-`~/.otw/config.json` is optional; a missing file uses normal defaults. Valid partial settings keep the same schema, and explicit values override detection. `recall`, `capture` and `routing` must be actual JSON booleans, not strings. One leading UTF-8 BOM is supported. An existing file that is unreadable, malformed, not an object, has wrong types, unknown keys or invalid nested values fails closed: all three flags become `false`, and manual `report` stops before reading history or calling a provider. `node bin/otw.mjs status` shows sanitized `config-invalid`, never raw config values or errors.
+`~/.otw/config.json` is optional; a missing file uses normal defaults. Valid partial settings keep the same schema, and explicit values override detection. `recall`, `recallWide`, `capture` and `routing` must be actual JSON booleans, not strings. One leading UTF-8 BOM is supported. An existing file that is unreadable, malformed, not an object, has wrong types, unknown keys or invalid nested values fails closed: all four flags become `false`, and manual `report` stops before reading history or calling a provider. `node bin/otw.mjs status` shows sanitized `config-invalid`, never raw config values or errors.
 
 ```json
 {
   "recall": true,
+  "recallWide": false,
   "capture": true,
   "routing": true,
   "judge": { "claude": "haiku", "codex": "gpt-6.1-sol" },
@@ -263,6 +264,13 @@ mapping follows the same classes by analogy and has not been measured.
 ```
 
 `node bin/otw.mjs status` shows what is stored.
+
+### Opt-in wide recall
+
+Set `"recallWide": true` in `~/.otw/config.json` (default `false`) to rank up to six distinct eligible same-project quotes using a tiny positive similarity floor instead of 0.18, still excluding zero overlap and respecting `recall: false`.
+In one synthetic test of 11 personal-preference tasks (3 runs each, Claude Code with haiku), wide recall passed 16/33 against 8/33 for the default; the sign test across tasks gave p = 0.063 and it also injects about 6 quotes on every prompt, including unrelated ones, so it stays off by default and is not evidence of benefit on a real history.
+
+[Experiment details](docs/preference-experiment-2026-10-28.md) · [Data](docs/data/exp4)
 
 ## Privacy
 

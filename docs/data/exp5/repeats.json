@@ -1,0 +1,632 @@
+[
+ {
+  "id": "c004-r1",
+  "pref": "c004",
+  "about": "What does this Go regexp in the log parser actually match: `^(\\w+)=(\".*?\"|\\S+)$`?",
+  "quote": "ok I don't need a row per character group. tell me what it matches in a sentence and show me one input that passes.",
+  "rule": "Explain regexes in one sentence plus one example."
+ },
+ {
+  "id": "c004-r2",
+  "pref": "c004",
+  "about": "Can you add a comment above the email validation pattern in signup.py so the next person gets it?",
+  "quote": "this comment is now 14 lines long. one line on what it accepts, one sample address, done.",
+  "rule": "Document regexes with a brief sentence and a sample match."
+ },
+ {
+  "id": "c004-r3",
+  "pref": "c004",
+  "about": "I need a sed expression that strips trailing version suffixes from image tags in our Dockerfile, and explain it briefly.",
+  "quote": "The sed works but the breakdown table is more than I asked for. Short summary and a before/after is all I wanted.",
+  "rule": "Summarize regexes briefly with one before/after example."
+ },
+ {
+  "id": "c006-r1",
+  "pref": "c006",
+  "about": "Commit the vitest config change and the two new test files for the billing module.",
+  "quote": "'Added tests' isn't how we write commits. test(billing): ... please, same as the rest of the log.",
+  "rule": "Write commits as type(scope): summary, conventional style."
+ },
+ {
+  "id": "c006-r2",
+  "pref": "c006",
+  "about": "Squash these three WIP commits on the migration branch into one before I open the PR.",
+  "quote": "the squashed message reads 'Database updates'. that's not conventional commits, make it feat(db): or chore(db): whatever fits.",
+  "rule": "Use conventional commit prefixes when rewriting commit messages."
+ },
+ {
+  "id": "c006-r3",
+  "pref": "c006",
+  "about": "Can you write the commit for bumping the Node version in the CI workflow?",
+  "quote": "Should be ci: bump node to 20 or similar. Not 'Updated workflow file'. Check git log if you're unsure of the style.",
+  "rule": "Follow conventional commits format; match existing git log style."
+ },
+ {
+  "id": "c011-r1",
+  "pref": "c011",
+  "about": "Seed the local Postgres with about 50 sample customers so I can test the admin table.",
+  "quote": "why is Taylor Swift a customer in my seed file. make the names obviously made up, like Testy McTestface level.",
+  "rule": "Seed data must use obviously fake names, never real people."
+ },
+ {
+  "id": "c011-r2",
+  "pref": "c011",
+  "about": "Write a Storybook story for the UserCard component with a few realistic-looking props.",
+  "quote": "Please swap out Elon Musk and Barack Obama in the stories. Use names that couldn't be mistaken for anyone real.",
+  "rule": "Use fictional names in component stories and fixtures."
+ },
+ {
+  "id": "c011-r3",
+  "pref": "c011",
+  "about": "Generate a CSV of fake employees for the onboarding notebook demo.",
+  "quote": "half these rows are actual athletes. fake names only, it's going in a public demo.",
+  "rule": "Demo datasets should contain only clearly fictional people."
+ },
+ {
+  "id": "c015-r1",
+  "pref": "c015",
+  "about": "Give me a quick update on where the Kafka consumer refactor stands.",
+  "quote": "I can't read four paragraphs in standup. a handful of bullets please.",
+  "rule": "Give progress updates as a few terse bullets."
+ },
+ {
+  "id": "c015-r2",
+  "pref": "c015",
+  "about": "Post a summary in the PR of what changed since the last review round.",
+  "quote": "this summary is longer than the diff. bullet list, keep it under five or so.",
+  "rule": "Keep PR change summaries to a short bullet list."
+ },
+ {
+  "id": "c015-r3",
+  "pref": "c015",
+  "about": "What's left on the Terraform cleanup before we can close the ticket?",
+  "quote": "Just the remaining items as bullets. I don't need the narrative of how we got here.",
+  "rule": "List remaining work as brief bullets, no narrative."
+ },
+ {
+  "id": "c020-r1",
+  "pref": "c020",
+  "about": "Draft the Slack message announcing the database maintenance window on Saturday at 2am.",
+  "quote": "2am where? write KST (or UTC with offset), half the team reads this from Europe.",
+  "rule": "Always include an explicit timezone with announced times."
+ },
+ {
+  "id": "c020-r2",
+  "pref": "c020",
+  "about": "Add the release cutoff time to the README section about contributing.",
+  "quote": "'cutoff is 6pm Thursday' is useless to anyone outside Seoul. Put the zone next to it.",
+  "rule": "Write the timezone next to every time in docs."
+ },
+ {
+  "id": "c020-r3",
+  "pref": "c020",
+  "about": "Write the email inviting the contractors to Friday's design review at 4.",
+  "quote": "Which 4? Our contractors are in Lisbon. Spell out the timezone, ideally both.",
+  "rule": "State the timezone explicitly for meeting times in emails."
+ },
+ {
+  "id": "c022-r1",
+  "pref": "c022",
+  "about": "Add a changelog entry for the new --dry-run flag in the CLI.",
+  "quote": "the entry went into the 1.4.0 section that's already released. new stuff goes under Unreleased at the top.",
+  "rule": "Put new changelog entries under Unreleased, not past releases."
+ },
+ {
+  "id": "c022-r2",
+  "pref": "c022",
+  "about": "Update CHANGELOG.md with the security fix for the token refresh bug.",
+  "quote": "You appended it after the oldest release again. Top of the file, under ## [Unreleased], with a ### Security heading.",
+  "rule": "Add changelog entries at the top under Unreleased with proper category."
+ },
+ {
+  "id": "c022-r3",
+  "pref": "c022",
+  "about": "Can you note the Python 3.12 support in the changelog for the SDK?",
+  "quote": "wrong spot. keep a changelog format, Unreleased goes first, latest at the top.",
+  "rule": "Follow Keep a Changelog: newest entries first under Unreleased."
+ },
+ {
+  "id": "c033-r1",
+  "pref": "c033",
+  "about": "Does our Dockerfile already pin the base image to a digest?",
+  "quote": "That's a yes or no question. Give me the answer, not a lecture on supply chain security.",
+  "rule": "Give one-line answers to yes/no questions."
+ },
+ {
+  "id": "c033-r2",
+  "pref": "c033",
+  "about": "is the users.email column indexed in prod?",
+  "quote": "just 'yes' or 'no, here's the migration' would have done.",
+  "rule": "Answer yes/no questions briefly in a single line."
+ },
+ {
+  "id": "c033-r3",
+  "pref": "c033",
+  "about": "Quick check, does the GitHub Actions cache step run on forks?",
+  "quote": "one line. yes or no, maybe a reason. not three sections.",
+  "rule": "Reply to yes/no questions in one line, optional short reason."
+ },
+ {
+  "id": "c034-r1",
+  "pref": "c034",
+  "about": "The Go service needs to map country codes to currency symbols; can you wire that up?",
+  "quote": "you added a postgres table and a migration for 200 static entries? a map literal in the package is enough.",
+  "rule": "Use an in-process map for static lookups, not a database."
+ },
+ {
+  "id": "c034-r2",
+  "pref": "c034",
+  "about": "Add caching for the feature flag reads in the Python worker, they're slow.",
+  "quote": "An in-memory dict with a TTL is fine for one worker process. We don't need memcached for this.",
+  "rule": "Prefer in-process caches before introducing external cache services."
+ },
+ {
+  "id": "c034-r3",
+  "pref": "c034",
+  "about": "Make the rate limiter in the API client remember the last request time per endpoint.",
+  "quote": "why is there a docker-compose service for redis now. it's a single process, a Map does this.",
+  "rule": "Keep per-process state in memory instead of adding external stores."
+ },
+ {
+  "id": "c044-r1",
+  "pref": "c044",
+  "about": "Format the invoice due dates in the React billing table as 'Mar 4, 2025' style.",
+  "quote": "moment again? it's in maintenance mode and huge. Intl.DateTimeFormat handles this.",
+  "rule": "Use Intl.DateTimeFormat or date-fns, never moment."
+ },
+ {
+  "id": "c044-r2",
+  "pref": "c044",
+  "about": "Write a helper in the Node script that adds 30 business days to a date.",
+  "quote": "Please use date-fns for this, not moment. We removed moment from the repo last year.",
+  "rule": "Prefer date-fns over moment for date arithmetic."
+ },
+ {
+  "id": "c044-r3",
+  "pref": "c044",
+  "about": "Can the dashboard show 'updated 5 minutes ago' next to each card?",
+  "quote": "Intl.RelativeTimeFormat exists. pulling in moment just for fromNow() is not ok.",
+  "rule": "Use native Intl relative formatting instead of moment."
+ },
+ {
+  "id": "c048-r1",
+  "pref": "c048",
+  "about": "Write the error message the upload form shows when the file is over 10MB.",
+  "quote": "'You uploaded an invalid file' reads like an accusation. Say what the limit is and what they can do.",
+  "rule": "Write user-facing errors that explain the issue without blaming."
+ },
+ {
+  "id": "c048-r2",
+  "pref": "c048",
+  "about": "Add a 403 handler in the Express API that returns a JSON error for the mobile app to display.",
+  "quote": "the message says 'You are not allowed to do this'. reword it neutrally, like 'This action needs admin access'.",
+  "rule": "Keep error messages neutral and descriptive, not accusatory."
+ },
+ {
+  "id": "c048-r3",
+  "pref": "c048",
+  "about": "Handle the case where the payment card is declined in the checkout component.",
+  "quote": "'You entered wrong card details' isn't fair, the bank may have declined it. Phrase it without pointing at them.",
+  "rule": "Avoid blaming users in error copy; describe what happened."
+ },
+ {
+  "id": "c049-r1",
+  "pref": "c049",
+  "about": "Why did the Alembic migration fail on staging?",
+  "quote": "Skip the 'sorry for the confusion' part. What's the actual error?",
+  "rule": "Don't apologize; go straight to the problem."
+ },
+ {
+  "id": "c049-r2",
+  "pref": "c049",
+  "about": "The test you wrote earlier is flaky, can you look again?",
+  "quote": "no apology needed. which assertion is flaky and why.",
+  "rule": "Omit apologies and state the cause directly."
+ },
+ {
+  "id": "c049-r3",
+  "pref": "c049",
+  "about": "You broke the build with that last Makefile change, fix it.",
+  "quote": "Three sentences of apologizing before saying the target name was wrong. Just say what went wrong and fix it.",
+  "rule": "Skip apology preambles; report the fault and the fix."
+ },
+ {
+  "id": "c055-r1",
+  "pref": "c055",
+  "about": "Set up a cron job in the Kubernetes manifest to send the daily digest at 8am.",
+  "quote": "8am UTC is 5pm for our users. Asia/Seoul unless I tell you otherwise, please.",
+  "rule": "Schedule user-facing jobs in Asia/Seoul by default."
+ },
+ {
+  "id": "c055-r2",
+  "pref": "c055",
+  "about": "Write the SQL that counts signups per day for the weekly report.",
+  "quote": "you grouped by UTC date. our users are in Korea, bucket by Asia/Seoul days.",
+  "rule": "Use Asia/Seoul day boundaries for user-facing reports by default."
+ },
+ {
+  "id": "c055-r3",
+  "pref": "c055",
+  "about": "Make the push notification reminder fire at 7pm local for our users.",
+  "quote": "you hardcoded the server's timezone which is UTC. Use Asia/Seoul explicitly.",
+  "rule": "Use explicit Asia/Seoul timezone for user schedules unless told otherwise."
+ },
+ {
+  "id": "c057-r1",
+  "pref": "c057",
+  "about": "Add zod as a dependency to the web package.",
+  "quote": "there's a package-lock.json in the diff now. pnpm add, this is a pnpm workspace.",
+  "rule": "Install packages with pnpm, never npm."
+ },
+ {
+  "id": "c057-r2",
+  "pref": "c057",
+  "about": "Update the README setup instructions for new contributors.",
+  "quote": "The README says npm install. It should be pnpm install, that's what the repo actually uses.",
+  "rule": "Document pnpm commands, not npm, in setup docs."
+ },
+ {
+  "id": "c057-r3",
+  "pref": "c057",
+  "about": "Write the CI step that installs dependencies and runs the tests.",
+  "quote": "why does the workflow call npm ci? use pnpm with the lockfile we have, pnpm-lock.yaml.",
+  "rule": "Use pnpm install in CI with pnpm-lock.yaml."
+ },
+ {
+  "id": "c059-r1",
+  "pref": "c059",
+  "about": "Write a small script that pings our healthcheck endpoints and prints the status codes.",
+  "quote": "no node-fetch, no axios. global fetch works fine on the Node version we run.",
+  "rule": "Use native fetch in small Node scripts instead of HTTP libraries."
+ },
+ {
+  "id": "c059-r2",
+  "pref": "c059",
+  "about": "Can you add a GitHub webhook relay to the scripts folder? Keep it tiny.",
+  "quote": "You added got as a dependency for two requests. fetch is built in, drop it.",
+  "rule": "Avoid HTTP client dependencies when built-in fetch suffices."
+ },
+ {
+  "id": "c059-r3",
+  "pref": "c059",
+  "about": "Make the seed script download the fixture JSON from the S3 URL first.",
+  "quote": "axios for a single GET? just use fetch.",
+  "rule": "Use built-in fetch for simple HTTP calls in scripts."
+ },
+ {
+  "id": "c082-r1",
+  "pref": "c082",
+  "about": "Add some logging to the webhook handler so I can see what payloads come in.",
+  "quote": "console.log('payload: ' + JSON.stringify(body)) isn't what we do. logger.info({ body }) with the pino instance.",
+  "rule": "Log through the existing pino logger with structured fields."
+ },
+ {
+  "id": "c082-r2",
+  "pref": "c082",
+  "about": "Debug why the queue worker drops jobs, add whatever output you need.",
+  "quote": "Fine for local poking but please use the app logger, not console.log. The console lines won't show up in our log pipeline.",
+  "rule": "Use the project logger instead of console output for diagnostics."
+ },
+ {
+  "id": "c082-r3",
+  "pref": "c082",
+  "about": "Log when the retry limit is hit in the API client.",
+  "quote": "we already have a logger module. import it, don't hand-roll string concatenation with console.",
+  "rule": "Reuse the existing logger module, not console.log."
+ },
+ {
+  "id": "c086-r1",
+  "pref": "c086",
+  "about": "Why is the Docker image 2GB now?",
+  "quote": "I scrolled through a history of Docker layers to find out it's the node_modules copy. Lead with that.",
+  "rule": "Put the root cause first, then brief context."
+ },
+ {
+  "id": "c086-r2",
+  "pref": "c086",
+  "about": "What's causing the N+1 queries on the orders page?",
+  "quote": "Too much preamble. The answer was in the last paragraph. Start with it.",
+  "rule": "Lead with the answer; trim background."
+ },
+ {
+  "id": "c086-r3",
+  "pref": "c086",
+  "about": "Explain why the vitest run hangs in CI but not locally.",
+  "quote": "just tell me the cause first. the intro about how test runners work is not needed.",
+  "rule": "State the cause up front and keep explanations short."
+ },
+ {
+  "id": "c087-r1",
+  "pref": "c087",
+  "about": "Give me a one-liner to find all files over 100MB in the repo and print their sizes.",
+  "quote": "du -b doesn't exist on my mac. need something that works with the BSD versions.",
+  "rule": "Use commands that work with macOS BSD utilities."
+ },
+ {
+  "id": "c087-r2",
+  "pref": "c087",
+  "about": "How do I replace a string in place across all yaml files in the config folder?",
+  "quote": "sed -i without a suffix breaks on macOS. Give me the BSD-safe form, sed -i ''.",
+  "rule": "Use BSD-compatible sed and flags on macOS."
+ },
+ {
+  "id": "c087-r3",
+  "pref": "c087",
+  "about": "Write a shell script that prints the date 7 days ago for the backup rotation.",
+  "quote": "date -d is GNU. I'm on a Mac, use date -v-7d or something portable.",
+  "rule": "Write date/shell logic that works on macOS, not GNU-only."
+ },
+ {
+  "id": "c091-r1",
+  "pref": "c091",
+  "about": "Review my Go handler for the payments webhook.",
+  "quote": "I don't need 'Nice work on the structure!' first. What's broken?",
+  "rule": "Skip praise in reviews; list the issues."
+ },
+ {
+  "id": "c091-r2",
+  "pref": "c091",
+  "about": "Can you look over this SQL migration before I merge it?",
+  "quote": "the first half of your review is compliments. just list the problems, ranked if you can.",
+  "rule": "List review findings directly, without compliments."
+ },
+ {
+  "id": "c091-r3",
+  "pref": "c091",
+  "about": "Check the React form component for accessibility issues.",
+  "quote": "stop with the 'Great start!' stuff. issues only please.",
+  "rule": "Give issue-only reviews, no encouragement filler."
+ },
+ {
+  "id": "c093-r1",
+  "pref": "c093",
+  "about": "Show the attachment size next to each file in the email client sidebar.",
+  "quote": "you divided by 1000. everything else in the app uses 1024, so the numbers don't match the upload dialog.",
+  "rule": "Compute KB/MB with 1024 to stay consistent with the app."
+ },
+ {
+  "id": "c093-r2",
+  "pref": "c093",
+  "about": "Write a Python helper that formats bytes into human-readable sizes for the CLI output.",
+  "quote": "Use 1024 steps. The web UI shows 1024-based sizes and users compare the two.",
+  "rule": "Format byte sizes in 1024 steps to match the UI."
+ },
+ {
+  "id": "c093-r3",
+  "pref": "c093",
+  "about": "Add a storage quota bar to the settings page.",
+  "quote": "quota says 9.5 GB here and 8.8 GB on the billing page. pick 1024 like the rest of the product.",
+  "rule": "Use 1024-based units consistently in storage displays."
+ },
+ {
+  "id": "c097-r1",
+  "pref": "c097",
+  "about": "Write release notes for v2.3 from the merged PRs.",
+  "quote": "'We are pleased to announce' — no. Just say what's new like you'd tell a friend who uses the app.",
+  "rule": "Write release notes casually, like talking to a user."
+ },
+ {
+  "id": "c097-r2",
+  "pref": "c097",
+  "about": "Draft the GitHub release description for the CLI's first stable version.",
+  "quote": "This reads like corporate comms. We're tiny, keep it relaxed and plain.",
+  "rule": "Keep release descriptions plain and informal."
+ },
+ {
+  "id": "c097-r3",
+  "pref": "c097",
+  "about": "Turn the changelog into a short in-app 'What's new' blurb.",
+  "quote": "too stiff. drop 'leveraging' and 'enhanced experience', talk normally.",
+  "rule": "Use plain, conversational language in product update notes."
+ },
+ {
+  "id": "c099-r1",
+  "pref": "c099",
+  "about": "Refactor the pandas cleanup cell in the analysis notebook.",
+  "quote": "df2, df3, x, y... I have no idea what's what. name them for what they hold, like orders_by_region.",
+  "rule": "Name variables after their contents, not df2 or x."
+ },
+ {
+  "id": "c099-r2",
+  "pref": "c099",
+  "about": "Write a bash loop that renames the backup files by date.",
+  "quote": "$a and $b are meaningless in a script I'll read in six months. Name them.",
+  "rule": "Use descriptive variable names in shell scripts too."
+ },
+ {
+  "id": "c099-r3",
+  "pref": "c099",
+  "about": "Implement the diffing function for the config sync tool in Go.",
+  "quote": "tmp, tmp2, res. come on. use names that say what they are.",
+  "rule": "Avoid tmp/single-letter names; name values by meaning."
+ },
+ {
+  "id": "c102-r1",
+  "pref": "c102",
+  "about": "The CI job can't push the Docker image to the registry, what's wrong?",
+  "quote": "you jumped straight to 'your token expired'. give me the top few causes in order of likelihood.",
+  "rule": "List ranked likely causes rather than assuming one."
+ },
+ {
+  "id": "c102-r2",
+  "pref": "c102",
+  "about": "Our Postgres connections keep timing out from the Lambda, any idea why?",
+  "quote": "Don't lock onto one theory. Rank 2-3 plausible reasons and how to check each.",
+  "rule": "Give 2-3 ranked hypotheses with quick checks."
+ },
+ {
+  "id": "c102-r3",
+  "pref": "c102",
+  "about": "Why would the React app render a blank page only in production?",
+  "quote": "It might not be the base path. what are the likely causes, ranked?",
+  "rule": "Offer a ranked shortlist of causes, not one guess."
+ },
+ {
+  "id": "c104-r1",
+  "pref": "c104",
+  "about": "Write unit tests for the date utilities in the shared package.",
+  "quote": "import { describe, it } from '@jest/globals'? we use vitest. vitest.config.ts is in the root.",
+  "rule": "Write tests with vitest, not jest."
+ },
+ {
+  "id": "c104-r2",
+  "pref": "c104",
+  "about": "Add a mock for the fetch call in the API client tests.",
+  "quote": "jest.fn() won't exist here. vi.fn(), this is a vitest repo.",
+  "rule": "Use vitest APIs like vi.fn for mocks."
+ },
+ {
+  "id": "c104-r3",
+  "pref": "c104",
+  "about": "Set up a test script in package.json for the new package in the monorepo.",
+  "quote": "you added jest and ts-jest as devDeps. Every other package runs vitest, match them.",
+  "rule": "Configure new packages to test with vitest."
+ },
+ {
+  "id": "c114-r1",
+  "pref": "c114",
+  "about": "Add docstrings to the functions in the scraper module.",
+  "quote": "the docstrings came out in Korean because my prompt was. code comments stay English please.",
+  "rule": "Write code comments and docstrings in English."
+ },
+ {
+  "id": "c114-r2",
+  "pref": "c114",
+  "about": "Comment the tricky parts of the SQL migration so reviewers can follow.",
+  "quote": "English comments please. The reviewer on this one doesn't read Korean.",
+  "rule": "Write SQL and code comments in English."
+ },
+ {
+  "id": "c114-r3",
+  "pref": "c114",
+  "about": "Explain in the Dockerfile why we install the extra locale packages.",
+  "quote": "I asked you in Korean but the comment in the file should be English. Team-wide rule.",
+  "rule": "Keep in-file comments in English regardless of prompt language."
+ },
+ {
+  "id": "c124-r1",
+  "pref": "c124",
+  "about": "Write the PR description for the auth refactor and mention who should look at it.",
+  "quote": "No @handles in the body. I'll request reviewers myself, mentions spam everyone's notifications.",
+  "rule": "Never include @mentions in PR descriptions."
+ },
+ {
+  "id": "c124-r2",
+  "pref": "c124",
+  "about": "Generate a PR summary that credits the folks who helped debug the race condition.",
+  "quote": "thank them by name if you want but without the @. it sends notifications.",
+  "rule": "Credit people by plain name, not @mention, in PRs."
+ },
+ {
+  "id": "c124-r3",
+  "pref": "c124",
+  "about": "Draft the description for the dependency bump PR.",
+  "quote": "why did you @ the whole platform team. remove those.",
+  "rule": "Leave @mentions out of generated PR text."
+ },
+ {
+  "id": "c126-r1",
+  "pref": "c126",
+  "about": "What's the env var that toggles verbose logging in our deploy script?",
+  "quote": "I wrote that script. just the var name, no walkthrough.",
+  "rule": "Give the requested detail only; skip explaining the user's own code."
+ },
+ {
+  "id": "c126-r2",
+  "pref": "c126",
+  "about": "Which migration added the soft-delete column to orders?",
+  "quote": "You don't need to explain what soft delete is. Just the migration filename.",
+  "rule": "Answer the specific question without basic explanations."
+ },
+ {
+  "id": "c126-r3",
+  "pref": "c126",
+  "about": "Remind me the name of the hook that handles the auth redirect in our React app.",
+  "quote": "I know how the auth flow works, I built it. the hook name, that's it.",
+  "rule": "Skip background on systems the user built; give just the answer."
+ },
+ {
+  "id": "c135-r1",
+  "pref": "c135",
+  "about": "Pull the total refunds for last month from the billing database.",
+  "quote": "you used now() - interval '30 days'. last month = the whole previous calendar month, first to last day.",
+  "rule": "Treat 'last month' as the prior calendar month in queries."
+ },
+ {
+  "id": "c135-r2",
+  "pref": "c135",
+  "about": "Make the dashboard's 'Last month' filter work.",
+  "quote": "The filter shows a rolling 30 days. It should be the previous calendar month, same as finance uses.",
+  "rule": "Implement 'last month' filters as the previous calendar month."
+ },
+ {
+  "id": "c135-r3",
+  "pref": "c135",
+  "about": "Write a notebook cell that summarizes error counts for last month.",
+  "quote": "rolling window again. calendar month. this keeps coming up.",
+  "rule": "Use calendar-month boundaries when asked for 'last month'."
+ },
+ {
+  "id": "c136-r1",
+  "pref": "c136",
+  "about": "Summarize the incident timeline from the on-call notes.",
+  "quote": "The rocket and checkmark emojis need to go. Plain text summary please.",
+  "rule": "Write summaries without emojis."
+ },
+ {
+  "id": "c136-r2",
+  "pref": "c136",
+  "about": "Write a weekly report of merged PRs for the team channel.",
+  "quote": "no emoji bullets. regular dashes are fine.",
+  "rule": "Use plain bullets, no emojis, in reports."
+ },
+ {
+  "id": "c136-r3",
+  "pref": "c136",
+  "about": "Give me a summary of the test failures from the last CI run.",
+  "quote": "please lose the red X emojis, just list the failing tests.",
+  "rule": "Report results in plain text without emoji markers."
+ },
+ {
+  "id": "c137-r1",
+  "pref": "c137",
+  "about": "Proofread the API reference page for the webhooks section.",
+  "quote": "you changed 'canceled' to 'cancelled' and 'color' to 'colour'. US spelling throughout, revert those.",
+  "rule": "Keep docs in American spelling."
+ },
+ {
+  "id": "c137-r2",
+  "pref": "c137",
+  "about": "Write the docs page for configuring the retry policy.",
+  "quote": "'initialise' and 'optimise' in a doc set that's otherwise all US English. please fix.",
+  "rule": "Use American spellings like initialize and optimize in docs."
+ },
+ {
+  "id": "c137-r3",
+  "pref": "c137",
+  "about": "Add a section to the README about licence and contributing.",
+  "quote": "License, not licence. we write American English everywhere in the docs.",
+  "rule": "Write README and docs content in American English."
+ },
+ {
+  "id": "c148-r1",
+  "pref": "c148",
+  "about": "Add a 'created at' column to the admin users table.",
+  "quote": "It shows 4/3/2025. Use 2025-04-03 like everywhere else, otherwise people misread it.",
+  "rule": "Display dates as YYYY-MM-DD."
+ },
+ {
+  "id": "c148-r2",
+  "pref": "c148",
+  "about": "Name the nightly backup files with the date in them.",
+  "quote": "backup_03-11-24.sql sorts terribly and is ambiguous. ISO dates, backup_2024-11-03.sql.",
+  "rule": "Use ISO YYYY-MM-DD in filenames and output."
+ },
+ {
+  "id": "c148-r3",
+  "pref": "c148",
+  "about": "Print the report period at the top of the CSV export.",
+  "quote": "'from 01/10 to 31/10' — which format is that even. YYYY-MM-DD please.",
+  "rule": "Write date ranges in ISO YYYY-MM-DD format."
+ }
+]

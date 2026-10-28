@@ -1,0 +1,56 @@
+{
+ "dev/V0": {
+  "n": 16,
+  "hitRate": 0.5,
+  "coverage": 0.813,
+  "picks": 37,
+  "precision": 0.432,
+  "noiseShare": 0.108,
+  "perCat": "verify:0/2 complete:2/2 delegated:2/2 measure:1/2 minimal:0/2 tests:2/2 style:0/2 destructive:1/2"
+ },
+ "dev/V1": {
+  "n": 16,
+  "hitRate": 0.063,
+  "coverage": 0.25,
+  "picks": 6,
+  "precision": 0.167,
+  "noiseShare": 0,
+  "perCat": "verify:0/2 complete:0/2 delegated:1/2 measure:0/2 minimal:0/2 tests:0/2 style:0/2 destructive:0/2"
+ },
+ "dev/V2": {
+  "n": 16,
+  "hitRate": 0.563,
+  "coverage": 0.875,
+  "picks": 47,
+  "precision": 0.34,
+  "noiseShare": 0.106,
+  "perCat": "verify:0/2 complete:2/2 delegated:2/2 measure:1/2 minimal:0/2 tests:2/2 style:1/2 destructive:1/2"
+ },
+ "holdout/V0": {
+  "n": 64,
+  "hitRate": 0.891,
+  "coverage": 0.984,
+  "picks": 261,
+  "precision": 0.402,
+  "noiseShare": 0.123,
+  "perCat": "complete:7/8 minimal:5/8 verify:7/8 measure:8/8 destructive:7/8 delegated:7/8 tests:8/8 style:8/8"
+ },
+ "holdout/V1": {
+  "n": 64,
+  "hitRate": 0.516,
+  "coverage": 0.672,
+  "picks": 106,
+  "precision": 0.387,
+  "noiseShare": 0.113,
+  "perCat": "complete:3/8 minimal:1/8 verify:1/8 measure:8/8 destructive:4/8 delegated:5/8 tests:6/8 style:5/8"
+ },
+ "holdout/V2": {
+  "n": 64,
+  "hitRate": 0.875,
+  "coverage": 0.984,
+  "picks": 288,
+  "precision": 0.375,
+  "noiseShare": 0.142,
+  "perCat": "complete:7/8 minimal:5/8 verify:7/8 measure:8/8 destructive:7/8 delegated:7/8 tests:8/8 style:7/8"
+ }
+}

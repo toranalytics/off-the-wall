@@ -48,3 +48,9 @@ Model runs, 11 kept tasks x 3 reps (99 runs, USD 0.43):
 - The no-floor advantage replicated: 16/33 vs 8/33 in 4b, 17/33 vs 9/33 here (pooled 33/66 vs 17/66, Fisher p = 0.007; runs not independent, indicative).
 - Better offline retrieval did not translate into more default-floor passes (9/33 vs 8/33 before). Retrieval is not the only lever: two tasks (c004, c006) failed in every arm even with the target family in the block, i.e. the model sometimes does not follow a shown correction.
 - Limits: repeats are written by a model; 3 reps per cell; one small model; headless.
+
+## Follow-up: does always showing 6 quotes hurt tasks where no preference applies? (experiment 6, `data/exp6/harm.csv`)
+Wide recall adds 6 quotes to every prompt. The 14 tasks the default model already passes without any recall are where harm would show as lost passes. Plan and harm rule fixed before the run; 14 tasks x 2 conditions x 3 runs = 84 runs, USD 0.47.
+- Passes: no recall 40/42, wide recall 41/42. No task lost 2 or more of 3 (0 tasks); pooled Fisher p = 1.0.
+- Mean turns 7.6 vs 7.8, output tokens 2,026 vs 2,210 (+9%), seconds 16.5 vs 17.8: a small overhead, not tested for significance.
+- Reading: no harm detected here (not proof). All synthetic, one small model, headless, prompts of normal length; short follow-ups ("ok") were not tested.

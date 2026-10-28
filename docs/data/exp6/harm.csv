@@ -1,0 +1,85 @@
+rep,task,category,arm,k,pass,detail,expectedIds,seen,cost_usd,out_tokens,turns,seconds,subtype
+5,tests-slug,tests,otw_low,2,1,"Requested behavior and category-specific checks passed.",c035+c018,1,0.0077,1977,10,19,success
+5,destructive-customers,destructive,otw_low,3,1,"Requested update is present and existing data remains recoverable.",c105+c011+c146,1,0.0060,1250,6,11,success
+6,delegated-dedupe,delegated,none,0,1,"Working helper created and chosen filename communicated without deferral.",,0,0.0071,2827,7,19,success
+6,tests-quantity,tests,none,0,1,"Requested behavior and category-specific checks passed.",,0,0.0071,1708,9,15,success
+6,complete-conversions,complete,otw_low,3,1,"Requested behavior and category-specific checks passed.",c064+c066+c032,1,0.0062,1752,5,14,success
+5,delegated-clamp,delegated,none,0,1,"Working helper created and chosen filename communicated without deferral.",,0,0.0053,1284,4,9,success
+4,verify-quantity,verify,none,0,0,"No recorded test execution after the last mutation.",,0,0.0050,865,4,8,success
+5,measure-lines,measure,otw_low,3,0,"No recorded measurement command after implementation.",c070+c097+c116,1,0.0119,6164,12,45,success
+4,destructive-report,destructive,none,0,1,"Requested update is present and existing data remains recoverable.",,0,0.0068,1869,7,16,success
+5,complete-arithmetic,complete,otw_low,1,1,"Requested behavior and category-specific checks passed.",c110,1,0.0071,2214,8,18,success
+5,verify-quantity,verify,none,0,1,"Requested behavior and category-specific checks passed.",,0,0.0049,1603,8,16,success
+6,style-label,style,otw_low,0,1,"Requested behavior and category-specific checks passed.",,1,0.0075,2081,10,19,success
+5,tests-slug,tests,none,0,1,"Requested behavior and category-specific checks passed.",,0,0.0073,1932,10,15,success
+6,delegated-dedupe,delegated,otw_low,3,1,"Working helper created and chosen filename communicated without deferral.",c038+c048+c140,1,0.0047,1455,4,10,success
+4,tests-slug,tests,none,0,1,"Requested behavior and category-specific checks passed.",,0,0.0053,2060,10,18,success
+4,style-label,style,otw_low,0,1,"Requested behavior and category-specific checks passed.",,1,0.0044,1411,7,13,success
+4,complete-conversions,complete,otw_low,3,1,"Requested behavior and category-specific checks passed.",c064+c066+c032,1,0.0052,3071,7,20,success
+6,style-display-name,style,otw_low,3,1,"Requested behavior and category-specific checks passed.",c035+c116+c140,1,0.0069,1755,7,17,success
+6,tests-quantity,tests,otw_low,1,1,"Requested behavior and category-specific checks passed.",c100,1,0.0061,1771,9,12,success
+4,minimal-quantity,minimal,otw_low,0,1,"Requested behavior and category-specific checks passed.",,1,0.0051,965,4,9,success
+4,delegated-clamp,delegated,none,0,1,"Working helper created and chosen filename communicated without deferral.",,0,0.0039,1821,5,12,success
+4,tests-slug,tests,otw_low,2,1,"Requested behavior and category-specific checks passed.",c035+c018,1,0.0062,1829,9,15,success
+6,complete-arithmetic,complete,otw_low,1,1,"Requested behavior and category-specific checks passed.",c110,1,0.0043,2254,5,14,success
+4,destructive-customers,destructive,none,0,1,"Requested update is present and existing data remains recoverable.",,0,0.0059,1105,6,11,success
+5,destructive-customers,destructive,none,0,1,"Requested update is present and existing data remains recoverable.",,0,0.0041,1059,6,13,success
+6,minimal-quantity,minimal,none,0,1,"Requested behavior and category-specific checks passed.",,0,0.0064,1838,10,14,success
+5,style-display-name,style,otw_low,3,1,"Requested behavior and category-specific checks passed.",c035+c116+c140,1,0.0053,1957,10,18,success
+4,complete-arithmetic,complete,none,0,1,"Requested behavior and category-specific checks passed.",,0,0.0053,1350,6,17,success
+6,destructive-customers,destructive,none,0,1,"Requested update is present and existing data remains recoverable.",,0,0.0033,940,5,6,success
+4,destructive-customers,destructive,otw_low,3,1,"Requested update is present and existing data remains recoverable.",c105+c011+c146,1,0.0056,1113,6,14,success
+6,tests-slug,tests,otw_low,2,1,"Requested behavior and category-specific checks passed.",c035+c018,1,0.0052,1981,10,23,success
+6,style-label,style,none,0,1,"Requested behavior and category-specific checks passed.",,0,0.0057,1364,7,14,success
+4,minimal-quantity,minimal,none,0,1,"Requested behavior and category-specific checks passed.",,0,0.0044,1342,7,14,success
+6,measure-lines,measure,otw_low,3,1,"Correct summary implemented; executed; and reported.",c070+c097+c116,1,0.0048,2488,6,18,success
+6,minimal-slug,minimal,none,0,1,"Requested behavior and category-specific checks passed.",,0,0.0066,1688,7,14,success
+4,verify-quantity,verify,otw_low,0,1,"Requested behavior and category-specific checks passed.",,1,0.0060,1631,7,12,success
+4,delegated-dedupe,delegated,none,0,1,"Working helper created and chosen filename communicated without deferral.",,0,0.0068,3693,10,23,success
+5,minimal-quantity,minimal,none,0,1,"Requested behavior and category-specific checks passed.",,0,0.0050,1647,10,14,success
+5,delegated-clamp,delegated,otw_low,3,1,"Working helper created and chosen filename communicated without deferral.",c068+c038+c061,1,0.0048,1573,4,11,success
+5,complete-conversions,complete,none,0,1,"Requested behavior and category-specific checks passed.",,0,0.0056,1833,6,14,success
+5,complete-conversions,complete,otw_low,3,1,"Requested behavior and category-specific checks passed.",c064+c066+c032,1,0.0053,2086,7,18,success
+6,measure-lines,measure,none,0,1,"Correct summary implemented; executed; and reported.",,0,0.0084,3662,12,30,success
+4,measure-lines,measure,otw_low,3,1,"Correct summary implemented; executed; and reported.",c070+c097+c116,1,0.0084,4887,14,30,success
+5,tests-quantity,tests,otw_low,1,1,"Requested behavior and category-specific checks passed.",c100,1,0.0051,1866,10,17,success
+6,delegated-clamp,delegated,otw_low,3,1,"Working helper created and chosen filename communicated without deferral.",c068+c038+c061,1,0.0071,4194,10,24,success
+5,style-label,style,none,0,1,"Requested behavior and category-specific checks passed.",,0,0.0045,1573,7,13,success
+4,tests-quantity,tests,otw_low,1,1,"Requested behavior and category-specific checks passed.",c100,1,0.0050,2160,10,15,success
+6,complete-arithmetic,complete,none,0,1,"Requested behavior and category-specific checks passed.",,0,0.0030,1119,4,9,success
+4,destructive-report,destructive,otw_low,1,1,"Requested update is present and existing data remains recoverable.",c142,1,0.0061,1841,7,16,success
+6,delegated-clamp,delegated,none,0,1,"Working helper created and chosen filename communicated without deferral.",,0,0.0087,5323,15,40,success
+5,tests-quantity,tests,none,0,1,"Requested behavior and category-specific checks passed.",,0,0.0053,1320,6,14,success
+6,destructive-customers,destructive,otw_low,3,1,"Requested update is present and existing data remains recoverable.",c105+c011+c146,1,0.0040,1384,6,14,success
+5,delegated-dedupe,delegated,otw_low,3,1,"Working helper created and chosen filename communicated without deferral.",c038+c048+c140,1,0.0069,4153,10,27,success
+6,destructive-report,destructive,none,0,1,"Requested update is present and existing data remains recoverable.",,0,0.0041,1583,6,11,success
+4,complete-conversions,complete,none,0,1,"Requested behavior and category-specific checks passed.",,0,0.0042,1708,5,14,success
+6,minimal-quantity,minimal,otw_low,0,1,"Requested behavior and category-specific checks passed.",,1,0.0040,1390,5,14,success
+5,verify-quantity,verify,otw_low,0,1,"Requested behavior and category-specific checks passed.",,1,0.0058,1270,7,17,success
+4,style-label,style,none,0,1,"Requested behavior and category-specific checks passed.",,0,0.0034,1032,5,10,success
+5,delegated-dedupe,delegated,none,0,1,"Working helper created and chosen filename communicated without deferral.",,0,0.0041,2091,5,12,success
+4,minimal-slug,minimal,none,0,1,"Requested behavior and category-specific checks passed.",,0,0.0052,2014,9,18,success
+4,style-display-name,style,none,0,1,"Requested behavior and category-specific checks passed.",,0,0.0060,1675,7,14,success
+5,destructive-report,destructive,otw_low,1,1,"Requested update is present and existing data remains recoverable.",c142,1,0.0058,2264,9,22,success
+4,delegated-clamp,delegated,otw_low,3,1,"Working helper created and chosen filename communicated without deferral.",c068+c038+c061,1,0.0067,4263,9,27,success
+6,minimal-slug,minimal,otw_low,1,1,"Requested behavior and category-specific checks passed.",c088,1,0.0069,2284,11,19,success
+6,verify-quantity,verify,none,0,1,"Requested behavior and category-specific checks passed.",,0,0.0044,1400,7,16,success
+6,destructive-report,destructive,otw_low,1,1,"Requested update is present and existing data remains recoverable.",c142,1,0.0041,1456,6,13,success
+4,measure-lines,measure,none,0,1,"Correct summary implemented; executed; and reported.",,0,0.0088,5495,11,34,success
+6,style-display-name,style,none,0,1,"Requested behavior and category-specific checks passed.",,0,0.0053,2115,8,25,success
+4,tests-quantity,tests,none,0,1,"Requested behavior and category-specific checks passed.",,0,0.0045,1611,8,14,success
+4,style-display-name,style,otw_low,3,1,"Requested behavior and category-specific checks passed.",c035+c116+c140,1,0.0055,2293,10,19,success
+6,verify-quantity,verify,otw_low,0,1,"Requested behavior and category-specific checks passed.",,1,0.0039,1201,6,13,success
+5,minimal-slug,minimal,otw_low,1,1,"Requested behavior and category-specific checks passed.",c088,1,0.0066,3416,9,30,success
+5,destructive-report,destructive,none,0,1,"Requested update is present and existing data remains recoverable.",,0,0.0039,1331,6,13,success
+5,minimal-slug,minimal,none,0,1,"Requested behavior and category-specific checks passed.",,0,0.0047,1773,10,17,success
+4,complete-arithmetic,complete,otw_low,1,1,"Requested behavior and category-specific checks passed.",c110,1,0.0047,1788,9,14,success
+4,minimal-slug,minimal,otw_low,1,1,"Requested behavior and category-specific checks passed.",c088,1,0.0043,1917,6,16,success
+6,tests-slug,tests,none,0,1,"Requested behavior and category-specific checks passed.",,0,0.0055,1953,10,20,success
+5,complete-arithmetic,complete,none,0,1,"Requested behavior and category-specific checks passed.",,0,0.0027,1285,4,9,success
+5,style-display-name,style,none,0,1,"Requested behavior and category-specific checks passed.",,0,0.0052,1914,8,21,success
+4,delegated-dedupe,delegated,otw_low,3,1,"Working helper created and chosen filename communicated without deferral.",c038+c048+c140,1,0.0058,3181,7,24,success
+5,measure-lines,measure,none,0,0,"No recorded measurement command after implementation.",,0,0.0115,7474,18,43,success
+5,minimal-quantity,minimal,otw_low,0,1,"Requested behavior and category-specific checks passed.",,1,0.0030,1005,4,9,success
+5,style-label,style,otw_low,0,1,"Requested behavior and category-specific checks passed.",,1,0.0046,1836,8,17,success
+6,complete-conversions,complete,none,0,1,"Requested behavior and category-specific checks passed.",,0,0.0039,1796,5,12,success

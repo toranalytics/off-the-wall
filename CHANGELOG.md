@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Docs: README Evidence now leads with the 2026-10-28 measurements on personal preferences (1/33 no recall, 9/33 default, 17/33 with recallWide; two runs on two stores), with limits stated; wide-recall note updated. No behaviour change.
+
 - Docs: state that the match guard is a low lexical floor and does not keep unrelated prompts from receiving quotes (small synthetic test); add experiment records under docs/. No behaviour change.
 
 ## 0.2.3 - Unreleased

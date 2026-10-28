@@ -23,3 +23,14 @@ Pilot: recall off, 3 reps x 20 tasks. Kept: tasks the default model violated in 
 ## What it does and does not show
 - First indication of an effect of the intended kind: when OTW finds the right past correction, the model follows it far more often than the default (7/12 vs 1/12). Not shown: that OTW finds it often enough to matter, or that this holds for a real user's history, other models, or interactive use.
 - Limits: synthetic preferences written by a model, 3 reps per cell, 11 tasks, one small model, one machine, headless; the task author had to see the preference text it tests.
+
+## Follow-up: dropping the similarity floor (experiment 4b, `data/exp4/lever.csv`)
+Idea from the retrieval finding: remove the 0.18 floor so the top 6 by rank are always shown. Same 11 tasks, 3 fresh runs each, 66 runs; the override exists only in an isolated test copy of the plugin.
+| | passes / runs |
+|---|---|
+| current floor (0.18) | 8/33 (same as the earlier 8/33) |
+| no floor, top 6 always | 16/33 |
+- Per task: 5 better, 0 worse, 6 tied; two-sided sign test p = 0.063 (just above the 0.05 used in the plan); pooled Fisher p = 0.072 (runs are not independent).
+- The prediction fixed before the run held: the target is newly retrieved for three tasks (c004, c082, c114), and there the no-floor variant passed 8/9 against 2/9 (p = 0.015). In the other 8 tasks 8/24 against 6/24 (p = 0.75), no difference.
+- Cost: 6.0 quotes per prompt against 2.5 (198 vs 81 over 33 runs). With no floor every prompt, including unrelated non-coding ones, receives 6 quotes; the current floor already lets 1-2 through for unrelated prompts (8 of 8 in a small check). Distraction on unrelated tasks was not measured beyond the earlier n = 10 ablation, which found nothing detectable.
+- Decision: the default stays; the change is offered as the opt-in setting `recallWide` (0.2.3 candidate). It is not evidence of benefit on a real history.

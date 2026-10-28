@@ -8,7 +8,7 @@ import { codexClasses, DEFAULT_MODELS } from './policy.mjs'
 
 export const DEFAULT_CONFIG = {
   recall: true,
-  recallWide: false,
+  recallWide: true,
   capture: true,
   routing: true,
   judge: { claude: 'haiku', codex: 'gpt-6.1-sol' },

@@ -33,9 +33,9 @@ const patch = (key, replacement, run) => {
   try { return run() } finally { fs[key] = previous }
 }
 
-test('original defaults are retained; missing config and missing parent are normal, read-only defaults', () => {
+test('wide recall defaults on; missing config and missing parent are normal, read-only defaults', () => {
   assert.deepEqual(DEFAULT_CONFIG, {
-    capture: true, recall: true, routing: true, recallWide: false,
+    capture: true, recall: true, routing: true, recallWide: true,
     judge: { claude: 'haiku', codex: 'gpt-6.1-sol' },
     models: { claude: { small: 'haiku', mid: 'sonnet', large: 'opus' }, codex: { small: 'gpt-6-luna', mid: 'gpt-6.1-sol', large: 'gpt-6-astra' } },
   })
@@ -257,9 +257,9 @@ test('errors finding pathname metadata are closed and deterministic', () => {
   })
 })
 
-test('recallWide accepts only booleans, defaults off, and participates in revisions', () => {
+test('recallWide accepts only booleans, defaults on, and participates in revisions', () => {
   const dir = fixture()
-  assert.equal(loadConfig(dir).recallWide, false)
+  assert.equal(loadConfig(dir).recallWide, true)
   put(dir, { recallWide: false })
   const off = loadConfig(dir)
   assert.equal(off.configIssue, null)

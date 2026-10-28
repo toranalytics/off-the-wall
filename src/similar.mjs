@@ -6,6 +6,7 @@ import { isProjectKey } from './scope.mjs'
 export const QUOTES = 6
 // Initial engineering guard, not an empirically calibrated accuracy/benefit claim.
 export const MIN_SIMILAR = 0.18
+export const WIDE_MIN_PROMPT_CHARS = 20
 const ORIGINS = new Set(['interactive-user', 'history-user'])
 export const recallable = c => !!c && typeof c.quote === 'string' && isProjectKey(c.project) && ORIGINS.has(c.origin) && Number.isFinite(c.at) && c.at > 0 && isUserInput(c.quote, c)
 
@@ -74,7 +75,7 @@ export function pickCorrections(list, prompt, now, n = QUOTES, project, recallWi
   if (!past.length) return []
   const texts = past.map(c => String(c.about || c.quote).slice(0, 300))
   // Wide recall relaxes relevance, never the zero-overlap or provenance boundary.
-  const floor = recallWide === true ? 1e-6 : MIN_SIMILAR
+  const floor = recallWide === true && prompt.trim().length >= WIDE_MIN_PROMPT_CHARS ? 1e-6 : MIN_SIMILAR
   const ranked = search(build(texts), prompt, floor, past.length).map(i => past[i])
   const out = [], seen = new Set()
   for (const c of ranked) {

@@ -43,7 +43,7 @@ the next session. Off the Wall keeps those messages locally and, before an answe
 words up to 6 corrections recorded in the same working directory. It uses the `claude` or `codex` CLI you already run,
 so it needs no separate API key. That does not mean nothing leaves your machine; see [Privacy](#privacy).
 
-> This is the unreleased 0.2.3 candidate, not a stable release. Measured so far: when the right past correction is quoted back, the agent follows personal preferences it cannot otherwise know far more often, in synthetic tests (see [Evidence](#evidence)). Not measured: a real user's long history, other models, or interactive use.
+> This is the unreleased 0.3.0 candidate, not a stable release. Measured so far: when the right past correction is quoted back, the agent follows personal preferences it cannot otherwise know far more often, in synthetic tests (see [Evidence](#evidence)). Not measured: a real user's long history, other models, or interactive use.
 
 > Beta note: the evidence is exploratory, from one person’s text replays, not a general guarantee of fewer corrections, lower costs or better task completion. The input classifier can still mistake automated host or plugin text for a user reply, and it is not a perfect detector of human-written input. Check source messages locally before sharing aggregate report counts, because the counts are model classifications that can be wrong.
 
@@ -96,7 +96,7 @@ node bin/otw.mjs report --seed
 where the host history records a working directory. Turns with no known working directory are not stored (the count of skipped turns is reported)
 and are not promoted automatically. See [Scope and legacy records](#scope-and-legacy-records).
 
-Requires Node 18 or newer. Historical: an earlier version was tried on macOS with Claude Code 2.1.301 and codex-cli 0.162.1. A later Codex-only 0.2.0 live smoke record is linked under Evidence; Claude Code integration remains unverified in a live host. Live-host reload and effects of this 0.2.2 candidate remain unverified.
+Requires Node 18 or newer. Historical: an earlier version was tried on macOS with Claude Code 2.1.301 and codex-cli 0.162.1. A later Codex-only 0.2.0 live smoke record is linked under Evidence; Claude Code integration remains unverified in a live host. Live-host reload and effects of this 0.3.0 candidate remain unverified.
 
 ### If nothing happens
 
@@ -135,7 +135,7 @@ publish anything. Nothing is posted for you.
 
 | Event | Claude Code | Codex |
 | :-- | :-- | :-- |
-| Each prompt | up to 6 past corrections quoted, each cut at 200 characters, only from the same normalized working directory (project key) and only if they pass the match guard. Fewer than 6, or none, is normal; there is no filler from other projects or just the latest. The match guard is a low lexical floor (word and character-bigram similarity of 0.18 against the stored past request): in a small synthetic test, unrelated non-coding prompts still received 1-2 quotes on average, so do not read "passes the guard" as "is relevant" | same |
+| Each prompt | by default, prompts of 20+ trimmed characters get up to 6 eligible same-project quotes regardless of similarity, ranked by similarity, with zero-overlap records excluded. Each quote is cut at 200 characters. Prompts under 20 characters keep the 0.18 similarity floor; `"recallWide": false` restores that floor for all prompts. There is no filler from other projects or just the latest; relevance is not guaranteed | same |
 | Each prompt | the previous answer and your new message are judged in a detached process; a correction is saved with the project hash and input origin | same |
 | Turn end | the end of the answer is kept for that judge | same |
 | Session start | the routing rule is added | the routing rule is added |
@@ -164,9 +164,9 @@ report. It shows the format only. It is not a real selection by relevance, worki
   stores new unscoped records, and there is no automatic "safe" promotion.
 - The input classifier leaves out text from an explicit meta or non-human source and known automation envelopes, and
   keeps ordinary Markdown and long English text. It is a filter, not a perfect detector of human-written input.
-- The match guard decides whether a stored correction is similar enough to the request to be quoted. Its current
-  threshold is an initial engineering setting. It is a filter, not a calibrated accuracy figure, and no precision or
-  recall is claimed for it.
+- By default, prompts of 20+ trimmed characters get up to 6 quotes regardless of similarity, ranked by similarity
+  and excluding zero overlap. The match guard uses the 0.18 floor for shorter prompts; `"recallWide": false` restores
+  that floor for all prompts. These are engineering settings, not calibrated accuracy or relevance guarantees.
 - There is no memory-management UI or delete command in this iteration. To clear local records, delete files under
   `~/.otw` yourself (see [Privacy](#privacy)). With `capture: false`, new prompt and answer excerpts are not kept
   (corrections already stored are not erased). `node bin/otw.mjs status` shows how many records are scoped and
@@ -202,11 +202,11 @@ Claude Code 2.1.311, haiku, headless, plugin 0.2.1/0.2.3 code, synthetic store a
 | | followed the preference |
 |---|---|
 | no recall | 1/33 |
-| Off the Wall, default | 9/33 |
-| Off the Wall, `recallWide` (opt-in) | 17/33 |
+| Off the Wall, former narrow default | 9/33 |
+| Off the Wall, `recallWide` (default since 0.3.0) | 17/33 |
 
-- The result was seen twice on two different stores (16/33 vs 8/33, then 17/33 vs 9/33). Against no recall, task by task: wide recall was better in 8 tasks and worse in none (sign test p = 0.008); the default was better in 5 and worse in none (p = 0.063).
-- The mechanism is retrieval: when the right correction is among the quotes shown the model follows it far more often; when it is not found, nothing changes. Offline, the default finds the right correction for 8 of 20 tasks (13 of 20 when the same correction has been repeated); `recallWide` finds more.
+- The result was seen twice on two different stores (16/33 vs 8/33, then 17/33 vs 9/33). Against no recall, task by task: wide recall was better in 8 tasks and worse in none (sign test p = 0.008); the former narrow default was better in 5 and worse in none (p = 0.063).
+- The mechanism is retrieval: when the right correction is among the quotes shown the model follows it far more often; when it is not found, nothing changes. Offline, the former narrow default finds the right correction for 8 of 20 tasks (13 of 20 when the same correction has been repeated); `recallWide` finds more.
 - It does not always work: a shown correction is sometimes ignored (2 of 11 tasks stayed at 0/3 in every condition).
 - No benefit was found where the default model already avoids the mistake (14 of 16 tasks passed without any recall), and the quoted correction did not beat a plain list of rules at 150 records. Such a list stops fitting as a history grows; that case was not tested.
 - Not shown: effect on a real user's history, other models, interactive sessions or long-term correction rates; the corrections here are written by a model.
@@ -268,7 +268,7 @@ mapping follows the same classes by analogy and has not been measured.
 ```json
 {
   "recall": true,
-  "recallWide": false,
+  "recallWide": true,
   "capture": true,
   "routing": true,
   "judge": { "claude": "haiku", "codex": "gpt-6.1-sol" },
@@ -281,12 +281,15 @@ mapping follows the same classes by analogy and has not been measured.
 
 `node bin/otw.mjs status` shows what is stored.
 
-### Opt-in wide recall
+### Wide recall (default since 0.3.0)
 
-Set `"recallWide": true` in `~/.otw/config.json` (default `false`) to rank up to six distinct eligible same-project quotes using a tiny positive similarity floor instead of 0.18, still excluding zero overlap and respecting `recall: false`.
-In two synthetic tests of 11 personal-preference tasks (3 runs each, Claude Code with haiku), wide recall passed 16/33 and 17/33 against 8/33 and 9/33 for the default (sign test across tasks p = 0.063 and 0.25 against the default, 0.008 against no recall in the second). It also injects about 6 quotes on every prompt, including unrelated ones; a check that this does not hurt tasks with no applicable preference is still pending, so it stays off by default and is not evidence of benefit on a real history.
+Wide recall is now on by default. For prompts of 20+ trimmed characters it ranks up to six distinct eligible same-project quotes by similarity regardless of the normal 0.18 floor, using a tiny positive floor and still excluding zero overlap. Project scoping, provenance and deduplication are unchanged; `recall: false` still disables recall. Set `"recallWide": false` in `~/.otw/config.json` to restore the old 0.18 floor. Prompts under 20 trimmed characters keep that narrow guard even in wide mode, so short follow-ups do not automatically receive six weak matches. Status adds `recall narrow` only when wide recall is off.
 
-[Experiment details](docs/preference-experiment-2026-10-28.md) · [Data](docs/data/exp4)
+Cost: up to 6 quotes of at most 200 characters each, roughly 300 tokens per prompt, on every prompt including unrelated ones (subject to the short-prompt guard and eligibility filters).
+
+Evidence: two synthetic runs on two stores, with 11 personal-preference tasks and 3 runs each in Claude Code with haiku, passed 16/33 and 17/33 with wide recall against 8/33 and 9/33 with the former narrow default. A harm check on 14 tasks with no applicable preference (42 runs per condition) passed 40/42 with no recall against 41/42 with wide recall; no task lost 2 or more of 3 runs. Output tokens were about 9 percent higher on average (2,026 vs 2,210), and seconds were 16.5 vs 17.8 (not significant, indicative only). All tests were synthetic, on one small model, headless; they do not establish benefit on real histories or other models. The short-prompt guard itself was not measured.
+
+[Experiment details](docs/preference-experiment-2026-10-28.md) · [Preference data](docs/data/exp4) · [Second-store data](docs/data/exp5) · [Harm-check data](docs/data/exp6)
 
 ## Privacy
 

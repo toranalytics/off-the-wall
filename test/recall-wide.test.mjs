@@ -6,6 +6,8 @@ import { join, dirname, delimiter } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { spawnSync } from 'node:child_process'
 import { pickCorrections, build, search, QUOTES, MIN_SIMILAR } from '../src/similar.mjs'
+import { DEFAULT_CONFIG } from '../src/config.mjs'
+import * as similar from '../src/similar.mjs'
 import { projectKey } from '../src/scope.mjs'
 
 const project = 'cwd:' + 'a'.repeat(64), other = 'cwd:' + 'b'.repeat(64)
@@ -16,10 +18,9 @@ const prompt = 'abcdefghijklmnopqrstuvwxyz'
 const weak = Array.from({ length: 8 }, (_, i) => record(i, '1234567890 '.repeat(20) + ' ab ' + i))
 const ids = rows => rows.map(c => c.id)
 
-test('default and explicit false retain pre-change ID snapshots', () => {
+test('explicit false retains pre-change ID snapshots byte for byte', () => {
   for (const [query, expected] of [['billing migration backfill', [0]], ['login test', [1, 4]], ['release notes', [3]], ['zzzzzz', []], ['update documentation', [6, 2]]]) {
-    assert.deepEqual(ids(pickCorrections(store, query, 2, undefined, project)), expected)
-    assert.deepEqual(ids(pickCorrections(store, query, 2, undefined, project, false)), expected)
+    assert.equal(JSON.stringify(pickCorrections(store, query, 2, undefined, project, false)), JSON.stringify(expected.map(id => store[id])))
   }
 })
 test('wide returns six by existing score below the default floor, with quote deduplication', () => {
@@ -28,8 +29,8 @@ test('wide returns six by existing score below the default floor, with quote ded
   const seen = new Set()
   const expected = ranked.filter(c => !seen.has(c.quote) && seen.add(c.quote)).slice(0, QUOTES)
   assert.deepEqual(search(build(rows.map(c => c.about)), prompt, MIN_SIMILAR, rows.length), [])
-  assert.deepEqual(pickCorrections(rows, prompt, 2, undefined, project), [])
-  const got = pickCorrections(rows, prompt, 2, undefined, project, true)
+  assert.deepEqual(pickCorrections(rows, prompt, 2, undefined, project, false), [])
+  const got = pickCorrections(rows, prompt, 2, undefined, project, DEFAULT_CONFIG.recallWide)
   assert.equal(got.length, 6)
   assert.deepEqual(ids(got), ids(expected))
   assert.equal(pickCorrections(rows, prompt, 2, 2, project, true).length, 2)
@@ -62,8 +63,8 @@ function sandbox(config, rows = weak) {
   return { run, hook: (host, event, more = {}) => JSON.parse(run('src/hook.mjs', [host], JSON.stringify({ hook_event_name: event, session_id: 'synthetic', cwd, ...more }))) }
 }
 for (const host of ['claude', 'codex']) {
-  test(`${host}: SessionStart then prompt uses opt-in config; recall false wins`, () => {
-    for (const [config, inject] of [[{}, false], [{ recallWide: false }, false], [{ recallWide: true }, true], [{ recallWide: true, recall: false }, false]]) {
+  test(`${host}: SessionStart then prompt uses default wide config; recall false wins`, () => {
+    for (const [config, inject] of [[{}, true], [{ recallWide: false }, false], [{ recallWide: true }, true], [{ recall: false }, false], [{ recallWide: true, recall: false }, false], [{ recallWide: 'true' }, false], [{ recallWide: 1 }, false], [{ recallWide: null }, false]]) {
       const box = sandbox(config)
       assert.deepEqual(box.hook(host, 'SessionStart'), {})
       const output = box.hook(host, 'UserPromptSubmit', { prompt })
@@ -82,10 +83,27 @@ for (const host of ['claude', 'codex']) {
     }
   })
 }
-test('status keeps the old flags line unless wide is explicitly enabled', () => {
-  for (const [config, suffix] of [[{}, ''], [{ recallWide: false }, ''], [{ recallWide: true }, ' · recall wide']]) {
+test('status labels only explicit narrow recall', () => {
+  for (const [config, suffix] of [[{}, ''], [{ recallWide: false }, ' · recall narrow'], [{ recallWide: true }, '']]) {
     const box = sandbox({ capture: true, routing: true, ...config })
     const output = box.run('bin/otw.mjs', ['status'])
     assert.ok(output.split('\n').includes('recall on · capture on · routing on' + suffix))
   }
+})
+
+test('wide prompt guard uses trimmed length: 19 is narrow, 20 is rank-based', () => {
+  assert.equal(similar.WIDE_MIN_PROMPT_CHARS, 20)
+  const short = 'abcdefghijklmnopqrs', long = short + 't'
+  assert.equal(short.length, 19); assert.equal(long.length, 20)
+  assert.deepEqual(search(build(weak.map(c => c.about)), short, MIN_SIMILAR, weak.length), [])
+  for (const query of [short, '  ' + short + '  ', 'ok', 'yes do it', 'continue']) {
+    assert.deepEqual(pickCorrections(weak, query, 2, undefined, project, true), [])
+  }
+  const expected = search(build(weak.map(c => c.about)), long, 1e-6, QUOTES).map(i => weak[i])
+  assert.equal(expected.length, 6)
+  assert.deepEqual(pickCorrections(weak, long, 2, undefined, project, true), expected)
+  assert.deepEqual(pickCorrections(weak, '  ' + long + '  ', 2, undefined, project, true), expected)
+  assert.deepEqual(pickCorrections(weak, long, 2, undefined, project, false), [])
+  const exact = record('exact', 'continue')
+  assert.deepEqual(pickCorrections([exact], 'continue', 2, undefined, project, true), [exact])
 })

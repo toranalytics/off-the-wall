@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.0 - Unreleased
+
+- **Behavior change:** default `recallWide` to `true`; opt out with `"recallWide": false` to restore the 0.18 similarity floor, also retained for prompts under 20 trimmed characters; two synthetic, headless Claude Code/haiku runs on two stores (11 preference tasks × 3) passed 16/33 and 17/33 wide vs 8/33 and 9/33 narrow, and a 14-task harm check (42 runs each) passed 40/42 no recall vs 41/42 wide with no task losing 2+ of 3, average output tokens 2,026 vs 2,210 (about 9% higher) and seconds 16.5 vs 17.8 (not significant, indicative only); one small model, short-prompt guard unmeasured.
+
 ## Unreleased
 
 - Docs: README Evidence now leads with the 2026-10-28 measurements on personal preferences (1/33 no recall, 9/33 default, 17/33 with recallWide; two runs on two stores), with limits stated; wide-recall note updated. No behaviour change.

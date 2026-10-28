@@ -7,6 +7,9 @@ export const QUOTES = 6
 // Initial engineering guard, not an empirically calibrated accuracy/benefit claim.
 export const MIN_SIMILAR = 0.18
 export const WIDE_MIN_PROMPT_CHARS = 20
+// Lexical gate (opt-in `recallGate`): a wide-recall candidate must share two whole words with the prompt, or one word
+// that appears in fewer than GATE_RARE of the stored requests. Bigram-only overlap no longer qualifies.
+export const GATE_RARE = 0.05
 const ORIGINS = new Set(['interactive-user', 'history-user'])
 export const recallable = c => !!c && typeof c.quote === 'string' && isProjectKey(c.project) && ORIGINS.has(c.origin) && Number.isFinite(c.at) && c.at > 0 && isUserInput(c.quote, c)
 
@@ -69,14 +72,28 @@ export const one = (s, n) => {
   return t.length > n ? `${t.slice(0, n)}…` : t
 }
 
-export function pickCorrections(list, prompt, now, n = QUOTES, project, recallWide = false) {
+const wordsOf = text => (text.toLowerCase().match(/[\p{L}\p{N}_-]+/gu) ?? []).filter(w => w.length >= 3)
+
+export function pickCorrections(list, prompt, now, n = QUOTES, project, recallWide = false, gate = false) {
   if (!isProjectKey(project) || !isUserInput(prompt) || !Number.isFinite(now) || !Number.isFinite(n) || n < 1) return []
   const past = list.filter(c => recallable(c) && c.project === project && c.at < now)
   if (!past.length) return []
   const texts = past.map(c => String(c.about || c.quote).slice(0, 300))
   // Wide recall relaxes relevance, never the zero-overlap or provenance boundary.
   const floor = recallWide === true && prompt.trim().length >= WIDE_MIN_PROMPT_CHARS ? 1e-6 : MIN_SIMILAR
-  const ranked = search(build(texts), prompt, floor, past.length).map(i => past[i])
+  let ranked = search(build(texts), prompt, floor, past.length).map(i => past[i])
+  if (gate === true && floor < MIN_SIMILAR) {
+    const wanted = new Set(wordsOf(prompt)), df = new Map(), shared = new Map()
+    texts.forEach((t, i) => {
+      const own = new Set(wordsOf(t))
+      for (const w of own) df.set(w, (df.get(w) ?? 0) + 1)
+      shared.set(past[i], [...own].filter(w => wanted.has(w)))
+    })
+    ranked = ranked.filter(c => {
+      const hits = shared.get(c).filter(w => df.get(w) / texts.length < 1)
+      return hits.length >= 2 || hits.some(w => df.get(w) / texts.length < GATE_RARE)
+    })
+  }
   const out = [], seen = new Set()
   for (const c of ranked) {
     const key = one(c.quote, 800)

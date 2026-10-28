@@ -1,5 +1,10 @@
 # Changelog
 
+
+## Unreleased
+
+- Added the opt-in setting `recallGate` (default `false`). With wide recall it requires a stored request to share two whole words with the prompt, or one word that appears in fewer than 5% of the stored requests, so bigram-only overlap no longer brings quotes in. On the synthetic offline evaluation (`docs/data/exp7/`) it cut the quotes shown for 8 unrelated prompts from 6.0 to 2.0 on average and kept the target correction on the same 11 of 20 tasks (18 with repeats). Found in a second round on a small synthetic set, so some overfitting is possible; no model-run confirmation yet (the targeted check was invalid because the test CLI was logged out). In a store of 20 records or fewer a prompt must share two words, which has not been measured. Not enabled by default.
+
 ## 0.3.0 - Unreleased
 
 - **Behavior change:** default `recallWide` to `true`; opt out with `"recallWide": false` to restore the 0.18 similarity floor, also retained for prompts under 20 trimmed characters; two synthetic, headless Claude Code/haiku runs on two stores (11 preference tasks × 3) passed 16/33 and 17/33 wide vs 8/33 and 9/33 narrow, and a 14-task harm check (42 runs each) passed 40/42 no recall vs 41/42 wide with no task losing 2+ of 3, average output tokens 2,026 vs 2,210 (about 9% higher) and seconds 16.5 vs 17.8 (not significant, indicative only); one small model, short-prompt guard unmeasured.

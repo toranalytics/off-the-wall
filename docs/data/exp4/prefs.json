@@ -1,0 +1,152 @@
+[
+ {
+  "id": "c004",
+  "quote": "a token-by-token table is overkill. one sentence then an example",
+  "rule": "Explain regexes with one sentence and an example."
+ },
+ {
+  "id": "c006",
+  "quote": "commit messages here are conventional commits, fix(auth): ..., not 'Fixed stuff with login'.",
+  "rule": "Use conventional commit format for commit messages."
+ },
+ {
+  "id": "c011",
+  "quote": "don't use real celebrity names in demo data, use obviously fake ones",
+  "rule": "Use clearly fictional names in demo data."
+ },
+ {
+  "id": "c015",
+  "quote": "bullets, not an essay. 5 lines max",
+  "rule": "Keep status updates to a few short bullets."
+ },
+ {
+  "id": "c020",
+  "quote": "times need the timezone written out. '10pm' on its own confuses the Berlin folks",
+  "rule": "Always state the timezone alongside times in announcements."
+ },
+ {
+  "id": "c022",
+  "quote": "we follow keep a changelog, newest on top under ## [Unreleased]. you put it at the bottom",
+  "rule": "Add changelog entries under Unreleased at the top."
+ },
+ {
+  "id": "c033",
+  "quote": "I asked yes or no. one line is fine.",
+  "rule": "Answer yes/no questions in one line."
+ },
+ {
+  "id": "c034",
+  "quote": "don't reach for redis for an in-process lookup table. a Map is fine",
+  "rule": "Prefer in-process structures before adding external services."
+ },
+ {
+  "id": "c044",
+  "quote": "please don't pull in moment for this, it's deprecated. date-fns or Intl",
+  "rule": "Avoid moment.js; prefer date-fns or native Intl."
+ },
+ {
+  "id": "c048",
+  "quote": "user-facing errors shouldn't blame them. 'You did something wrong' is bad, 'Your session expired, please sign in again' is fine",
+  "rule": "Phrase user-facing errors neutrally, without blaming the user."
+ },
+ {
+  "id": "c049",
+  "quote": "you keep apologizing. no need, just tell me what broke",
+  "rule": "Skip apologies; state the problem directly."
+ },
+ {
+  "id": "c055",
+  "quote": "9am for whom? you assumed UTC. our users are in Seoul, use Asia/Seoul unless I say otherwise",
+  "rule": "Default to Asia/Seoul for user-facing schedules unless told otherwise."
+ },
+ {
+  "id": "c057",
+  "quote": "we use pnpm, not npm. you generated a package-lock.json again",
+  "rule": "Use pnpm for package management in this repo."
+ },
+ {
+  "id": "c059",
+  "quote": "Node 18+ has fetch built in. no need for axios in a 40-line script",
+  "rule": "Use built-in fetch instead of adding HTTP libraries to small scripts."
+ },
+ {
+  "id": "c082",
+  "quote": "use the pino logger we already have, not console.log with string concatenation",
+  "rule": "Use the project's existing logger instead of console.log."
+ },
+ {
+  "id": "c086",
+  "quote": "way too long. three paragraphs of background before the actual answer. lead with the cause",
+  "rule": "Lead with the answer and keep explanations short."
+ },
+ {
+  "id": "c087",
+  "quote": "I'm on macOS. find -printf doesn't exist on BSD find. give me something that works here",
+  "rule": "Write shell commands compatible with macOS/BSD tools."
+ },
+ {
+  "id": "c091",
+  "quote": "Less cheerleading please. Skip the 'Great job!' and just list the problems.",
+  "rule": "Give reviews without praise filler; list issues directly."
+ },
+ {
+  "id": "c093",
+  "quote": "use KB = 1024 like the rest of the UI, mixing 1000 and 1024 is confusing",
+  "rule": "Use 1024-based units for file sizes to match the UI."
+ },
+ {
+  "id": "c097",
+  "quote": "too formal, reads like a press release. we're a four person team, write like a human",
+  "rule": "Write release notes in a casual, plain voice."
+ },
+ {
+  "id": "c099",
+  "quote": "names like a, b, tmp2 are unreadable. name them for what they hold",
+  "rule": "Use descriptive variable names, not single letters or tmpN."
+ },
+ {
+  "id": "c102",
+  "quote": "don't just assume it's permissions. give me the 2-3 likely causes, ranked",
+  "rule": "Offer ranked likely causes instead of jumping to one assumption."
+ },
+ {
+  "id": "c104",
+  "quote": "we're on vitest, not jest. the config is sitting right there in the repo",
+  "rule": "Use vitest for new tests."
+ },
+ {
+  "id": "c114",
+  "quote": "comments should be in English, not everyone on the team reads Korean",
+  "rule": "Write code comments in English."
+ },
+ {
+  "id": "c124",
+  "quote": "please don't @mention people in PR descriptions, it pings them all",
+  "rule": "Don't @mention people in generated PR descriptions."
+ },
+ {
+  "id": "c126",
+  "quote": "you explained how the flag system works like I'm new here. I wrote it. just give me the flag name",
+  "rule": "Don't over-explain things the user already knows."
+ },
+ {
+  "id": "c135",
+  "quote": "'last month' means the calendar month, not the last 30 days. we've been through this",
+  "rule": "Interpret 'last month' as the previous calendar month."
+ },
+ {
+  "id": "c136",
+  "quote": "no emojis in summaries pls. plain text",
+  "rule": "No emojis in summaries or reports."
+ },
+ {
+  "id": "c137",
+  "quote": "american spelling please, behavior not behaviour, the rest of the docs use it",
+  "rule": "Use American English spelling in docs."
+ },
+ {
+  "id": "c148",
+  "quote": "YYYY-MM-DD everywhere please. no 03/04/24, nobody knows if thats march or april",
+  "rule": "Use ISO YYYY-MM-DD dates in UI and output."
+ }
+]

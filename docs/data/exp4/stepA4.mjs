@@ -1,0 +1,8 @@
+import fs from 'node:fs'; import path from 'node:path'; import { pathToFileURL } from 'node:url'
+const root='/Users/SJB/.aside/u/0/sessions/2026-10-22_0s8heOAE5qcpaKfV/tmp/claude-cli/config/plugins/cache/off-the-wall/off-the-wall'; const src=path.join(root,fs.readdirSync(root)[0],'src')
+const { pickCorrections } = await import(pathToFileURL(path.join(src,'similar.mjs')).href); const { projectKey } = await import(pathToFileURL(path.join(src,'scope.mjs')).href)
+const { TASKS } = await import('./tasks4.mjs'); const store = JSON.parse(fs.readFileSync('../otw-exp2/store/store.json','utf8')); const key = projectKey('/tmp/otw-exp4-stepA')
+const list = store.map((r,i)=>({ at:1700000000000+i, about:r.about, quote:r.quote, rule:r.rule, host:'claude', src:'live', project:key, origin:'interactive-user', sessionId:'s'+i, _id:r.id, _cat:r.category }))
+const choose=(n,k)=>{let r=1;for(let i=1;i<=k;i++)r=r*(n-k+i)/i;return r}; const rows=[]; let hit=0, chance=0, any=0, noisePicks=0, picks=0
+for (const t of TASKS) { const p = pickCorrections(list, t.prompt, Date.now(), undefined, key); const k=p.length; const h=p.some(x=>x._id===t.pref); if(k)any++; if(h)hit++; picks+=k; noisePicks+=p.filter(x=>x._cat==='noise').length; const c=k?k/store.length:0; chance+=c; rows.push({task:t.id,pref:t.pref,k,hit:h,ids:p.map(x=>x._id).join('/')}) }
+console.table(rows); console.log(`blocks produced ${any}/${TASKS.length}; exact target preference among picks ${hit}/${TASKS.length}; expected by chance with the same k: ${chance.toFixed(1)}; picks that are preference records (noise category): ${noisePicks}/${picks}`)

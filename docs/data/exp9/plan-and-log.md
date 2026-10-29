@@ -40,3 +40,15 @@ Reading: a meaning-based score does what word overlap could not on the noise sid
 - E5: embedding cosine, top 6 with cosine >= 0.30.
 - E6 (hybrid): the current word-overlap picks (wide recall, up to 6), each kept only if its embedding cosine to the prompt is >= 0.20.
 Same pass rule (HIT_single >= 11, HIT_repeat >= 17, HOLD >= 0.933, NOISE <= 3.0 on both stores). Overfitting caveat: this is a second look at the same 20 tasks, 8 unrelated prompts and 64-prompt holdout after seeing round 1, so a pass would still only be exploratory and would need a model-run check and a separate decision about shipping an optional dependency.
+
+### Round 2 result (run by the account owner in a terminal on 2026-10-29; `exp9-output-round2.txt`; same model)
+| | HIT_single | HIT_repeat | NOISE_single | NOISE_repeat | HOLD |
+|---|---|---|---|---|---|
+| E0 current word overlap | 11 | 17 | 6.00 | 6.00 | 0.953 |
+| E4 cosine >= 0.25 | 13 | 15 | 0.63 | 0.63 | 0.828 |
+| E5 cosine >= 0.30 | 13 | 14 | 0.13 | 0.13 | 0.734 |
+| E6 word overlap, kept if cosine >= 0.20 | 10 | 16 | 0.38 | 0.38 | 0.703 |
+Keep rule: E4, E5 and E6 all discarded. E4 is the closest: it passes the single-store hits (13 > 11) and the noise limit (0.63), but misses HIT_repeat (15 < 17) and HOLD (0.828 < 0.933).
+
+### Conclusion of experiment 9
+A small local embedding model removes almost all of the quotes attached to unrelated prompts (6.0 to 0.1 to 0.6), which no word-overlap variant could do in experiments 7 and 8. It does so at a cost that this rule does not accept: the holdout coverage falls from 0.953 to 0.83 or lower and the repeat-store hits fall from 17 to 14 to 16. At thresholds of 0.25 and 0.30 it finds more targets than word overlap on the single store (13 vs 11) but fewer on the repeat store. There is no threshold in the three-by-two grid that satisfies all conditions. Decision: word overlap stays as the only selector; nothing is added to `src/`. Writing this down as a possible optional direction (an embedding re-ranker behind an explicit opt-in, with an installed model) only if someone needs lower noise more than coverage; it would need its own model-run check and would add a dependency and a download, so it is not planned. Limits: 20 tasks, 8 unrelated prompts, one embedding model, a second look at the same data after round 1, synthetic stores, offline only.

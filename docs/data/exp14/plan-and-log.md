@@ -1,6 +1,6 @@
 # Experiment 14 (2026-10-29): does the recall effect hold with the largest Claude model (Opus)?
 
-Status: plan, written before any model run. Model runs are done by the account owner in a terminal.
+Status: NOT RUN. Plan and runner were prepared, then the owner decided on 2026-10-29 not to run it (estimated USD 12-25 for one more model). The README and articles keep saying that Opus and the Codex models were not measured.
 
 ## Why
 Experiments 5b/10 (haiku) and 12 (Sonnet) found that quoting the matching correction raises how often synthetic personal habits are followed. Opus is the model most likely to follow a habit without help, so it is the case where the effect could shrink or vanish. The README and articles still say Opus is not measured.

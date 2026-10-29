@@ -167,7 +167,7 @@ report. It shows the format only. It is not a real selection by relevance, worki
 - By default, prompts of 20+ trimmed characters get up to 6 quotes regardless of similarity, ranked by similarity
   and excluding zero overlap. The match guard uses the 0.18 floor for shorter prompts; `"recallWide": false` restores
   that floor for all prompts. These are engineering settings, not calibrated accuracy or relevance guarantees.
-- There is no memory-management UI or delete command in this iteration. To clear local records, delete files under
+- There is no memory-management UI. On main (not yet in a release) `otw forget --all --yes` deletes every stored correction, the session state and the log, and `otw forget --project --yes` deletes only the current working directory's corrections; without `--yes` both only show what would be deleted. Provider-side copies and your Claude Code/Codex histories are not affected. In 0.3.0, delete files under
   `~/.otw` yourself (see [Privacy](#privacy)). With `capture: false`, new prompt and answer excerpts are not kept
   (corrections already stored are not erased). `node bin/otw.mjs status` shows how many records are scoped and
   origin-tagged and how many are quarantined.
@@ -309,7 +309,7 @@ There is no publisher telemetry and no separate API key. That is not the same as
 provider still sees these excerpts and your plan's usage or charges can apply. The default event and error logs omit raw
 excerpts. With `OTW_DEBUG` set, raw excerpts can be written to `~/.otw/log.jsonl`. History frames that are unknown or too
 large fail closed: project and pending state are not guessed from them. Deleting `~/.otw` forgets what Off the Wall stored, but it does not erase your Claude Code
-or Codex histories or any copies kept by a provider. There is no delete command yet. Sharing is manual: the Discussions
+or Codex histories or any copies kept by a provider. `otw forget` (on main, not yet in a release; see Scope and legacy records) deletes what Off the Wall stored; in 0.3.0 there is no delete command. Sharing is manual: the Discussions
 link only prefills counts and kind names, and you review it before publishing.
 
 ### Capture controls and deletion
@@ -333,7 +333,7 @@ link only prefills counts and kind names, and you review it before publishing.
   some relevant corrections can be left out.
 - Scope is per exact working directory. Related folders, moved projects and worktrees do not share recall.
 - Recall quotes your words to the model only. They are not shown to you during the session.
-- There is no memory-management UI or delete command yet.
+- There is no memory-management UI. `otw forget` exists on main but not in the 0.3.0 pre-release.
 
 ## Development
 

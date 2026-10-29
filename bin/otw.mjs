@@ -3,6 +3,7 @@ import { hookStatus } from '../src/hookstatus.mjs'
 import { recallable } from '../src/similar.mjs'
 import { report } from '../src/report.mjs'
 import { config, corrections, home } from '../src/store.mjs'
+import { runForget, USAGE as FORGET_USAGE } from '../src/forget.mjs'
 
 const [cmd, ...rest] = process.argv.slice(2)
 const flag = (name, dflt) => {
@@ -30,11 +31,16 @@ if (cmd === 'report') {
   console.log(`scoped/origin-tagged ${scoped} · quarantined ${cs.length - scoped} (not automatically recalled)`)
   console.log(`recall ${cfg.recall ? 'on' : 'off'} · capture ${cfg.capture ? 'on' : 'off'} · routing ${cfg.routing ? 'on' : 'off'}${cfg.recallWide ? '' : ' · recall narrow'}`)
   for (const line of hookStatus(home())) console.log(line)
+} else if (cmd === 'forget') {
+  const r = runForget(home(), rest, process.cwd())
+  for (const line of r.lines) console.log(line)
+  process.exitCode = r.code
 } else {
   console.log(`otw report [--days 30 | --days 0] [--max 400] [--host claude|codex] [--seed] [--claude-dir DIR] [--codex-dir DIR]
   Reads your Claude Code and Codex history on this machine and shows how often you corrected how the assistant
   worked, and for what (model labels, not verified outcomes). --seed saves only origin-tagged corrections with
   an explicit history workspace; recall requires a relevant match in that same working directory.
   --days 0 reads all history. Try it without your own history: --host claude --claude-dir examples/claude-history --days 0
-otw status`)
+otw status
+${FORGET_USAGE}`)
 }

@@ -3,6 +3,7 @@
 
 ## Unreleased
 
+- Added `otw forget`: `--all --yes` deletes every stored correction, the per-session state and the diagnostic log (config.json stays); `--project [DIR] --yes` deletes only that working directory's corrections and session state. Without `--yes` it only shows counts. It never follows links or touches anything outside the Off the Wall folder, and a capture authorized before the deletion cannot append afterwards (tests). Provider-side copies and Claude Code/Codex histories are not affected.
 - No behavior change. Tried an opt-in lexical gate (`recallGate`) against recall noise on unrelated prompts and removed it again: it cut the quotes shown on unrelated prompts from 6.0 to 2.0 only on a 150-record synthetic store, not on a 240-record one (6.0 to 5.5), and lowered target hits for very small stores. Record: `docs/data/exp7/plan-and-log.md`.
 
 ## 0.3.0 - Unreleased

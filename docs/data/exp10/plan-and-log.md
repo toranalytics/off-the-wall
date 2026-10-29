@@ -31,3 +31,20 @@ Total 66 + 36 = 102 runs, Claude Code 2.1.311, haiku, headless, synthetic, order
 - The only change to the plugin test copy (isolated, not in the product), in `correctionBlock`:
   `- <quote>` becomes `- <quote> (said in reply to the request: "<about, 120 characters>")` when `OTW_EXP_ABOUT=1`.
 - Run: `bash docs/data/exp10/run-exp10.sh` (102 runs, resumable). Output: `run.csv`, `run-summary.txt`.
+
+### Result (run by the account owner in a terminal on 2026-10-29; `run.csv`; Claude Code 2.1.311, haiku, headless; USD 0.56; every run returned a result, 4 of 104 ended at the turn limit and count as fails)
+The runner recorded 104 rows instead of 102: two cells have a fourth row ((rep 2, h-paginate-test, none) and (rep 1, task-c033, quote)), which means two runs overlapped (the runner was probably started twice at the same time). The `run-summary.txt` the runner wrote counts the duplicates (preference quote 21/34, quote_about 19/33; harm none 1/13). The table below keeps the first row of each (rep, task, arm). Using the second row instead changes only harm/none (11/12 instead of 12/12, a turn-limit failure) and nothing that the decision rule looks at.
+| | passes |
+|---|---|
+| preference tasks, quote (current block) | 20/33 |
+| preference tasks, quote_about | 19/33 |
+| harm tasks (wrong application of a one-off correction), none | 12/12 passed (0 failures) |
+| harm tasks, quote | 12/12 passed (0 failures) |
+| harm tasks, quote_about | 12/12 passed (0 failures) |
+- Per task on the preference side: quote_about better in 1 task, worse in 2, tied in 8. Mean output tokens 2,095 against 2,251 (+7%).
+- Integrity check: the `about_seen` column is 1 for every quote_about run and 0 for every quote run; no block for none.
+- Decision rule: preference condition met (19 >= 20 - 2), harm condition met (0 <= 0), gain no. The harm question is unanswered: with the quote-only block the model never misapplied a one-off correction in these 12 runs, so there was nothing for the added request text to prevent.
+- Same four preference tasks stay at 0/3 in both arms (c004, c015, c057, c104).
+
+### Conclusion of experiment 10
+Quoting the request next to the correction did not help on personal preferences (19/33 against 20/33, within noise) and the one-off misapplication it was meant to prevent did not occur with this model on these four tasks, so no benefit was measured. It costs a few more tokens per quote. Decision: not shipped, not added to the product or to the local GJC module; the plain quote stays. This does not show that misapplication never happens; the four tasks were written by the experimenter and one small model followed the new task each time. A harder test (tasks where the one-off instruction is more tempting, other models) would be needed before drawing a conclusion either way.

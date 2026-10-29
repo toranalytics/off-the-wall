@@ -1,0 +1,20 @@
+task,none,quote,quote_about
+h-paginate-test,3/4,3/3,3/3
+task-c124,-,3/3,3/3
+task-c104,-,0/3,0/3
+task-c006,-,3/3,3/3
+task-c114,-,3/3,2/3
+h-refactor,3/3,3/3,3/3
+h-cli-readme,3/3,3/3,3/3
+h-explain-retry,3/3,3/3,3/3
+task-c137,-,2/3,3/3
+task-c033,-,4/4,3/3
+task-c136,-,3/3,3/3
+task-c004,-,0/3,0/3
+task-c082,-,3/3,2/3
+task-c057,-,0/3,0/3
+task-c015,-,0/3,0/3
+
+preference passes: quote 21/34, quote_about 19/33
+harm tasks failures: none 1/13, quote 0/12, quote_about 0/12
+decision rule: preference condition met, harm condition met, gain no; harm question unanswered (quote arm has no failures)

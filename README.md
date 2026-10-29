@@ -209,12 +209,13 @@ Claude Code 2.1.311, haiku, headless, plugin 0.2.1/0.2.3 code, synthetic store a
 | Off the Wall, former narrow default | 9/33 |
 | Off the Wall, `recallWide` (default since 0.3.0) | 17/33 |
 
+- With a larger model (Claude Code with Sonnet instead of haiku, same tasks and store, 66 runs): no recall 2/33, current default 20/33; better in 7 tasks, worse in none (sign test p = 0.016). Synthetic habits, 3 runs per cell. Record: [docs](docs/preference-experiment-2026-10-28.md).
 - A third run after fixing the scorer defect (experiment 5b, same store and tasks, 99 more runs): no recall 2/33, former narrow default 14/33, `recallWide` 25/33. It is one more sample with the same direction; the higher numbers come partly from the fix and partly from run-to-run variation, so the first table is not replaced. Record: [docs](docs/preference-experiment-2026-10-28.md).
 - The result was seen twice on two different stores (16/33 vs 8/33, then 17/33 vs 9/33). Against no recall, task by task: wide recall was better in 8 tasks and worse in none (sign test p = 0.008); the former narrow default was better in 5 and worse in none (p = 0.063).
 - The mechanism is retrieval: when the right correction is among the quotes shown the model follows it far more often; when it is not found, nothing changes. Offline, the former narrow default finds the right correction for 8 of 20 tasks (13 of 20 when the same correction has been repeated); `recallWide` finds more.
 - It does not always work: in one of the 11 tasks (a strict one-sentence answer format) the shown correction was not followed in any run. A second task that also stayed at 0/3 was a scoring defect found afterwards (the scorer rejected answers wrapped in a code fence); re-read from the transcripts, 5 of 6 runs that saw the correction followed it against 0 of 3 that did not. That recount is post hoc and the reported numbers above are the original ones, so they understate the effect.
 - No benefit was found where the default model already avoids the mistake (14 of 16 tasks passed without any recall), and the quoted correction did not beat a plain list of rules at 150 records. Such a list stops fitting as a history grows; that case was not tested.
-- Not shown: effect on a real user's history, other models, interactive sessions or long-term correction rates; the corrections here are written by a model.
+- Not shown: effect on a real user's history, models other than Claude haiku and Sonnet (for example Opus or the Codex models), interactive sessions or long-term correction rates; the corrections here are written by a model.
 - Records, scripts and data: [docs/](docs/) (experiments 1-7), including the weaknesses found by an independent review.
 
 - [Live Claude Code headless smoke record (2.1.311, plugin 0.2.1; interactive use not tested; one run produced a very long malformed output that did not reproduce in 8 reruns)](docs/live-claude-smoke-2026-10-27.md)

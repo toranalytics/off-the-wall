@@ -1,0 +1,67 @@
+rep,task,category,arm,k,pass,detail,expectedIds,seen,about_seen,cost_usd,out_tokens,turns,seconds,subtype
+3,task-c006,pref,none,0,0,"Required answer content and preference-specific text checks",,0,0,0.0670,276,2,7,success
+1,task-c114,pref,quote,6,1,"Implementation behavior and preference-specific checks",c114+c082-r3+c137-r2+c045+c018+c022,1,0,0.1070,1584,5,15,success
+2,task-c033,pref,quote,6,1,"Required answer content and preference-specific text checks",c134+c042+c094+c120+c004-r1+c033-r3,1,0,0.0642,244,3,6,success
+1,task-c137,pref,none,0,0,"Implementation behavior and preference-specific checks",,0,0,0.0926,794,4,9,success
+2,task-c057,pref,none,0,0,"Implementation behavior and preference-specific checks",,0,0,0.1241,1825,9,21,success
+1,task-c124,pref,none,0,0,"Required answer content and preference-specific text checks",,0,0,0.0891,651,3,9,success
+1,task-c137,pref,quote,6,1,"Implementation behavior and preference-specific checks",c097+c097-r1+c058+c024+c020-r2+c137-r3,1,0,0.0766,861,3,10,success
+2,task-c033,pref,none,0,0,"Required answer content and preference-specific text checks",,0,0,0.0714,608,3,8,success
+2,task-c137,pref,none,0,0,"Implementation behavior and preference-specific checks",,0,0,0.0470,667,4,8,success
+1,task-c033,pref,none,0,0,"Required answer content and preference-specific text checks",,0,0,0.0444,584,3,8,success
+1,task-c033,pref,quote,6,1,"Required answer content and preference-specific text checks",c134+c042+c094+c120+c004-r1+c033-r3,1,0,0.0409,259,3,6,success
+2,task-c015,pref,none,0,0,"Required answer content and preference-specific text checks",,0,0,0.0599,281,2,6,success
+1,task-c006,pref,none,0,0,"Required answer content and preference-specific text checks",,0,0,0.0150,179,2,5,success
+2,task-c124,pref,quote,6,1,"Required answer content and preference-specific text checks",c124+c124-r3+c124-r1+c110+c020-r3+c097-r2,1,0,0.0731,640,3,9,success
+2,task-c082,pref,none,0,0,"Implementation behavior and preference-specific checks",,0,0,0.0990,820,5,14,success
+2,task-c136,pref,quote,6,1,"Required answer content and preference-specific text checks",c097+c136-r1+c135-r3+c136+c097-r1+c094,1,0,0.0614,301,2,6,success
+3,task-c033,pref,quote,6,0,"Required answer content and preference-specific text checks",c134+c042+c094+c120+c004-r1+c033-r3,1,0,0.0330,265,3,6,success
+3,task-c124,pref,quote,6,1,"Required answer content and preference-specific text checks",c124+c124-r3+c124-r1+c110+c020-r3+c097-r2,1,0,0.0455,662,3,11,success
+2,task-c006,pref,quote,6,1,"Required answer content and preference-specific text checks",c006-r1+c006-r3+c031+c048+c006+c116,1,0,0.0655,347,2,8,success
+3,task-c114,pref,none,0,0,"Implementation behavior and preference-specific checks",,0,0,0.0918,1528,6,17,success
+2,task-c114,pref,none,0,0,"Implementation behavior and preference-specific checks",,0,0,0.0738,1889,6,20,success
+1,task-c124,pref,quote,6,1,"Required answer content and preference-specific text checks",c124+c124-r3+c124-r1+c110+c020-r3+c097-r2,1,0,0.0453,639,3,9,success
+1,task-c114,pref,none,0,0,"Implementation behavior and preference-specific checks",,0,0,0.0630,1737,6,19,success
+3,task-c057,pref,none,0,0,"Implementation behavior and preference-specific checks",,0,0,0.0659,1341,7,16,success
+2,task-c114,pref,quote,6,1,"Implementation behavior and preference-specific checks",c114+c082-r3+c137-r2+c045+c018+c022,1,0,0.0620,1620,5,15,success
+3,task-c006,pref,quote,6,1,"Required answer content and preference-specific text checks",c006-r1+c006-r3+c031+c048+c006+c116,1,0,0.0164,312,2,6,success
+1,task-c136,pref,quote,6,1,"Required answer content and preference-specific text checks",c097+c136-r1+c135-r3+c136+c097-r1+c094,1,0,0.0163,297,2,5,success
+2,task-c057,pref,quote,6,0,"Implementation behavior and preference-specific checks",c057-r3+c137-r3+c020-r2+c013+c024+c058,1,0,0.0982,1334,7,16,success
+3,task-c004,pref,none,0,0,"Required answer content and preference-specific text checks",,0,0,0.1020,1138,5,13,success
+3,task-c114,pref,quote,6,1,"Implementation behavior and preference-specific checks",c114+c082-r3+c137-r2+c045+c018+c022,1,0,0.0660,1573,6,16,success
+3,task-c124,pref,none,0,0,"Required answer content and preference-specific text checks",,0,0,0.0468,810,3,11,success
+1,task-c004,pref,quote,6,0,"Required answer content and preference-specific text checks",c004-r2+c064+c093-r1+c114-r3+c086+c049,1,0,0.0453,388,2,6,success
+3,task-c136,pref,none,0,0,"Required answer content and preference-specific text checks",,0,0,0.0429,282,2,6,success
+3,task-c015,pref,quote,6,0,"Required answer content and preference-specific text checks",c015+c097+c097-r3+c025+c057-r2+c130,1,0,0.0438,238,2,6,success
+2,task-c104,pref,quote,6,0,"Implementation behavior and preference-specific checks",c115+c064+c136-r3+c144+c103+c002,1,0,0.1319,2344,10,22,success
+3,task-c136,pref,quote,6,1,"Required answer content and preference-specific text checks",c097+c136-r1+c135-r3+c136+c097-r1+c094,1,0,0.0078,267,2,6,success
+1,task-c057,pref,none,0,0,"Implementation behavior and preference-specific checks",,0,0,0.0676,1424,7,15,success
+3,task-c137,pref,none,0,0,"Implementation behavior and preference-specific checks",,0,0,0.0485,835,4,10,success
+3,task-c057,pref,quote,6,0,"Implementation behavior and preference-specific checks",c057-r3+c137-r3+c020-r2+c013+c024+c058,1,0,0.0629,1364,6,15,success
+2,task-c136,pref,none,0,0,"Required answer content and preference-specific text checks",,0,0,0.0161,280,2,6,success
+3,task-c033,pref,none,0,0,"Required answer content and preference-specific text checks",,0,0,0.0474,815,5,11,success
+3,task-c137,pref,quote,6,1,"Implementation behavior and preference-specific checks",c097+c097-r1+c058+c024+c020-r2+c137-r3,1,0,0.0490,843,4,9,success
+1,task-c006,pref,quote,6,1,"Required answer content and preference-specific text checks",c006-r1+c006-r3+c031+c048+c006+c116,1,0,0.0077,247,2,5,success
+1,task-c104,pref,none,0,0,"Implementation behavior and preference-specific checks",,0,0,0.1318,2934,12,28,success
+2,task-c124,pref,none,0,0,"Required answer content and preference-specific text checks",,0,0,0.0203,650,2,8,success
+3,task-c015,pref,none,0,0,"Required answer content and preference-specific text checks",,0,0,0.0372,286,2,6,success
+3,task-c104,pref,quote,6,0,"Implementation behavior and preference-specific checks",c115+c064+c136-r3+c144+c103+c002,1,0,0.0768,1996,8,20,success
+2,task-c137,pref,quote,6,1,"Implementation behavior and preference-specific checks",c097+c097-r1+c058+c024+c020-r2+c137-r3,1,0,0.0485,850,3,9,success
+1,task-c082,pref,none,0,1,"Implementation behavior and preference-specific checks",,0,0,0.0554,1083,6,11,success
+1,task-c136,pref,none,0,0,"Required answer content and preference-specific text checks",,0,0,0.0079,276,2,5,success
+2,task-c015,pref,quote,6,0,"Required answer content and preference-specific text checks",c015+c097+c097-r3+c025+c057-r2+c130,1,0,0.0154,206,2,5,success
+1,task-c057,pref,quote,6,0,"Implementation behavior and preference-specific checks",c057-r3+c137-r3+c020-r2+c013+c024+c058,1,0,0.0667,1336,7,15,success
+2,task-c004,pref,quote,6,0,"Required answer content and preference-specific text checks",c004-r2+c064+c093-r1+c114-r3+c086+c049,1,0,0.0175,416,2,6,success
+3,task-c082,pref,none,0,1,"Implementation behavior and preference-specific checks",,0,0,0.0575,1270,7,15,success
+3,task-c082,pref,quote,6,1,"Implementation behavior and preference-specific checks",c120+c060+c082+c042+c097-r3+c121,1,0,0.0821,980,5,13,success
+2,task-c004,pref,none,0,0,"Required answer content and preference-specific text checks",,0,0,0.0522,901,4,11,success
+1,task-c015,pref,none,0,0,"Required answer content and preference-specific text checks",,0,0,0.0168,302,2,6,success
+2,task-c006,pref,none,0,0,"Required answer content and preference-specific text checks",,0,0,0.0077,264,2,5,success
+3,task-c104,pref,none,0,0,"Implementation behavior and preference-specific checks",,0,0,0.1230,3315,16,32,success
+1,task-c104,pref,quote,6,0,"Implementation behavior and preference-specific checks",c115+c064+c136-r3+c144+c103+c002,1,0,0.0767,1955,8,18,success
+2,task-c082,pref,quote,6,1,"Implementation behavior and preference-specific checks",c120+c060+c082+c042+c097-r3+c121,1,0,0.0549,1073,5,11,success
+1,task-c004,pref,none,0,0,"Required answer content and preference-specific text checks",,0,0,0.0384,455,2,13,success
+2,task-c104,pref,none,0,0,"Implementation behavior and preference-specific checks",,0,0,0.1398,3664,18,37,success
+1,task-c015,pref,quote,6,0,"Required answer content and preference-specific text checks",c015+c097+c097-r3+c025+c057-r2+c130,1,0,0.0164,259,2,5,success
+1,task-c082,pref,quote,6,1,"Implementation behavior and preference-specific checks",c120+c060+c082+c042+c097-r3+c121,1,0,0.0545,1049,6,13,success
+3,task-c004,pref,quote,6,0,"Required answer content and preference-specific text checks",c004-r2+c064+c093-r1+c114-r3+c086+c049,1,0,0.0081,289,2,6,success

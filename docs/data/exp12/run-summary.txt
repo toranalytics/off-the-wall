@@ -1,0 +1,16 @@
+task,none,quote
+task-c006,0/3,3/3
+task-c114,0/3,3/3
+task-c033,0/3,2/3
+task-c137,0/3,3/3
+task-c057,0/3,0/3
+task-c124,0/3,3/3
+task-c015,0/3,0/3
+task-c082,2/3,3/3
+task-c136,0/3,3/3
+task-c004,0/3,0/3
+task-c104,0/3,0/3
+
+passes: none 2/33, quote 20/33
+per task: quote better 7, worse 0, tied 4; sign test p=0.016
+ceiling: none passes 2 of 33 (rule: at least 24 of 33 means no room to show an effect)

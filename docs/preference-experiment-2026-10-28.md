@@ -72,3 +72,14 @@ Same 11 tasks, same 240-record repeat store, same three arms (no recall, default
 - Compared with the original run (1/33, 9/33, 17/33) every arm is higher by 1 to 8. The scorer fix explains part of it (c006 went from 0/3 to 3/3 in both OTW arms); the rest is run-to-run variation with 3 runs per cell, which this experiment cannot separate from a real change. Treat 14/33 and 25/33 as one more sample, not as a better estimate than 9/33 and 17/33.
 - Task c104 stayed at 0/3 in every arm and c057 at 1/3 with wide recall, so the effect is not uniform. c004 (one-sentence format) passed 2/3 in both OTW arms this time against 0 before: that task is sensitive to sampling.
 - Same limits as before: synthetic preferences written by a model, one small model, headless, 3 runs per cell, no real user history.
+
+## Larger model (experiment 12, `data/exp12/`, run by the account owner in a terminal on 2026-10-29)
+Same 11 tasks, store and scorer as experiment 5b, but with Claude Code's `sonnet` instead of haiku, arms: no recall and the current default (wide recall), 3 runs per cell (66 runs, USD 3.80, no duplicate or missing rows).
+| | followed the preference |
+|---|---|
+| no recall | 2/33 |
+| current default (wide recall) | 20/33 |
+- Per task: better in 7, worse in none, tied in 4 (sign test p = 0.016). Without recall the larger model did not already follow these habits (2/33), so there was room for an effect.
+- The same four tasks stay at 0/3 in both arms as with haiku.
+- Runs with the quote were somewhat shorter on average (819 against 1,035 output tokens, 3.9 against 5.0 turns); not tested for significance.
+- Still not shown: other models (Opus, Codex models), real users' histories, interactive use. Synthetic habits and store, 3 runs per cell, headless.

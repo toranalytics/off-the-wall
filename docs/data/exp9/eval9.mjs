@@ -46,7 +46,13 @@ const metrics = async (name, f) => ({
   HOLD: +((await Promise.all(hold.prompts.map(async p => (await f(lh, p.prompt)).some(c => c._cat === p.category)))).filter(Boolean).length / hold.prompts.length).toFixed(3),
 })
 rows.E0 = await metrics('E0', base)
-for (const [name, tau] of [['E1', 0.35], ['E2', 0.45], ['E3', 0.55]]) rows[name] = await metrics(name, (l, p) => pick(l, p, tau))
+const round2 = process.argv.includes('--round2')
+if (!round2) for (const [name, tau] of [['E1', 0.35], ['E2', 0.45], ['E3', 0.55]]) rows[name] = await metrics(name, (l, p) => pick(l, p, tau))
+else {
+  for (const [name, tau] of [['E4', 0.25], ['E5', 0.30]]) rows[name] = await metrics(name, (l, p) => pick(l, p, tau))
+  // E6: current word-overlap picks, kept only if embedding cosine >= 0.20
+  rows.E6 = await metrics('E6', async (l, p) => { const vs = await embedStore(l), q = await embedPrompt(p), idx = new Map(l.map((c, i) => [c._id, i])); return (await base(l, p)).filter(c => dot(q, vs[idx.get(c._id)]) >= 0.20) })
+}
 console.log(fake ? 'FAKE EMBEDDER (pipeline test, not a result)' : 'model: Xenova/all-MiniLM-L6-v2 q8')
 console.table(rows)
 for (const [n, r] of Object.entries(rows)) if (n !== 'E0') console.log(n, r.HIT_single >= 11 && r.HIT_repeat >= 17 && r.HOLD >= 0.933 && r.NOISE_single <= 3 && r.NOISE_repeat <= 3 ? 'CANDIDATE' : 'discard')

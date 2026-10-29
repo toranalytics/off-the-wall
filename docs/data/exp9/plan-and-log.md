@@ -25,4 +25,18 @@ A variant is a candidate only if HIT_single >= 11, HIT_repeat >= 17, HOLD >= 0.9
 Synthetic store and prompts, 20 tasks, one embedding model, thresholds picked by me before looking (an arbitrary grid of three); a hit means the target is shown, not that a model follows it.
 
 ## Log
-(not run yet)
+### Round 1 (run by the account owner in a terminal on 2026-10-29; `exp9-output.txt`; model Xenova/all-MiniLM-L6-v2 q8; the pasted summary listed E1 twice by mistake, the output file has it once)
+| | HIT_single | HIT_repeat | NOISE_single | NOISE_repeat | HOLD |
+|---|---|---|---|---|---|
+| E0 current word overlap | 11 | 17 | 6.00 | 6.00 | 0.953 |
+| E1 cosine >= 0.35 | 10 | 14 | 0.13 | 0.13 | 0.547 |
+| E2 cosine >= 0.45 | 5 | 11 | 0.00 | 0.00 | 0.344 |
+| E3 cosine >= 0.55 | 3 | 4 | 0.00 | 0.00 | 0.141 |
+Keep rule: E1, E2 and E3 all discarded (E1 fails HIT 10 < 11, HIT_repeat 14 < 17 and HOLD 0.547 < 0.933). E0 reproduces the earlier numbers exactly, so the evaluator is consistent with experiments 7 and 8.
+Reading: a meaning-based score does what word overlap could not on the noise side (unrelated prompts get about 0.1 quotes instead of 6), and E1 keeps most targets on the preference tasks (10 of 11, 14 of 17). But the 64-prompt holdout drops from 0.953 to 0.547, so at 0.35 it also drops many quotes that were relevant there. The three thresholds are a coarse grid; the sharp change between 0.35 and 0.45 suggests the useful range is below 0.35, which this round did not test.
+
+### Round 2 (registered before it is run; same evaluator, data and keep rule; each variant once)
+- E4: embedding cosine, top 6 with cosine >= 0.25.
+- E5: embedding cosine, top 6 with cosine >= 0.30.
+- E6 (hybrid): the current word-overlap picks (wide recall, up to 6), each kept only if its embedding cosine to the prompt is >= 0.20.
+Same pass rule (HIT_single >= 11, HIT_repeat >= 17, HOLD >= 0.933, NOISE <= 3.0 on both stores). Overfitting caveat: this is a second look at the same 20 tasks, 8 unrelated prompts and 64-prompt holdout after seeing round 1, so a pass would still only be exploratory and would need a model-run check and a separate decision about shipping an optional dependency.

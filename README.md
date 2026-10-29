@@ -2,7 +2,7 @@
   <strong>English</strong> | <a href="README.ko.md">한국어</a> | <a href="README.ja.md">日本語</a> | <a href="README.zh-CN.md">中文</a>
 </p>
 
-0.2.2: Avoid duplicate routing context on primed session resume; compact still re-injects ([CHANGELOG](CHANGELOG.md)).
+Plain-language overview of what it does and does not do, with the test details at the end: [English](https://toranalytics.github.io/en/otw-what-it-does/) · [한국어](https://toranalytics.github.io/otw-what-it-does/) · [中文](https://toranalytics.github.io/zh/otw-what-it-does/). Release notes: [CHANGELOG](CHANGELOG.md).
 
 <p align="center">
   <img src="assets/hero.png" alt="Off the Wall: a pixel-art parrot on a terminal, quoting your past corrections" width="100%" />

@@ -2,7 +2,7 @@
   <a href="README.md">English</a> | <strong>한국어</strong> | <a href="README.ja.md">日本語</a> | <a href="README.zh-CN.md">中文</a>
 </p>
 
-0.2.2: 이미 라우팅 지침이 주입된 세션을 재개할 때 중복 주입을 방지하며, compact 후에는 다시 주입합니다 ([변경 내역](CHANGELOG.md)).
+쉬운 설명(무엇을 하고 무엇을 못 하는지, 끝에 시험 상세): [한국어](https://toranalytics.github.io/otw-what-it-does/) · [English](https://toranalytics.github.io/en/otw-what-it-does/) · [中文](https://toranalytics.github.io/zh/otw-what-it-does/). 릴리스 노트: [변경 내역](CHANGELOG.md).
 
 <p align="center">
   <img src="assets/hero.png" alt="Off the Wall: 터미널 위의 픽셀 앵무새가 과거 지적을 인용하는 그림" width="100%" />

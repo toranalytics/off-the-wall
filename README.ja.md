@@ -2,7 +2,7 @@
   <a href="README.md">English</a> | <a href="README.ko.md">한국어</a> | <strong>日本語</strong> | <a href="README.zh-CN.md">中文</a>
 </p>
 
-0.2.2: ルーティング指示を注入済みのセッション再開時は重複注入を防ぎ、compact 後は再注入します ([変更履歴](CHANGELOG.md))。
+やさしい説明（何ができて何ができないか、末尾にテスト詳細）: [한국어](https://toranalytics.github.io/otw-what-it-does/) · [English](https://toranalytics.github.io/en/otw-what-it-does/) · [中文](https://toranalytics.github.io/zh/otw-what-it-does/)（日本語版はありません）。リリースノート: [変更履歴](CHANGELOG.md)。
 
 <p align="center">
   <img src="assets/hero.png" alt="Off the Wall: ターミナルの上で過去の指摘を引用するピクセルアートのオウム" width="100%" />

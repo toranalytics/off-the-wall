@@ -59,3 +59,16 @@ Wide recall adds 6 quotes to every prompt. The 14 tasks the default model alread
 - c006 (conventional commit message): the scorer used `t.trim()` with a start-anchored pattern, so a correct message in a code fence scored as a failure. Original scores were left unchanged in every table. Post hoc recount from the 9 saved c006 transcripts of experiment 5: with the correction in the block 5 of 6 followed it; without 0 of 3. The scorer was written by another model and was not changed after seeing results; a fixed scorer will be used in any rerun.
 - c004 (explain a regex in one sentence plus an example): the answers were 3 to 7 lines with several sentences, so this is a genuine non-follow (or an overly strict format); not changed.
 - Consequence for earlier statements: "2 of 11 tasks stayed at 0/3 although the target was shown" was wrong for c006.
+
+## Re-run with the fixed scorer (experiment 5b, `data/exp5b/`, run by the account owner in a terminal on 2026-10-28)
+Same 11 tasks, same 240-record repeat store, same three arms (no recall, default narrow, `recallWide`), 3 fresh runs per cell (99 runs, USD 0.48, every run returned a result). The only change is the scorer (`tasks4-v2.mjs`): answers wrapped in a code fence are normalized before the commit-message check, which was proven on the recorded answers beforehand. The scorer was changed after the original results were known, so this is a re-run after a fix, not an independent replication. The original table above is left as it was.
+| | followed the preference |
+|---|---|
+| no recall | 2/33 |
+| Off the Wall, former narrow default | 14/33 |
+| Off the Wall, `recallWide` | 25/33 |
+- Sign tests across tasks: wide vs none 10 better, 0 worse, 1 tied (p = 0.002); narrow vs none 7/0/4 (p = 0.016); wide vs narrow 6/0/5 (p = 0.031). Pooled Fisher p-values are not meaningful here because runs are not independent.
+- Where the default narrow selection already contained the target correction (7 tasks): narrow 11/21, none 0/21, wide 16/21. Where it did not (4 tasks): narrow 3/12, none 2/12, wide 9/12.
+- Compared with the original run (1/33, 9/33, 17/33) every arm is higher by 1 to 8. The scorer fix explains part of it (c006 went from 0/3 to 3/3 in both OTW arms); the rest is run-to-run variation with 3 runs per cell, which this experiment cannot separate from a real change. Treat 14/33 and 25/33 as one more sample, not as a better estimate than 9/33 and 17/33.
+- Task c104 stayed at 0/3 in every arm and c057 at 1/3 with wide recall, so the effect is not uniform. c004 (one-sentence format) passed 2/3 in both OTW arms this time against 0 before: that task is sensitive to sampling.
+- Same limits as before: synthetic preferences written by a model, one small model, headless, 3 runs per cell, no real user history.

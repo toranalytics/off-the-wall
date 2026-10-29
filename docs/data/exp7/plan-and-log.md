@@ -65,3 +65,16 @@ Side effect found while writing the tests: in a store of 20 records or fewer no 
 
 ### Confirmation run: invalid, not counted
 The 24 runs of the targeted check completed in about 30 seconds with 0 tokens and USD 0: the Claude CLI in the isolated config had lost its login ("Not logged in - Please run /login", `terminal_reason: api_error`), and the runner scored those empty answers as failures. They are discarded and not data. The check has not been run; it needs a fresh login of the isolated CLI by the account owner. Until then `recallGate` has offline evidence only and stays opt-in (default off).
+
+### Confirmation run, valid (2026-10-29; `confirm.csv`, runner `run-exp7.mjs`; run by the account owner in a logged-in terminal; Claude Code 2.1.311, haiku, headless, synthetic)
+The earlier attempts (24 + 24 runs with 0 tokens) were logged-out and are discarded. This run: 24 runs, every run returned a result, USD 0.12 in total. Arms: v0 = current default, v9 = `recallGate` on.
+| task | arm | pass | quotes shown | mean output tokens | mean turns |
+|---|---|---|---|---|---|
+| c114 | v0 | 6/6 | 6 | 4,359 | 7.3 |
+| c114 | v9 | 6/6 | 3 | 3,280 | 6.5 |
+| c033 | v0 | 2/6 | 6 | 1,139 | 4.3 |
+| c033 | v9 | 2/6 | 4 | 767 | 3.0 |
+- Reading: no loss of passes with the gate on in the two tasks whose quotes it changes. c114 keeps its target correction in both arms and passes 6/6 in both; c033's target is not retrieved in either arm and it passes 2/6 in both (incidental).
+- Output tokens and turns were lower with the gate on (about -25% and -33%). With 6 runs per cell on two tasks this is not tested for significance and may be run-to-run variation; it is not a claimed saving.
+- Not shown: any benefit on pass rate, behaviour on a real history, a different model, or the 14 preference-free tasks (not rerun). The check can only say "no harm seen" here.
+- Decision: `recallGate` stays opt-in and default off. Evidence is two offline rounds on a small synthetic set plus this two-task check; that is not enough to change the default.

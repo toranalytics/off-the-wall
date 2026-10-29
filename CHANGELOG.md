@@ -3,7 +3,7 @@
 
 ## Unreleased
 
-- Added the opt-in setting `recallGate` (default `false`). With wide recall it requires a stored request to share two whole words with the prompt, or one word that appears in fewer than 5% of the stored requests, so bigram-only overlap no longer brings quotes in. On the synthetic offline evaluation (`docs/data/exp7/`) it cut the quotes shown for 8 unrelated prompts from 6.0 to 2.0 on average and kept the target correction on the same 11 of 20 tasks (18 with repeats). Found in a second round on a small synthetic set, so some overfitting is possible; no model-run confirmation yet (the targeted check was invalid because the test CLI was logged out). In a store of 20 records or fewer a prompt must share two words, which has not been measured. Not enabled by default.
+- Added the opt-in setting `recallGate` (default `false`). With wide recall it requires a stored request to share two whole words with the prompt, or one word that appears in fewer than 5% of the stored requests, so bigram-only overlap no longer brings quotes in. On the synthetic offline evaluation (`docs/data/exp7/`) it cut the quotes shown for 8 unrelated prompts from 6.0 to 2.0 on average and kept the target correction on the same 11 of 20 tasks (18 with repeats). Found in a second round on a small synthetic set, so some overfitting is possible; a two-task model check (24 runs, haiku, headless) showed no lost passes (c114 6/6 vs 6/6, c033 2/6 vs 2/6) with 3 and 2 fewer quotes shown; it cannot show a benefit. In a store of 20 records or fewer a prompt must share two words, which has not been measured. Not enabled by default.
 
 ## 0.3.0 - Unreleased
 

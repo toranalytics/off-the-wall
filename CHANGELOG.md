@@ -1,12 +1,13 @@
 # Changelog
 
 
-## Unreleased
+## 0.3.1 - 2026-10-29 (pre-release)
 
 - Added `otw forget`: `--all --yes` deletes every stored correction, the per-session state and the diagnostic log (config.json stays); `--project [DIR] --yes` deletes only that working directory's corrections and session state. Without `--yes` it only shows counts. It never follows links or touches anything outside the Off the Wall folder, and a capture authorized before the deletion cannot append afterwards (tests). Provider-side copies and Claude Code/Codex histories are not affected.
 - No behavior change. Tried an opt-in lexical gate (`recallGate`) against recall noise on unrelated prompts and removed it again: it cut the quotes shown on unrelated prompts from 6.0 to 2.0 only on a 150-record synthetic store, not on a 240-record one (6.0 to 5.5), and lowered target hits for very small stores. Record: `docs/data/exp7/plan-and-log.md`.
+- Documentation: README translations brought in line with the English text, the stale "Claude Code unverified in a live host" statements replaced by what was actually checked (one headless Claude Code 2.1.311 run and one Codex smoke run; interactive use still unverified), experiment records 5b and 7 added.
 
-## 0.3.0 - Unreleased
+## 0.3.0 - 2026-10-28 (pre-release)
 
 - **Behavior change:** default `recallWide` to `true`; opt out with `"recallWide": false` to restore the 0.18 similarity floor, also retained for prompts under 20 trimmed characters; two synthetic, headless Claude Code/haiku runs on two stores (11 preference tasks × 3) passed 16/33 and 17/33 wide vs 8/33 and 9/33 narrow, and a 14-task harm check (42 runs each) passed 40/42 no recall vs 41/42 wide with no task losing 2+ of 3, average output tokens 2,026 vs 2,210 (about 9% higher) and seconds 16.5 vs 17.8 (not significant, indicative only); one small model, short-prompt guard unmeasured.
 

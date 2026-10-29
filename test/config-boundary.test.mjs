@@ -35,7 +35,7 @@ const patch = (key, replacement, run) => {
 
 test('wide recall defaults on; missing config and missing parent are normal, read-only defaults', () => {
   assert.deepEqual(DEFAULT_CONFIG, {
-    capture: true, recall: true, routing: true, recallWide: true, recallGate: false,
+    capture: true, recall: true, routing: true, recallWide: true,
     judge: { claude: 'haiku', codex: 'gpt-6.1-sol' },
     models: { claude: { small: 'haiku', mid: 'sonnet', large: 'opus' }, codex: { small: 'gpt-6-luna', mid: 'gpt-6.1-sol', large: 'gpt-6-astra' } },
   })

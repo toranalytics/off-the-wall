@@ -9,14 +9,13 @@ import { codexClasses, DEFAULT_MODELS } from './policy.mjs'
 export const DEFAULT_CONFIG = {
   recall: true,
   recallWide: true,
-  recallGate: false,
   capture: true,
   routing: true,
   judge: { claude: 'haiku', codex: 'gpt-6.1-sol' },
   models: DEFAULT_MODELS,
 }
 
-const FLAGS = ['recall', 'recallWide', 'recallGate', 'capture', 'routing']
+const FLAGS = ['recall', 'recallWide', 'capture', 'routing']
 const HOSTS = ['claude', 'codex']
 const CLASSES = ['small', 'mid', 'large']
 const ISSUE = 'config-invalid'
@@ -108,7 +107,7 @@ export function loadConfig(dir) {
   return {
     ...DEFAULT_CONFIG,
     ...value,
-    ...(snapshot.issue ? { recall: false, recallWide: false, recallGate: false, capture: false, routing: false } : {}),
+    ...(snapshot.issue ? { recall: false, recallWide: false, capture: false, routing: false } : {}),
     judge: { ...defaults.judge, ...value.judge },
     models: {
       claude: { ...defaults.models.claude, ...value.models?.claude },

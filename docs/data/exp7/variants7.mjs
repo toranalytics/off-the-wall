@@ -21,3 +21,6 @@ export const VARIANTS = {
 VARIANTS.V7 = { note: 'V4 with rare cutoff 10%', filter: (ctx, r) => r.filter(x => ctx.sharedWords(x.i, 0.1) >= 1) }
 VARIANTS.V8 = { note: 'V4 + relative gate 0.5', filter: (ctx, r) => { const a = r.filter(x => ctx.sharedWords(x.i, 0.3) >= 1); return a.filter(x => x.s >= 0.5 * (a[0]?.s ?? 0)) } }
 VARIANTS.V9 = { note: '>=2 shared words, or 1 word in <5% of records', filter: (ctx, r) => r.filter(x => ctx.sharedWords(x.i, 1) >= 2 || ctx.sharedWords(x.i, 0.05) >= 1) }
+
+// Round 3 (registered in plan-and-log.md before running)
+VARIANTS.V10 = { note: '>=2 shared words that are in <30% of records, or 1 word in <5%', filter: (ctx, r) => r.filter(x => ctx.sharedWords(x.i, 0.3) >= 2 || ctx.sharedWords(x.i, 0.05) >= 1) }

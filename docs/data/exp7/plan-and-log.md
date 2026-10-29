@@ -78,3 +78,25 @@ The earlier attempts (24 + 24 runs with 0 tokens) were logged-out and are discar
 - Output tokens and turns were lower with the gate on (about -25% and -33%). With 6 runs per cell on two tasks this is not tested for significance and may be run-to-run variation; it is not a claimed saving.
 - Not shown: any benefit on pass rate, behaviour on a real history, a different model, or the 14 preference-free tasks (not rerun). The check can only say "no harm seen" here.
 - Decision: `recallGate` stays opt-in and default off. Evidence is two offline rounds on a small synthetic set plus this two-task check; that is not enough to change the default.
+
+## Finding after the confirmation run: V9's noise reduction does not hold on the larger repeat store (2026-10-29, offline)
+`small-store.mjs` (20 seeded subsets of the 240-record repeat store per size, no model calls). Quotes shown on the 8 unrelated prompts, default vs gate (V9 as shipped), and target-in-picks over tasks whose target family is in the subset:
+| store size | hit default | hit gate | unrelated default | unrelated gate |
+|---|---|---|---|---|
+| 10 | 0.83 | 0.70 | 6.0 | 0.06 |
+| 20 | 0.81 | 0.73 | 6.0 | 0.18 |
+| 40 | 0.66 | 0.61 | 6.0 | 0.66 |
+| 80 | 0.63 | 0.65 | 6.0 | 1.84 |
+| 150 | 0.66 | 0.68 | 6.0 | 3.56 |
+| 240 | 0.85 | 0.90 | 6.0 | 5.50 |
+On the full 240-record store the gate shows 6,6,6,6,4,6,4,6 quotes on the 8 unrelated prompts (mean 5.5). Cause: the two-shared-words rule counts stopwords ("what", "the", "about", "write") that appear in many stored requests, so any prompt with two of them passes; the earlier 6.0 -> 2.0 was measured only on the 150-record single store, where the effect happens to be larger. Correction: the CHANGELOG sentence and this log's round-2 reading overstate the generality; the 2.0 holds for that one store only.
+
+### Round 3 (registered before it is run; one try)
+- V10: like V9, but a shared word counts toward the "two words" rule only if it appears in fewer than 30% of the stored requests (so stopwords and other common words do not count). The single-rare-word rule (< 5%) is unchanged.
+- Pass rule, fixed now: HIT_single >= 11, HIT_repeat >= 17 (V0 values), HOLD >= 0.933, and mean quotes on the 8 unrelated prompts <= 3.0 on BOTH the 150-record single store and the 240-record repeat store.
+- Overfitting caveat: this is the third look at the same 20 tasks and 8 prompts after seeing the failure, so the holdout is the only protection and the result is exploratory. If V10 fails the rule, `recallGate` stays as is, documented as only effective on that store, or is removed.
+
+### Round 3 result: V10 fails its pre-registered rule
+V10: HIT_single 10 (< 11), HIT_repeat 17, HOLD 0.922 (< 0.933), quotes on unrelated prompts 2.00 on the 150-record single store (shipped gate code with V9: 2.00 single, 5.50 repeat; V10 was not run on the repeat store because it had already failed the hit and holdout conditions). Not kept.
+Conclusion of experiment 7: no variant found that cuts unrelated-prompt noise on both stores without losing targets or holdout hits. V9 only helped on the 150-record single store (6.0 -> 2.0) and not on the 240-record repeat store (6.0 -> 5.5), and it lowers target hits for stores of 40 or fewer records (0.83 -> 0.70 at 10 records). Decision, applying the simplicity criterion borrowed from autoresearch ("an improvement of about 0 with more code: discard"): the opt-in `recallGate` is removed from `src/` (the setting, selector code and its tests). Wide recall stays as in 0.3.0. The experiment record, evaluator and data stay in `docs/data/exp7/`; the helper scripts that pass the gate argument (`check-gate-equivalence.mjs`, `per-task-hits.mjs`, `small-store.mjs`, `noise-repeat-store.mjs`) were run against the gate code at commit 9d12683 and no longer behave as described on current main.
+What this leaves open: the noise on unrelated prompts is real (6 quotes on every 20+ character prompt with wide recall, experiment 4b/6: no pass loss, about +9% output tokens). A lexical gate does not fix it on larger stores; a different kind of relevance signal (for example an embedding or a model judging relevance) would be a separate, larger experiment and has not been done.

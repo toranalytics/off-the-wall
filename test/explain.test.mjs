@@ -57,3 +57,11 @@ test('explain reports recall off and configuration errors, and needs a prompt', 
   const bad = box(); for (const args of [[], ['--cwd', bad.a], ['please check', '--cwd']]) assert.equal(bad.run(args).status, 2, args.join(' '))
   assert.match(bad.run(['please check the flaky login tests', '--cwd', 'relative/dir']).stdout, /no usable working directory/)
 })
+
+test('status explains an empty store and stays quiet once there are records', () => {
+  const t = box(), empty = box()
+  writeFileSync(join(empty.home, 'corrections.jsonl'), '')
+  const run = (b) => spawnSync(process.execPath, [join(root, 'bin/otw.mjs'), 'status'], { env: { ...process.env, OTW_HOME: b.home, HOME: join(b.dir, 'h'), CODEX_HOME: join(b.dir, 'c') }, encoding: 'utf8', timeout: 8000 }).stdout
+  assert.match(run(empty), /No corrections stored yet/)
+  assert.doesNotMatch(run(t), /No corrections stored yet/)
+})

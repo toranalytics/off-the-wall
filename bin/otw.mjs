@@ -35,6 +35,7 @@ if (cmd === 'report') {
   console.log(`scoped/origin-tagged ${scoped} · quarantined ${cs.length - scoped} (not automatically recalled)`)
   console.log(`recall ${cfg.recall ? 'on' : 'off'} · capture ${cfg.capture ? 'on' : 'off'} · routing ${cfg.routing ? 'on' : 'off'}${cfg.recallWide ? '' : ' · recall narrow'}`)
   for (const line of hookStatus(home())) console.log(line)
+  if (!cs.length) console.log('No corrections stored yet: recall has nothing to quote. They are saved as you correct the agent (capture), or you can start from your history with `otw report --seed` (sends excerpts to your model provider; see the README).')
 } else if (cmd === 'explain') {
   // Read-only: shows what recall would attach to a prompt, without sending anything to a model or writing any file.
   const prompt = rest[0] && !rest[0].startsWith('--') ? rest[0] : null

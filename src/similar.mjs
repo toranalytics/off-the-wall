@@ -45,8 +45,8 @@ export function build(texts) {
   return { idf, unseen: Math.log(texts.length + 2), docs: feats.map((f, i) => ({ i, ...weigh(f, idf) })) }
 }
 
-// Indexes of the documents most like the query, best first.
-export function search(index, query, minScore, limit) {
+// Documents most like the query, best first, with their similarity.
+export function searchScored(index, query, minScore, limit) {
   const { vec, norm } = weigh(features(query), index.idf, index.unseen)
   if (norm === 0) return []
   const scored = []
@@ -60,8 +60,11 @@ export function search(index, query, minScore, limit) {
     const s = dot / (norm * d.norm)
     if (s >= minScore) scored.push({ i: d.i, s })
   }
-  return scored.sort((a, b) => b.s - a.s).slice(0, limit).map(x => x.i)
+  return scored.sort((a, b) => b.s - a.s).slice(0, limit)
 }
+
+// Indexes of the documents most like the query, best first.
+export const search = (index, query, minScore, limit) => searchScored(index, query, minScore, limit).map(x => x.i)
 
 export const one = (s, n) => {
   // Box-drawing characters come from text copied off a terminal pane.
@@ -69,23 +72,43 @@ export const one = (s, n) => {
   return t.length > n ? `${t.slice(0, n)}…` : t
 }
 
-export function pickCorrections(list, prompt, now, n = QUOTES, project, recallWide = false) {
-  if (!isProjectKey(project) || !isUserInput(prompt) || !Number.isFinite(now) || !Number.isFinite(n) || n < 1) return []
+// Shared by pickCorrections and explainRecall so that the explanation can never drift from the real selection.
+function select(list, prompt, now, n, project, recallWide) {
+  if (!isProjectKey(project) || !isUserInput(prompt) || !Number.isFinite(now) || !Number.isFinite(n) || n < 1) return null
   const past = list.filter(c => recallable(c) && c.project === project && c.at < now)
-  if (!past.length) return []
+  if (!past.length) return { past, floor: null, scored: [], out: [] }
   const texts = past.map(c => String(c.about || c.quote).slice(0, 300))
   // Wide recall relaxes relevance, never the zero-overlap or provenance boundary.
   const floor = recallWide === true && prompt.trim().length >= WIDE_MIN_PROMPT_CHARS ? 1e-6 : MIN_SIMILAR
-  const ranked = search(build(texts), prompt, floor, past.length).map(i => past[i])
+  const scored = searchScored(build(texts), prompt, floor, past.length)
   const out = [], seen = new Set()
-  for (const c of ranked) {
+  for (const { i, s } of scored) {
+    const c = past[i]
     const key = one(c.quote, 800)
     if (seen.has(key)) continue
     seen.add(key)
-    out.push(c)
+    out.push({ c, s })
     if (out.length >= Math.min(QUOTES, Math.floor(n))) break
   }
-  return out
+  return { past, floor, scored, out }
+}
+
+export function pickCorrections(list, prompt, now, n = QUOTES, project, recallWide = false) {
+  return (select(list, prompt, now, n, project, recallWide)?.out ?? []).map(x => x.c)
+}
+
+// Read-only account of what recall would do for a prompt: used by `otw explain`.
+export function explainRecall(list, prompt, now, project, recallWide = false) {
+  const base = { total: list.length, eligible: 0, otherProject: 0, notRecallable: 0, picks: [], floor: null, mode: recallWide === true && String(prompt).trim().length >= WIDE_MIN_PROMPT_CHARS ? 'wide' : 'floor' }
+  if (!isProjectKey(project)) return { ...base, blocked: 'no usable working directory, so there is no automatic recall' }
+  if (!isUserInput(prompt)) return { ...base, blocked: 'this prompt would not be treated as human input' }
+  for (const c of list) {
+    if (!recallable(c)) base.notRecallable++
+    else if (c.project !== project) base.otherProject++
+    else if (c.at < now) base.eligible++
+  }
+  const r = select(list, prompt, now, QUOTES, project, recallWide)
+  return { ...base, floor: r?.floor ?? null, picks: (r?.out ?? []).map(({ c, s }) => ({ quote: one(c.quote, 200), about: one(c.about ?? '', 120), score: s })) }
 }
 
 // This candidate adds an authority boundary; this is not the wording in the old replay.

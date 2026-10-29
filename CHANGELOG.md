@@ -1,5 +1,8 @@
 # Changelog
 
+## Unreleased
+
+- Added `otw explain "<prompt>" [--cwd DIR]`: a read-only view of which stored corrections recall would attach to a prompt in a working directory, with similarity scores, how many records were excluded (other directory, not recalled) and which selection mode applies. It does not call a model or write anything, and it uses the same selection code as the hook (tests check that the picks are identical). Meant for seeing why an unrelated quote shows up.
 
 ## 0.3.1 - 2026-10-29 (pre-release)
 

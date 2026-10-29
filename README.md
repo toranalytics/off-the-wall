@@ -127,6 +127,10 @@ kinds and their counts. Only the counts and kind names go in; none of your quote
 classifications and may be wrong, so check the source messages locally and review the post yourself before you
 publish anything. Nothing is posted for you.
 
+## See what would be recalled
+
+`node bin/otw.mjs explain "<prompt>"` (add `--cwd DIR` for another working directory) shows which stored corrections would be quoted before an answer to that prompt, with similarity scores and how many records were excluded. It is read-only: no model call, no file written. It is the quickest way to see why a quote you did not expect shows up. Available on main; not in the 0.3.1 release yet.
+
 ## What the agent sees
 
 <p align="center">

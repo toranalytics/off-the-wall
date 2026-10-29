@@ -1,0 +1,30 @@
+{
+  "task": "task-c006",
+  "prompt": "Write a commit message for the change described in change.txt.",
+  "correction": "commit messages here are conventional commits, fix(auth): ..., not 'Fixed stuff with login'.",
+  "about": "write the commit message for the login change",
+  "model": "sonnet",
+  "runs": {
+    "none": {
+      "answer": "```\nFix crash on expired session token in authentication\n\nCo-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>\n```\n\nI wrote this from the single line in `change.txt`. The directory isn't a git repository, so I didn't commit anything or check the diff. If the fix has a specific cause, such as a missing expiry check, tell me and I'll add a body line for it.",
+      "toolCalls": [
+        "Read"
+      ],
+      "blockSeenInSession": 0,
+      "passedHabitCheck": false,
+      "costUsd": 0.087842,
+      "seconds": 9
+    },
+    "otw": {
+      "answer": "```\nfix(auth): handle expired session token without crashing\n\nCo-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>\n```\n\nchange.txt은 한 줄뿐이라 변경 범위는 거기 적힌 내용만으로 잡았고, 실제 diff는 확인하지 않았습니다. 이 저장소는 git 저장소가 아니어서 커밋은 만들지 않았습니다.",
+      "toolCalls": [
+        "Read",
+        "Bash"
+      ],
+      "blockSeenInSession": 1,
+      "passedHabitCheck": true,
+      "costUsd": 0.06945119999999999,
+      "seconds": 7
+    }
+  }
+}

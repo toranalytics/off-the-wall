@@ -9,6 +9,12 @@ Plain-language overview of what it does and does not do, with the test details a
 </p>
 
 <p align="center">
+  <img src="assets/before-after-en.png" alt="Same request, same model (Claude Sonnet), run once each, real outputs: without Off the Wall the commit message, summary and PR description ignore the saved habit; with it they follow it. Three tasks, first run shown, one correction made up for the demo." width="100%" />
+</p>
+
+<p align="center"><sub>This is an illustration. The measured numbers are under Evidence below.</sub></p>
+
+<p align="center">
   <img src="assets/demo.svg" alt="Illustration with a made-up example, not a recording: a correction is saved on day 1, and on day 8 a similar request gets that correction quoted word for word before the agent answers." width="100%" />
 </p>
 

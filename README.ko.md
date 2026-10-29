@@ -9,6 +9,12 @@
 </p>
 
 <p align="center">
+  <img src="assets/before-after-ko.png" alt="같은 요청, 같은 모델(Claude Sonnet), 각각 한 번씩 돌린 실제 출력입니다. Off the Wall이 없으면 커밋 메시지, 요약, PR 설명이 저장된 습관을 무시하고, 있으면 따릅니다. 작업 3개, 첫 실행 그대로이고 지적은 데모용으로 만든 것입니다." width="100%" />
+</p>
+
+<p align="center"><sub>예시 그림이며, 측정한 숫자는 아래 근거 절에 있습니다.</sub></p>
+
+<p align="center">
   <img src="assets/demo.svg" alt="시험용으로 만든 예시 그림이며 녹화가 아닙니다. 1일차에 지적을 저장하고, 8일차 비슷한 요청에서 에이전트가 답하기 전에 그 지적이 원문 그대로 붙습니다." width="100%" />
 </p>
 

@@ -9,6 +9,12 @@
 </p>
 
 <p align="center">
+  <img src="assets/before-after-en.png" alt="同じ依頼、同じモデル(Claude Sonnet)を1回ずつ実行した実際の出力です。Off the Wall がないと、コミットメッセージ、要約、PR 説明は保存された習慣を無視し、あると守ります。3タスク、最初の実行をそのまま掲載、指摘はデモ用に作ったものです。" width="100%" />
+</p>
+
+<p align="center"><sub>これは例示です。測定した数値は下の根拠の節にあります。</sub></p>
+
+<p align="center">
   <img src="assets/demo.svg" alt="作ったサンプルの図で、録画ではありません。1日目に指摘を保存し、8日目の似た依頼でエージェントが答える前にその指摘がそのまま付きます。" width="100%" />
 </p>
 

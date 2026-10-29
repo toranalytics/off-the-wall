@@ -1,0 +1,29 @@
+{
+  "task": "task-c124",
+  "prompt": "Write a PR description from changes.txt, including the implementation, testing, and reviewer information.",
+  "correction": "please don't @mention people in PR descriptions, it pings them all",
+  "about": "write the PR description for the export button change",
+  "model": "sonnet",
+  "runs": {
+    "none": {
+      "answer": "## Deduplicate webhook deliveries by event ID\n\n### Implementation\n- Webhook deliveries are now deduplicated by event ID, so a delivery that repeats an event ID is not processed a second time.\n\n### Testing\n- The replay suite passes. This comes from `changes.txt`. I haven't run it myself.\n\n### Reviewer\n- @mira-dev (Mira)\n\n`changes.txt` is a single line, so I didn't add details it doesn't give. It doesn't say where event IDs are stored, how long they are retained, or what happens to a duplicate (dropped or acknowledged). It also doesn't say whether the replay suite covers a duplicate event ID. If you send me those details or the diff, I can fill them in.",
+      "toolCalls": [
+        "Bash"
+      ],
+      "blockSeenInSession": 0,
+      "passedHabitCheck": false,
+      "costUsd": 0.0640944,
+      "seconds": 9
+    },
+    "otw": {
+      "answer": "## Deduplicate webhook deliveries by event ID\n\n### Implementation\n- Webhook deliveries are now deduplicated by event ID, so a redelivered event is not processed a second time.\n\n### Testing\n- The replay suite passes, per `changes.txt`. I didn't run it myself.\n- `changes.txt` doesn't say whether the suite covers duplicate event IDs. Confirm that before merging, because a suite that never sends a duplicate would pass with or without this change.\n\n### Reviewer\n- Mira (`mira-dev`)\n\n---\n\n`changes.txt` is a single line, so I wrote only what it states. It doesn't name the files changed, where event IDs are stored, or how long they're kept. Add those to the Implementation section if the reviewer needs them.\n\nI wrote the reviewer's handle in backticks and left out the `@`, so posting this won't ping them. Add the mention yourself when you want Mira notified.",
+      "toolCalls": [
+        "Bash"
+      ],
+      "blockSeenInSession": 1,
+      "passedHabitCheck": true,
+      "costUsd": 0.0668398,
+      "seconds": 14
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "task": "task-c136",
+  "prompt": "Summarize the launch notes in notes.txt for the team chat.",
+  "correction": "no emojis in summaries pls. plain text",
+  "about": "summarize the release notes for the team chat",
+  "model": "sonnet",
+  "runs": {
+    "none": {
+      "answer": "Here's a draft for the team chat:\n\n> 🚀 Launch is live!\n> ✅ Checkout checks passed.\n> ⚠️ Search indexing is delayed.\n\n`notes.txt` has only that one line, so there's nothing more to add. It doesn't say how long the indexing delay is expected to last or who owns it. If you want that in the post, tell me and I'll add it.",
+      "toolCalls": [
+        "Read"
+      ],
+      "blockSeenInSession": 0,
+      "passedHabitCheck": false,
+      "costUsd": 0.060129600000000005,
+      "seconds": 9
+    },
+    "otw": {
+      "answer": "Launch is live. Checkout checks passed. Search indexing is delayed.",
+      "toolCalls": [
+        "Read"
+      ],
+      "blockSeenInSession": 1,
+      "passedHabitCheck": true,
+      "costUsd": 0.06354560000000001,
+      "seconds": 7
+    }
+  }
+}

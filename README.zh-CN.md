@@ -9,6 +9,12 @@
 </p>
 
 <p align="center">
+  <img src="assets/before-after-zh.png" alt="同一个请求、同一个模型(Claude Sonnet)各运行一次的真实输出:没有 Off the Wall 时,提交信息、摘要和 PR 描述会无视已保存的习惯;有它时会遵守。3 个任务,展示第一次运行,纠正是为演示编的。" width="100%" />
+</p>
+
+<p align="center"><sub>这只是示例。测量的数字在下面的依据一节。</sub></p>
+
+<p align="center">
   <img src="assets/demo.svg" alt="这是用编造的例子画的示意图,不是录屏。第1天保存纠正,第8天遇到类似请求时,智能体回答之前会原样附上那条纠正。" width="100%" />
 </p>
 

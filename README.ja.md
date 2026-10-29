@@ -8,6 +8,10 @@
   <img src="assets/hero.png" alt="Off the Wall: ターミナルの上で過去の指摘を引用するピクセルアートのオウム" width="100%" />
 </p>
 
+<p align="center">
+  <img src="assets/demo.svg" alt="作ったサンプルの図で、録画ではありません。1日目に指摘を保存し、8日目の似た依頼でエージェントが答える前にその指摘がそのまま付きます。" width="100%" />
+</p>
+
 <h1 align="center">Off the Wall</h1>
 
 <p align="center">

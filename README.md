@@ -8,6 +8,10 @@ Plain-language overview of what it does and does not do, with the test details a
   <img src="assets/hero.png" alt="Off the Wall: a pixel-art parrot on a terminal, quoting your past corrections" width="100%" />
 </p>
 
+<p align="center">
+  <img src="assets/demo.svg" alt="Illustration with a made-up example, not a recording: a correction is saved on day 1, and on day 8 a similar request gets that correction quoted word for word before the agent answers." width="100%" />
+</p>
+
 <h1 align="center">Off the Wall</h1>
 
 <p align="center">

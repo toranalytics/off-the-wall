@@ -8,6 +8,10 @@
   <img src="assets/hero.png" alt="Off the Wall: 터미널 위의 픽셀 앵무새가 과거 지적을 인용하는 그림" width="100%" />
 </p>
 
+<p align="center">
+  <img src="assets/demo.svg" alt="시험용으로 만든 예시 그림이며 녹화가 아닙니다. 1일차에 지적을 저장하고, 8일차 비슷한 요청에서 에이전트가 답하기 전에 그 지적이 원문 그대로 붙습니다." width="100%" />
+</p>
+
 <h1 align="center">Off the Wall</h1>
 
 <p align="center">

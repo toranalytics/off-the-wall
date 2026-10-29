@@ -8,6 +8,10 @@
   <img src="assets/hero.png" alt="Off the Wall：终端上的像素鹦鹉，引用你过去的纠正" width="100%" />
 </p>
 
+<p align="center">
+  <img src="assets/demo.svg" alt="这是用编造的例子画的示意图,不是录屏。第1天保存纠正,第8天遇到类似请求时,智能体回答之前会原样附上那条纠正。" width="100%" />
+</p>
+
 <h1 align="center">Off the Wall</h1>
 
 <p align="center">

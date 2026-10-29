@@ -1,6 +1,10 @@
 #!/usr/bin/env node
 import { hookStatus } from '../src/hookstatus.mjs'
 import { explainRecall, recallable } from '../src/similar.mjs'
+import { codexClasses, codexUnclassified } from '../src/policy.mjs'
+import { readFileSync } from 'node:fs'
+import { homedir } from 'node:os'
+import { join } from 'node:path'
 import { projectKey } from '../src/scope.mjs'
 import { report } from '../src/report.mjs'
 import { config, corrections, home } from '../src/store.mjs'
@@ -35,6 +39,11 @@ if (cmd === 'report') {
   console.log(`scoped/origin-tagged ${scoped} · quarantined ${cs.length - scoped} (not automatically recalled)`)
   console.log(`recall ${cfg.recall ? 'on' : 'off'} · capture ${cfg.capture ? 'on' : 'off'} · routing ${cfg.routing ? 'on' : 'off'}${cfg.recallWide ? '' : ' · recall narrow'}`)
   for (const line of hookStatus(home())) console.log(line)
+  try {
+    const cache = JSON.parse(readFileSync(join(process.env.CODEX_HOME || join(homedir(), '.codex'), 'models_cache.json'), 'utf8'))
+    const c = codexClasses(cache), other = codexUnclassified(cache), used = cfg.models?.codex ?? {}
+    console.log(`codex models (from Codex's own list): small ${used.small ?? c.small ?? '-'} · mid ${used.mid ?? c.mid ?? '-'} · large ${used.large ?? c.large ?? '-'}` + (other.length ? ` · not used (no tier in its description, set it in config.json to use it): ${other.join(', ')}` : ''))
+  } catch {}
   if (!cs.length) console.log('No corrections stored yet: recall has nothing to quote. They are saved as you correct the agent (capture), or you can start from your history with `otw report --seed` (sends excerpts to your model provider; see the README).')
 } else if (cmd === 'explain') {
   // Read-only: shows what recall would attach to a prompt, without sending anything to a model or writing any file.

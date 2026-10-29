@@ -3,6 +3,7 @@
 ## Unreleased
 
 - Added `otw explain "<prompt>" [--cwd DIR]`: a read-only view of which stored corrections recall would attach to a prompt in a working directory, with similarity scores, how many records were excluded (other directory, not recalled) and which selection mode applies. It does not call a model or write anything, and it uses the same selection code as the hook (tests check that the picks are identical). Meant for seeing why an unrelated quote shows up.
+- `otw status` lists the Codex models it uses per class and any listed model it does not use because its description names no tier (today: gpt-6.1-terra), so a new model is not silently ignored; set it in `config.json` `models.codex` to use it. No routing change.
 - `otw status` now says so when no corrections are stored yet and points to capture and `otw report --seed`.
 
 ## 0.3.1 - 2026-10-29 (pre-release)

@@ -38,6 +38,15 @@ export function codexClasses(cache) {
   }
   return out
 }
+// Listed, non-older models that no class claimed: their description names no tier, so they are not used for
+// routing unless config.json names them. `otw status` shows them so a new model is not silently ignored.
+export function codexUnclassified(cache) {
+  const used = Object.values(codexClasses(cache))
+  return (cache?.models ?? [])
+    .filter(m => m?.slug && (m.visibility ?? 'list') === 'list' && !OLDER.test(m.description ?? '') && !used.includes(m.slug))
+    .sort((a, b) => (a.priority ?? 99) - (b.priority ?? 99))
+    .map(m => m.slug)
+}
 export const CODEX_EFFORT = { small: 'low', mid: 'medium', large: 'high' }
 
 export function policy(host, models = DEFAULT_MODELS[host]) {

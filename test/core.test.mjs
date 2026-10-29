@@ -267,3 +267,18 @@ test('config: detected Codex models, judge on the mid class, config.json wins', 
   assert.equal(config().models.claude.small, 'haiku')
   delete process.env.CODEX_HOME
 })
+
+test('codexUnclassified lists listed, non-older models that no class claimed', async () => {
+  const { codexUnclassified } = await import('../src/policy.mjs')
+  const cache = { models: [
+    { slug: 'big', description: 'Frontier intelligence for the most demanding work.', priority: 1 },
+    { slug: 'work', description: 'Latest workhorse model for coding.', priority: 2 },
+    { slug: 'fast', description: 'Fast and affordable model for easier tasks.', priority: 4 },
+    { slug: 'mystery', description: 'A new Codex model.', priority: 3 },
+    { slug: 'old', description: 'Older balanced model for straightforward work.', priority: 5 },
+    { slug: 'hidden', description: 'Fast and affordable agentic coding model.', visibility: 'hide' },
+  ] }
+  assert.deepEqual(codexUnclassified(cache), ['mystery'])
+  assert.deepEqual(codexUnclassified({ models: [] }), [])
+  assert.deepEqual(codexUnclassified(undefined), [])
+})

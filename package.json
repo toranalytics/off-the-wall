@@ -11,6 +11,24 @@
   "bin": {
     "otw": "bin/otw.mjs"
   },
+  "files": [
+    "bin",
+    "src",
+    "hooks",
+    "examples",
+    ".claude-plugin",
+    ".codex-plugin",
+    ".agents",
+    "README.md",
+    "README.ko.md",
+    "README.ja.md",
+    "README.zh-CN.md",
+    "LICENSE",
+    "CHANGELOG.md",
+    "SECURITY.md",
+    "VERIFICATION.md",
+    "PRIVACY-VERIFICATION.md"
+  ],
   "engines": {
     "node": ">=18"
   },

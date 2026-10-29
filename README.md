@@ -96,11 +96,11 @@ node bin/otw.mjs report --seed
 where the host history records a working directory. Turns with no known working directory are not stored (the count of skipped turns is reported)
 and are not promoted automatically. See [Scope and legacy records](#scope-and-legacy-records).
 
-Requires Node 18 or newer. Historical: an earlier version was tried on macOS with Claude Code 2.1.301 and codex-cli 0.162.1. A later Codex-only 0.2.0 live smoke record is linked under Evidence; Claude Code integration remains unverified in a live host. Live-host reload and effects of this 0.3.0 candidate remain unverified.
+Requires Node 18 or newer. Live-host checks so far: one Codex smoke run (0.2.0 on codex-cli 0.162.1) and one headless Claude Code run (2.1.311 with plugin 0.2.1: save and recall), both linked under Evidence. Interactive Claude Code use and live-host effects of the current main remain unverified.
 
 ### If nothing happens
 
-Codex does not run plugin hooks until you trust them in `/hooks` (or accept "Hooks need review" at startup and choose **Trust all**). `otw status` now shows the latest hook activity recorded in the local sessions directory and, when readable, the number of Codex trust entries. These diagnostics are not proof that hooks are currently enabled or that recall is effective. Claude Code integration remains unverified in a live host.
+Codex does not run plugin hooks until you trust them in `/hooks` (or accept "Hooks need review" at startup and choose **Trust all**). `otw status` now shows the latest hook activity recorded in the local sessions directory and, when readable, the number of Codex trust entries. These diagnostics are not proof that hooks are currently enabled or that recall is effective. Interactive Claude Code use remains unverified (one headless run was checked).
 
 Disabling the plugin in Codex config may not stop already-trusted hooks in `codex exec`; to stop OTW, set `{"recall":false,"routing":false,"capture":false}` in `~/.otw/config.json`.
 
@@ -211,8 +211,9 @@ Claude Code 2.1.311, haiku, headless, plugin 0.2.1/0.2.3 code, synthetic store a
 - It does not always work: in one of the 11 tasks (a strict one-sentence answer format) the shown correction was not followed in any run. A second task that also stayed at 0/3 was a scoring defect found afterwards (the scorer rejected answers wrapped in a code fence); re-read from the transcripts, 5 of 6 runs that saw the correction followed it against 0 of 3 that did not. That recount is post hoc and the reported numbers above are the original ones, so they understate the effect.
 - No benefit was found where the default model already avoids the mistake (14 of 16 tasks passed without any recall), and the quoted correction did not beat a plain list of rules at 150 records. Such a list stops fitting as a history grows; that case was not tested.
 - Not shown: effect on a real user's history, other models, interactive sessions or long-term correction rates; the corrections here are written by a model.
-- Records, scripts and data: [docs/](docs/) (experiments 1-5), including the weaknesses found by an independent review.
+- Records, scripts and data: [docs/](docs/) (experiments 1-7), including the weaknesses found by an independent review.
 
+- [Live Claude Code headless smoke record (2.1.311, plugin 0.2.1; interactive use not tested; one run produced a very long malformed output that did not reproduce in 8 reruns)](docs/live-claude-smoke-2026-10-27.md)
 - [Live Codex smoke record (macOS, 0.2.0 on codex-cli 0.162.1; Claude Code not tested)](docs/live-codex-smoke-2026-10-27.md). This supplied historical record is not a live verification of 0.2.2.
 
 <p align="center">

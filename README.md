@@ -36,7 +36,7 @@ Plain-language overview of what it does and does not do, with the test details a
   <a href="#privacy">Privacy</a>
 </p>
 
-**Without Off the Wall, Claude followed a personal habit it could not know 2 times out of 33. With it: 20 out of 33.** Same tasks, Claude Code with Sonnet; with haiku the same jump was 1 to 17, and 2 to 25 in a rerun. Synthetic habits, 3 runs per cell, headless. [How it was measured](#evidence)
+**A model can't know your habits, like how you write commit messages or dates. I gave Claude 33 tasks like that. Without Off the Wall, Claude (Sonnet) followed the habit 2 times. With it, 20 times.** It works because your own earlier correction is shown again, word for word. These are test habits I made up, not real users' records. With the haiku model it went from 1 to 17, and from 2 to 25 when I measured again. [How it was measured](#evidence)
 
 **Your corrections from the same working directory, quoted word for word before the agent answers. A local, model-labelled report of what you correct most. Model-selection guidance for subagents.**
 

@@ -71,7 +71,7 @@ export async function runBench({ model = 'haiku', reps = 3, yes = false, bin = '
     const r = spawnSync(bin, ['-p', t.prompt, '--model', model, '--output-format', 'stream-json', '--verbose', '--max-turns', '14', '--max-budget-usd', '0.6', '--permission-mode', 'acceptEdits', '--allowedTools', ALLOWED], { cwd: p.dir, env: { ...process.env, OTW_HOME: p.home }, encoding: 'utf8', timeout: 240000, maxBuffer: 1 << 27 })
     const ev = []; let res = {}
     for (const l of (r.stdout || '').split('\n')) { try { const j = JSON.parse(l); if (j.type === 'assistant') for (const c of j.message?.content || []) if (c.type === 'tool_use') ev.push({ name: c.name, input: c.input }); if (j.type === 'result') res = j } catch {} }
-    if (r.error && r.error.code === 'ENOENT') { log(`STOP: \`${bin}\` was not found. Install Claude Code or pass --bin.`); return 3 }
+    if (r.error && r.error.code === 'ENOENT') { log(`STOP: \`${bin}\` was not found. Install the Claude Code CLI, or pass its full path with --bin (find it with: which claude). If you use a separate Claude profile, set CLAUDE_CONFIG_DIR to it as well.`); return 3 }
     if (res.type !== 'result' || /Not logged in/i.test(String(res.result || ''))) { log(`STOP: no usable result (${String(res.result || r.stderr || 'no output').slice(0, 120)}). Log in to claude and run it again.`); return 3 }
     let seen = false
     if (res.session_id && fs.existsSync(projDir)) for (const d of fs.readdirSync(projDir)) { const f = path.join(projDir, d, res.session_id + '.jsonl'); if (fs.existsSync(f)) seen = fs.readFileSync(f, 'utf8').includes('[off-the-wall]') }

@@ -51,7 +51,7 @@ export async function selftest(log = console.log) {
   log(bad ? `selftest FAILED: ${bad}` : 'selftest passed'); return bad ? 1 : 0
 }
 
-export async function runBench({ model = 'haiku', reps = 3, yes = false, bin = 'claude', json = null, keep = false, log = console.log } = {}) {
+export async function runBench({ model = 'haiku', reps = 3, yes = false, bin = 'claude', json = null, keep = false, log = console.log, spawn = spawnSync } = {}) {
   const { PREF } = await import(tasksFile())
   const total = PREF.length * 2 * reps, cost = (RATE[model] ?? RATE.sonnet) * total
   log(`otw bench: ${PREF.length} tasks x 2 conditions (recall off / on) x ${reps} reps = ${total} runs with \`${bin} -p\`, model ${model}.`)
@@ -68,7 +68,7 @@ export async function runBench({ model = 'haiku', reps = 3, yes = false, bin = '
   for (const { rep, t, arm } of combos) {
     n++
     const p = prepare(t, arm, rep, now), t0 = Date.now()
-    const r = spawnSync(bin, ['-p', t.prompt, '--model', model, '--output-format', 'stream-json', '--verbose', '--max-turns', '14', '--max-budget-usd', '0.6', '--permission-mode', 'acceptEdits', '--allowedTools', ALLOWED], { cwd: p.dir, env: { ...process.env, OTW_HOME: p.home }, encoding: 'utf8', timeout: 240000, maxBuffer: 1 << 27 })
+    const r = spawn(bin, ['-p', t.prompt, '--model', model, '--output-format', 'stream-json', '--verbose', '--max-turns', '14', '--max-budget-usd', '0.6', '--permission-mode', 'acceptEdits', '--allowedTools', ALLOWED], { cwd: p.dir, env: { ...process.env, OTW_HOME: p.home }, encoding: 'utf8', timeout: 240000, maxBuffer: 1 << 27 })
     const ev = []; let res = {}
     for (const l of (r.stdout || '').split('\n')) { try { const j = JSON.parse(l); if (j.type === 'assistant') for (const c of j.message?.content || []) if (c.type === 'tool_use') ev.push({ name: c.name, input: c.input }); if (j.type === 'result') res = j } catch {} }
     if (r.error && r.error.code === 'ENOENT') { log(`STOP: \`${bin}\` was not found. Install the Claude Code CLI, or pass its full path with --bin (find it with: which claude). If you use a separate Claude profile, set CLAUDE_CONFIG_DIR to it as well.`); return 3 }

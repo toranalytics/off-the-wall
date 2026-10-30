@@ -1,0 +1,21 @@
+family detection at TAU=0.3: linked pairs 57, purity 0.860; repeats linked to their original 40/90 (0.444)
+per task (target-family quotes shown):
+  task-c004: W 1  F2 1
+  task-c006: W 3  F2 3
+  task-c015: W 1  F2 1
+  task-c033: W 1  F2 1
+  task-c137: W 1  F2 0
+  task-c057: W 1  F2 2
+  task-c082: W 1  F2 2
+  task-c104: W 0  F2 0
+  task-c114: W 1  F2 2
+  task-c124: W 3  F2 3
+  task-c136: W 2  F2 3
+W  {"hit":10,"two":3,"quotes":"6.00","nonTarget":"4.64"}
+F2 {"hit":9,"two":6,"quotes":"6.00","nonTarget":"4.36"}
+FAIL purity >= 0.90
+FAIL repeat recall >= 0.80
+PASS F2 two >= W two + 3
+FAIL F2 hit >= W hit
+PASS quotes per prompt <= 6
+RESULT: criteria NOT met

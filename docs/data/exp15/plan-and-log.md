@@ -1,0 +1,14 @@
+# OTW experiment 15: family completion (show a second quote of the same repeated correction). Plan fixed before evaluation (2026-10-30)
+
+Question. Experiments 5 and 5b showed that when the same preference had been corrected several times (3 repeats in the 240-record store), wide recall already finds the target family for 10 of the 11 kept tasks, yet passes stayed uneven. In experiment 5 the pass rate by number of target-family quotes shown was: 0 quotes 3/15, 1 quote 14/33, 2 quotes 6/6, 3+ quotes 3/12 (small numbers, not monotonic). Idea borrowed from agentmemory ("memories that are used often strengthen") and kept inside OTW's design (verbatim quotes, local, no embeddings): when a picked correction has near-duplicates in the store (the same correction repeated), add one more member of that family instead of a lower-ranked unrelated quote, so that a repeated habit is shown twice.
+
+Not tested as such: "pin the most repeated corrections always". The experiment-5 store repeats every preference exactly three times, so frequency cannot rank families there (all 30 families are equal). That needs a skewed synthetic store and is left out on purpose.
+
+Policy F2 (offline, product ranking untouched): take wide recall picks (cap 6, product code from main, recallWide on). Detect families without labels: link two records when the TF-IDF similarity of their quote texts (product tokenizer, quotes index) is at least TAU = 0.30 (fixed now, not tuned). For each of the top 3 picks, add the best other member of its family (by similarity of the member's `about` to the prompt) right after it, if not already picked. Keep the cap of 6 by dropping the lowest-ranked picks that are not in a completed family.
+
+Data. exp5/store3.json (150 original + 90 repeats = 240, frozen), the 11 kept tasks of experiment 10 (tasks10.mjs PREF), same fixtures as experiments 5, 5b and 12. Truth for evaluation only: family = record id equal to the preference id or `<id>-r<N>`.
+
+Measures (offline, no model): (1) cluster purity and repeat recall at TAU: fraction of linked pairs that share a true family; fraction of repeat records linked to their own original. (2) For the 11 kept tasks: family hit (at least 1 target-family quote), two-quote count (at least 2 target-family quotes), quotes per prompt, non-target quotes per prompt. Arms: W (current wide recall) and F2.
+
+Pass criteria for going on to a model step (all must hold): purity >= 0.90 and repeat recall >= 0.80 at TAU; F2 two-quote count >= W two-quote count + 3 (of 11 tasks); F2 family hit >= W family hit; quotes per prompt <= 6. If not met: record the numbers, do not build the feature, no model run.
+Model step if passed (not run now): 11 kept tasks, arms W and F2, 3 reps, haiku then Sonnet, user terminal, then the 14-task harm check. Limits: synthetic repeats written by a model, uniform repetition, 11 tasks, headless.

@@ -21,7 +21,7 @@ function fixture() {
   const stub = `#!/usr/bin/env node
 const fs=require('node:fs'), p=process.env.FIXTURE_BASE;
 (async()=>{let body='';for await(const chunk of process.stdin)body+=chunk;
-fs.writeFileSync(p+'/started',JSON.stringify({workerPid:process.ppid}));
+fs.writeFileSync(p+'/started.tmp',JSON.stringify({workerPid:process.ppid}));fs.renameSync(p+'/started.tmp',p+'/started');
 const deadline=Date.now()+10000;while(!fs.existsSync(p+'/release')){if(Date.now()>deadline)process.exit(2);await new Promise(r=>setTimeout(r,15));}
 const answer=process.env.FIXTURE_RESPONSE||'Run the synthetic backfill before saying done.';
 const args=process.argv.slice(2),i=args.indexOf('-o');if(i>=0)fs.writeFileSync(args[i+1],answer);else process.stdout.write(answer);

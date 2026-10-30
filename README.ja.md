@@ -207,7 +207,7 @@ node bin/otw.mjs bench --yes                  # haiku で66回、あなたのプ
 node bin/otw.mjs bench --yes --model sonnet   # 約4ドル
 ```
 
-習慣は作ったもので、タスクは小さいです。あなたの CLAUDE.md やグローバルルールはそのまま有効なので、タスクに合うルールがあると「オフ」の点数が上がることがあります。上の数字は修正240件のストアから出たもので、`otw bench` は11件を使うため数字は変わります。実行したら「haiku、66回: オフ 3/33、オン 19/33」のような一行を [issue](https://github.com/toranalytics/off-the-wall/issues) で知らせてもらえれば十分です。
+習慣は作ったもので、タスクは小さいです。あなたの CLAUDE.md やグローバルルールはそのまま有効なので、タスクに合うルールがあると「オフ」の点数が上がることがあります。初回の実行(作者の端末、haiku、66回、0.33ドル): オフ 3/33、Off the Wall 20/33([記録](docs/data/bench-first-run/result.md))。上の数字は修正240件のストアから出たもので、`otw bench` は11件を使うため数字は変わります。実行したら「haiku、66回: オフ 3/33、オン 19/33」のような一行を [issue](https://github.com/toranalytics/off-the-wall/issues) で知らせてもらえれば十分です。
 
 ## 根拠
 

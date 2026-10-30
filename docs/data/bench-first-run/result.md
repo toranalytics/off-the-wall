@@ -1,7 +1,7 @@
 # `otw bench` first real run (2026-10-30)
 
 Run by the author in their own terminal: `otw bench --yes` with Claude Code 2.1.311, model haiku, 3 reps, 66 runs, the isolated test profile (not a normal install).
-The terminal summary was not captured; the numbers below come from re-scoring the 66 session transcripts and temporary directories with the same task scorers (`rescore.mjs`).
+The terminal summary line was `Habit followed: 3/33 (9%) with recall off, 20/33 (61%) with Off the Wall`, cost reported by the CLI USD 0.33. An independent re-score of the 66 session transcripts with the same scorers (`rescore.mjs`) gave the identical per-task table below.
 
 | task | recall off | recall on |
 |---|---|---|

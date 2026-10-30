@@ -207,7 +207,7 @@ node bin/otw.mjs bench --yes                  # haiku로 66번, 내 요금제에
 node bin/otw.mjs bench --yes --model sonnet   # 약 4달러
 ```
 
-습관은 지어낸 것이고 작업은 작습니다. 내 CLAUDE.md나 전역 규칙은 그대로 적용되므로, 작업과 맞는 내 규칙이 있으면 "끈" 쪽 점수가 올라갈 수 있습니다. 위 숫자는 교정 240개 저장소에서 나온 것이고 `otw bench`는 11개를 쓰므로 숫자가 다르게 나올 수 있습니다. 돌려 보셨다면 "haiku, 66번: 끔 3/33, 켬 19/33" 같은 한 줄을 [이슈](https://github.com/toranalytics/off-the-wall/issues)로 알려 주시면 충분합니다.
+습관은 지어낸 것이고 작업은 작습니다. 내 CLAUDE.md나 전역 규칙은 그대로 적용되므로, 작업과 맞는 내 규칙이 있으면 "끈" 쪽 점수가 올라갈 수 있습니다. 첫 실제 실행(작성자 터미널, haiku, 66번, 0.33달러): 끔 3/33, Off the Wall 20/33 ([기록](docs/data/bench-first-run/result.md)). 위 숫자는 교정 240개 저장소에서 나온 것이고 `otw bench`는 11개를 쓰므로 숫자가 다르게 나올 수 있습니다. 돌려 보셨다면 "haiku, 66번: 끔 3/33, 켬 19/33" 같은 한 줄을 [이슈](https://github.com/toranalytics/off-the-wall/issues)로 알려 주시면 충분합니다.
 
 ## 근거
 

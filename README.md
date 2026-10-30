@@ -222,7 +222,7 @@ node bin/otw.mjs bench --yes                  # 66 runs on haiku, about USD 0.4 
 node bin/otw.mjs bench --yes --model sonnet   # about USD 4
 ```
 
-The habits are made up and the tasks are small. Your own CLAUDE.md or global rules stay active, so a rule of yours that matches a task can raise the "off" score. The numbers above came from a store of 240 corrections; `otw bench` uses 11, so expect different numbers. If you run it, a line like "haiku, 66 runs: 3/33 off, 19/33 on" in an [issue](https://github.com/toranalytics/off-the-wall/issues) is plenty.
+The habits are made up and the tasks are small. Your own CLAUDE.md or global rules stay active, so a rule of yours that matches a task can raise the "off" score. First real run (author's own terminal, haiku, 66 runs, USD 0.33): 3/33 with recall off, 20/33 with Off the Wall ([record](docs/data/bench-first-run/result.md)). The numbers above came from a store of 240 corrections; `otw bench` uses 11, so expect different numbers. If you run it, a line like "haiku, 66 runs: 3/33 off, 19/33 on" in an [issue](https://github.com/toranalytics/off-the-wall/issues) is plenty.
 
 ## Evidence
 

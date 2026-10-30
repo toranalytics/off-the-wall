@@ -200,7 +200,7 @@ node bin/otw.mjs bench --yes                  # 在 haiku 上跑 66 次,用你�
 node bin/otw.mjs bench --yes --model sonnet   # 约 4 美元
 ```
 
-习惯是编的,任务很小。你自己的 CLAUDE.md 或全局规则仍然有效,所以如果有和任务相符的规则,"关闭"一栏的分数可能偏高。上面的数字来自 240 条纠正的库,而 `otw bench` 用 11 条,所以数字会不同。如果你运行了,在 [issue](https://github.com/toranalytics/off-the-wall/issues) 里写一行"haiku,66 次:关 3/33,开 19/33"就足够了。
+习惯是编的,任务很小。你自己的 CLAUDE.md 或全局规则仍然有效,所以如果有和任务相符的规则,"关闭"一栏的分数可能偏高。首次真实运行(作者本人终端,haiku,66 次,0.33 美元):关闭 3/33,Off the Wall 20/33([记录](docs/data/bench-first-run/result.md))。上面的数字来自 240 条纠正的库,而 `otw bench` 用 11 条,所以数字会不同。如果你运行了,在 [issue](https://github.com/toranalytics/off-the-wall/issues) 里写一行"haiku,66 次:关 3/33,开 19/33"就足够了。
 
 ## 依据
 

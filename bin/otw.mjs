@@ -71,7 +71,7 @@ if (cmd === 'report') {
 } else if (cmd === 'bench') {
   if (rest.includes('--selftest')) process.exitCode = await benchSelftest()
   else if (rest.includes('--help')) console.log(BENCH_USAGE)
-  else process.exitCode = await runBench({ model: flag('model', 'haiku'), reps: Number(flag('reps', 3)), yes: !!flag('yes', false), bin: flag('bin', 'claude'), json: flag('json', null) })
+  else process.exitCode = await runBench({ model: flag('model', 'haiku'), reps: Number(flag('reps', 3)), yes: !!flag('yes', false), bin: flag('bin', 'claude'), json: flag('json', null), keep: rest.includes('--keep') })
 } else if (cmd === 'forget') {
   const r = runForget(home(), rest, process.cwd())
   for (const line of r.lines) console.log(line)

@@ -11,7 +11,7 @@ import { projectKey } from './scope.mjs'
 
 const HERE = path.dirname(fileURLToPath(import.meta.url))
 const ALLOWED = 'Read,Edit,Write,Bash(node:*),Bash(wc:*),Bash(ls:*),Bash(cat:*),Bash(date:*),Bash(grep:*)'
-export const USAGE = `otw bench [--model haiku|sonnet] [--reps 3] [--yes] [--bin claude] [--json FILE] [--selftest]
+export const USAGE = `otw bench [--model haiku|sonnet] [--reps 3] [--yes] [--bin claude] [--json FILE] [--keep] [--selftest]
   Runs 11 small tasks, each needing a habit the model cannot know, with your own claude CLI: once with recall off and
   once with recall on (the Off the Wall plugin must be installed). Prints how often the habit was followed in each case.
   Without --yes it only shows what it would do. --selftest checks the tasks and the hook without calling any model.`
@@ -51,7 +51,7 @@ export async function selftest(log = console.log) {
   log(bad ? `selftest FAILED: ${bad}` : 'selftest passed'); return bad ? 1 : 0
 }
 
-export async function runBench({ model = 'haiku', reps = 3, yes = false, bin = 'claude', json = null, log = console.log } = {}) {
+export async function runBench({ model = 'haiku', reps = 3, yes = false, bin = 'claude', json = null, keep = false, log = console.log } = {}) {
   const { PREF } = await import(tasksFile())
   const total = PREF.length * 2 * reps, cost = (RATE[model] ?? RATE.sonnet) * total
   log(`otw bench: ${PREF.length} tasks x 2 conditions (recall off / on) x ${reps} reps = ${total} runs with \`${bin} -p\`, model ${model}.`)
@@ -78,6 +78,7 @@ export async function runBench({ model = 'haiku', reps = 3, yes = false, bin = '
     if (arm === 'otw' && !seen) { log('STOP: the Off the Wall plugin did not add its block in a recall-on run. Install it in Claude Code (/plugin install off-the-wall --marketplace toranalytics/off-the-wall), restart, and run again. Nothing was changed.'); return 4 }
     if (arm === 'none' && seen) { log('STOP: a block was added in a recall-off run, so the plugin ignored its temporary settings; results would not mean anything.'); return 4 }
     const sc = t.score(p.dir, ev, String(res.result || ''))
+    if (!keep) { fs.rmSync(p.dir, { recursive: true, force: true }); fs.rmSync(p.home, { recursive: true, force: true }) }
     rows.push({ task: t.id, arm, rep, pass: !!sc.pass, cost: res.total_cost_usd || 0 })
     if (n % 6 === 0 || n === combos.length) log(`${n}/${combos.length} runs (${Math.round((Date.now() - t0) / 1000)}s last)`)
   }

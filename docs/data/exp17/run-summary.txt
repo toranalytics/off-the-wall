@@ -1,0 +1,4 @@
+items 180; unparsed answers 0; cost USD 0.504
+links made 152; precision 0.480; recall 0.811 (ceiling 0.81); false links on controls 73/90
+criteria: precision >= 0.95 FAIL; recall >= 0.65 PASS; false links <= 3 FAIL
+RESULT: criteria NOT met

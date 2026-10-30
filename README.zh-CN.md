@@ -194,6 +194,8 @@ node bin/otw.mjs report --seed
 
 `otw bench` 用你自己的 `claude` CLI 运行 11 个小任务,每个任务都需要模型无从得知的习惯:先关闭回忆跑一次,再开启 Off the Wall 跑一次,分别显示习惯被遵守的次数。需要在 Claude Code 里装好插件,并且 `claude` 已登录。
 
+**可用范围:** `bench` 只在仓库 main 分支,不在 0.3.1 发布版或 npm 包中。请先按快速开始克隆仓库,再在该目录下运行。首次运行使用隔离配置中的实验性修改插件,普通安装尚未验证。Claude Code 可能读取全局指令和其他插件,并保存会话记录。
+
 ```bash
 node bin/otw.mjs bench                        # 只显示会做什么和大致费用,不运行
 node bin/otw.mjs bench --yes                  # 在 haiku 上跑 66 次,用你自己的套餐约 0.4 美元、13 分钟

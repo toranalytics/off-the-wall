@@ -32,6 +32,11 @@ test('bench stops with a clear message when the plugin block never appears', asy
   try { const code = await runBench({ yes: true, reps: 1, spawn: fakeSpawn(cfg, false), log: x => lines.push(x) }); assert.equal(code, 4); assert.match(lines.join('\n'), /plugin did not add its block/) }
   finally { if (old === undefined) delete process.env.CLAUDE_CONFIG_DIR; else process.env.CLAUDE_CONFIG_DIR = old }
 })
+test('bench rejects an error result rather than scoring it', async () => {
+  const lines = []
+  const code = await runBench({ yes: true, reps: 1, log: x => lines.push(x), spawn: () => ({ status: 0, stdout: JSON.stringify({ type: 'result', is_error: true, subtype: 'error_max_turns', result: 'failed' }), stderr: '' }) })
+  assert.equal(code, 3); assert.match(lines.join('\n'), /no usable result/)
+})
 test('bench stops when claude is missing', () => {
   const r = run(['--yes', '--reps', '1', '--bin', join(base, 'does-not-exist')]); assert.equal(r.status, 3); assert.match(r.stdout, /was not found/)
 })

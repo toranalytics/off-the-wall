@@ -56,7 +56,7 @@ export async function runBench({ model = 'haiku', reps = 3, yes = false, bin = '
   const total = PREF.length * 2 * reps, cost = (RATE[model] ?? RATE.sonnet) * total
   log(`otw bench: ${PREF.length} tasks x 2 conditions (recall off / on) x ${reps} reps = ${total} runs with \`${bin} -p\`, model ${model}.`)
   log(`Rough cost on your own Claude plan: USD ${cost.toFixed(2)} (measured earlier: haiku about 0.006 and sonnet about 0.06 per run), about ${Math.round(total * 12 / 60)} minutes.`)
-  log('Sent to your model provider through your own claude CLI: the task prompts, 11 made-up corrections and the small files in temporary directories. Nothing else is read, and nothing is written outside temporary directories.')
+  log('Task prompts, fabricated corrections and task files may be sent to your model provider. Claude Code may also load your global instructions, settings, and other plugins, and may save session transcripts under its configuration directory. Review your configuration before running.')
   log('Your own CLAUDE.md or global rules are not removed: a rule of yours that matches a task (for example a commit style) can raise the "recall off" score.')
   if (!yes) { log('Add --yes to run it.'); return 0 }
   const now = Date.now(), g = rng('otw-bench'), combos = []
@@ -68,19 +68,20 @@ export async function runBench({ model = 'haiku', reps = 3, yes = false, bin = '
   for (const { rep, t, arm } of combos) {
     n++
     const p = prepare(t, arm, rep, now), t0 = Date.now()
+    try {
     const r = spawn(bin, ['-p', t.prompt, '--model', model, '--output-format', 'stream-json', '--verbose', '--max-turns', '14', '--max-budget-usd', '0.6', '--permission-mode', 'acceptEdits', '--allowedTools', ALLOWED], { cwd: p.dir, env: { ...process.env, OTW_HOME: p.home }, encoding: 'utf8', timeout: 240000, maxBuffer: 1 << 27 })
     const ev = []; let res = {}
     for (const l of (r.stdout || '').split('\n')) { try { const j = JSON.parse(l); if (j.type === 'assistant') for (const c of j.message?.content || []) if (c.type === 'tool_use') ev.push({ name: c.name, input: c.input }); if (j.type === 'result') res = j } catch {} }
     if (r.error && r.error.code === 'ENOENT') { log(`STOP: \`${bin}\` was not found. Install the Claude Code CLI, or pass its full path with --bin (find it with: which claude). If you use a separate Claude profile, set CLAUDE_CONFIG_DIR to it as well.`); return 3 }
-    if (res.type !== 'result' || /Not logged in/i.test(String(res.result || ''))) { log(`STOP: no usable result (${String(res.result || r.stderr || 'no output').slice(0, 120)}). Log in to claude and run it again.`); return 3 }
+    if (res.type !== 'result' || res.is_error === true || (res.subtype && res.subtype !== 'success') || r.status !== 0 || r.error || /Not logged in/i.test(String(res.result || ''))) { log(`STOP: no usable result (${String(res.result || r.stderr || 'no output').slice(0, 120)}). Log in to claude and run it again.`); return 3 }
     let seen = false
     if (res.session_id && fs.existsSync(projDir)) for (const d of fs.readdirSync(projDir)) { const f = path.join(projDir, d, res.session_id + '.jsonl'); if (fs.existsSync(f)) seen = fs.readFileSync(f, 'utf8').includes('[off-the-wall]') }
     if (arm === 'otw' && !seen) { log('STOP: the Off the Wall plugin did not add its block in a recall-on run. Install it in Claude Code (/plugin install off-the-wall --marketplace toranalytics/off-the-wall), restart, and run again. Nothing was changed.'); return 4 }
     if (arm === 'none' && seen) { log('STOP: a block was added in a recall-off run, so the plugin ignored its temporary settings; results would not mean anything.'); return 4 }
     const sc = t.score(p.dir, ev, String(res.result || ''))
-    if (!keep) { fs.rmSync(p.dir, { recursive: true, force: true }); fs.rmSync(p.home, { recursive: true, force: true }) }
     rows.push({ task: t.id, arm, rep, pass: !!sc.pass, cost: res.total_cost_usd || 0 })
     if (n % 6 === 0 || n === combos.length) log(`${n}/${combos.length} runs (${Math.round((Date.now() - t0) / 1000)}s last)`)
+    } finally { if (!keep) { fs.rmSync(p.dir, { recursive: true, force: true }); fs.rmSync(p.home, { recursive: true, force: true }) } }
   }
   const tot = { none: [0, 0], otw: [0, 0] }, by = {}
   for (const r of rows) { by[r.task] ??= { none: [0, 0], otw: [0, 0] }; by[r.task][r.arm][0] += r.pass; by[r.task][r.arm][1]++; tot[r.arm][0] += r.pass; tot[r.arm][1]++ }

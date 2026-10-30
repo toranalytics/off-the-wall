@@ -21,9 +21,11 @@
 <h1 align="center">Off the Wall</h1>
 
 <p align="center">
-  <strong>이미 한 지적을 코딩 에이전트에게 다시 떠올리게 하세요.</strong>
+  <strong>같은 지적, 이제 한 번만.</strong>
   <br/>
   <sub><strong>Claude Code</strong>와 <strong>Codex</strong>용 플러그인. 같은 작업 디렉터리에서 사용자가 예전에 한 지적을 다음 답 앞에 그대로 둡니다.</sub>
+  <br/>
+  <sub>내 시험에서 Claude는 모델이 알 수 없는 습관을 94%(33번 중 31번) 무시했습니다. Off the Wall이 있으면 39%(33번 중 13번)였습니다. 시험용으로 만든 습관, Claude Sonnet 기준입니다. <a href="#직접-확인하기">직접 확인하기</a>.</sub>
 </p>
 
 <p align="center">
@@ -194,6 +196,18 @@ Node 18 이상이 필요합니다. 지금까지의 실제 호스트 확인은 �
 계정별로 보관하는 목록(`~/.codex/models_cache.json`)을 읽고 모델 설명을 보고 세 등급으로 나눕니다. Codex에는
 "대화가 필요 없으면 `fork_turns: "none"`을 넘기라"는 규칙도 들어갑니다. 넘기지 않으면 대화 전체가 하위 에이전트에
 복사되고, 모델이 다르면 그 내용이 하나도 캐시되지 않습니다.
+
+## 직접 확인하기
+
+`otw bench`는 모델이 알 수 없는 습관이 필요한 작은 작업 11개를 내 `claude` CLI로 돌립니다. 회수를 끈 채 한 번, Off the Wall을 켠 채 한 번 돌려서 각각 습관을 지킨 횟수를 보여 줍니다. Claude Code에 플러그인이 설치돼 있고 `claude`에 로그인돼 있어야 합니다.
+
+```bash
+node bin/otw.mjs bench                        # 무엇을 할지와 대략 비용만 보여 주고 실행하지 않음
+node bin/otw.mjs bench --yes                  # haiku로 66번, 내 요금제에서 약 0.4달러, 13분
+node bin/otw.mjs bench --yes --model sonnet   # 약 4달러
+```
+
+습관은 지어낸 것이고 작업은 작습니다. 내 CLAUDE.md나 전역 규칙은 그대로 적용되므로, 작업과 맞는 내 규칙이 있으면 "끈" 쪽 점수가 올라갈 수 있습니다. 위 숫자는 교정 240개 저장소에서 나온 것이고 `otw bench`는 11개를 쓰므로 숫자가 다르게 나올 수 있습니다. 돌려 보셨다면 "haiku, 66번: 끔 3/33, 켬 19/33" 같은 한 줄을 [이슈](https://github.com/toranalytics/off-the-wall/issues)로 알려 주시면 충분합니다.
 
 ## 근거
 

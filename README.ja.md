@@ -21,9 +21,11 @@
 <h1 align="center">Off the Wall</h1>
 
 <p align="center">
-  <strong>すでにした指摘を、コーディングエージェントに思い出させる。</strong>
+  <strong>同じ指摘を、二度言わせない。</strong>
   <br/>
   <sub><strong>Claude Code</strong> と <strong>Codex</strong> 用のプラグイン。同じ作業ディレクトリであなたが以前した指摘を、次の回答の前にそのまま置きます。</sub>
+  <br/>
+  <sub>私のテストでは、Claude はモデルが知り得ない習慣を94%(33回中31回)無視しました。Off the Wall があると39%(33回中13回)でした。テスト用に作った習慣、Claude Sonnet での結果です。<a href="#自分で確かめる">自分で確かめる</a>。</sub>
 </p>
 
 <p align="center">
@@ -195,6 +197,18 @@ Node 18 以上が必要です。これまでの実ホストでの確認は2つ�
 Codex が保持する一覧(`~/.codex/models_cache.json`)を読み、説明から三つの等級に分けます。
 
 <a id="evidence"></a>
+## 自分で確かめる
+
+`otw bench` は、モデルが知り得ない習慣が必要な小さなタスク11個を、あなたの `claude` CLI で実行します。想起をオフにして1回、Off the Wall をオンにして1回です。それぞれ習慣が守られた回数を表示します。Claude Code にプラグインが入っていて、`claude` にログインしている必要があります。
+
+```bash
+node bin/otw.mjs bench                        # 何をするかと大まかな費用だけ表示し、実行しない
+node bin/otw.mjs bench --yes                  # haiku で66回、あなたのプランで約0.4ドル、13分
+node bin/otw.mjs bench --yes --model sonnet   # 約4ドル
+```
+
+習慣は作ったもので、タスクは小さいです。あなたの CLAUDE.md やグローバルルールはそのまま有効なので、タスクに合うルールがあると「オフ」の点数が上がることがあります。上の数字は修正240件のストアから出たもので、`otw bench` は11件を使うため数字は変わります。実行したら「haiku、66回: オフ 3/33、オン 19/33」のような一行を [issue](https://github.com/toranalytics/off-the-wall/issues) で知らせてもらえれば十分です。
+
 ## 根拠
 
 **最新の測定（2026-10-28）：モデルが知り得ない個人の好み。** Claude Code 2.1.311、haiku、ヘッドレス、実験者とは別のモデルが作った合成ストアとタスク、自動採点、実行前に固定した計画。既定のモデルがほとんど守らない好み（コミット形式、ツール、口調、日付形式など）の11タスクを3回ずつ実行しました。

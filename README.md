@@ -21,9 +21,11 @@ Plain-language overview of what it does and does not do, with the test details a
 <h1 align="center">Off the Wall</h1>
 
 <p align="center">
-  <strong>Remind your coding agent what you already corrected.</strong>
+  <strong>Stop telling your coding agent the same thing twice.</strong>
   <br/>
   <sub>A plugin for <strong>Claude Code</strong> and <strong>Codex</strong> that puts your own past corrections from the same working directory in front of the next answer.</sub>
+  <br/>
+  <sub>In my tests Claude ignored a habit it could not know in 94% of runs (31 of 33). With Off the Wall: 39% (13 of 33). Made-up habits, Claude Sonnet. <a href="#check-it-yourself">Check it yourself</a>.</sub>
 </p>
 
 <p align="center">
@@ -209,6 +211,18 @@ so Off the Wall reads the list Codex keeps for you (`~/.codex/models_cache.json`
 by each model's description. For Codex, the rule also says to pass `fork_turns: "none"` when the subagent does not
 need the conversation. Otherwise the whole history is copied into it, and on a different model none of it is
 cached.
+
+## Check it yourself
+
+`otw bench` runs 11 small tasks, each needing a habit a model cannot know, with your own `claude` CLI: once with recall off and once with Off the Wall on. It prints how often the habit was followed in each case. It needs the plugin installed in Claude Code and `claude` logged in.
+
+```bash
+node bin/otw.mjs bench                        # shows what it would do and the rough cost, runs nothing
+node bin/otw.mjs bench --yes                  # 66 runs on haiku, about USD 0.4 and 13 minutes on your own plan
+node bin/otw.mjs bench --yes --model sonnet   # about USD 4
+```
+
+The habits are made up and the tasks are small. Your own CLAUDE.md or global rules stay active, so a rule of yours that matches a task can raise the "off" score. The numbers above came from a store of 240 corrections; `otw bench` uses 11, so expect different numbers. If you run it, a line like "haiku, 66 runs: 3/33 off, 19/33 on" in an [issue](https://github.com/toranalytics/off-the-wall/issues) is plenty.
 
 ## Evidence
 

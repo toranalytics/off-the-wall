@@ -21,9 +21,11 @@
 <h1 align="center">Off the Wall</h1>
 
 <p align="center">
-  <strong>让编程智能体重新想起你已经纠正过的事。</strong>
+  <strong>同样的纠正,只说一次。</strong>
   <br/>
   <sub>适用于 <strong>Claude Code</strong> 和 <strong>Codex</strong> 的插件：把你在同一工作目录中以前的纠正原文放在下一次回答之前。</sub>
+  <br/>
+  <sub>在我的测试里,Claude 对模型无从得知的习惯有 94%(33 次中 31 次)没有遵守。有 Off the Wall 时是 39%(33 次中 13 次)。编造的习惯,Claude Sonnet。<a href="#自己验证">自己验证</a>。</sub>
 </p>
 
 <p align="center">
@@ -188,6 +190,18 @@ node bin/otw.mjs report --seed
 （`~/.codex/models_cache.json`），根据描述分成三个等级。
 
 <a id="evidence"></a>
+## 自己验证
+
+`otw bench` 用你自己的 `claude` CLI 运行 11 个小任务,每个任务都需要模型无从得知的习惯:先关闭回忆跑一次,再开启 Off the Wall 跑一次,分别显示习惯被遵守的次数。需要在 Claude Code 里装好插件,并且 `claude` 已登录。
+
+```bash
+node bin/otw.mjs bench                        # 只显示会做什么和大致费用,不运行
+node bin/otw.mjs bench --yes                  # 在 haiku 上跑 66 次,用你自己的套餐约 0.4 美元、13 分钟
+node bin/otw.mjs bench --yes --model sonnet   # 约 4 美元
+```
+
+习惯是编的,任务很小。你自己的 CLAUDE.md 或全局规则仍然有效,所以如果有和任务相符的规则,"关闭"一栏的分数可能偏高。上面的数字来自 240 条纠正的库,而 `otw bench` 用 11 条,所以数字会不同。如果你运行了,在 [issue](https://github.com/toranalytics/off-the-wall/issues) 里写一行"haiku,66 次:关 3/33,开 19/33"就足够了。
+
 ## 依据
 
 **最新测量（2026-10-28）：模型无从得知的个人偏好。** Claude Code 2.1.311、haiku、无界面模式，由实验者以外的模型生成的合成库与任务，自动评分，计划在运行前固定。默认模型很少遵守这些偏好（提交格式、工具、语气、日期格式等）的 11 个任务，各运行 3 次。

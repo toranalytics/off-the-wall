@@ -1,0 +1,57 @@
+[
+  {
+    "id": "c006",
+    "about": "Commit the fix for the login redirect loop.",
+    "quote": "commit messages here are conventional commits, fix(auth): ..., not 'Fixed stuff with login'."
+  },
+  {
+    "id": "c057",
+    "about": "Set up a new package for the shared types.",
+    "quote": "we use pnpm, not npm. you generated a package-lock.json again"
+  },
+  {
+    "id": "c082",
+    "about": "Add logging to the payment service.",
+    "quote": "use the pino logger we already have, not console.log with string concatenation"
+  },
+  {
+    "id": "c015",
+    "about": "Give me a status update on the Postgres migration.",
+    "quote": "bullets, not an essay. 5 lines max"
+  },
+  {
+    "id": "c114",
+    "about": "Add comments explaining the retry logic in queue.js.",
+    "quote": "comments should be in English, not everyone on the team reads Korean"
+  },
+  {
+    "id": "c136",
+    "about": "Summarize the incident from last night's logs.",
+    "quote": "no emojis in summaries pls. plain text"
+  },
+  {
+    "id": "c124",
+    "about": "Write the PR description for the search feature.",
+    "quote": "please don't @mention people in PR descriptions, it pings them all"
+  },
+  {
+    "id": "c137",
+    "about": "Write the docstrings for the cache module.",
+    "quote": "american spelling please, behavior not behaviour, the rest of the docs use it"
+  },
+  {
+    "id": "c104",
+    "about": "Write a quick test for the email validator.",
+    "quote": "we're on vitest, not jest. the config is sitting right there in the repo"
+  },
+  {
+    "id": "c004",
+    "about": "What does this email-matching regex actually do?",
+    "quote": "a token-by-token table is overkill. one sentence then an example"
+  },
+  {
+    "id": "c033",
+    "about": "Quick question: is rebasing my feature branch onto main safe if nobody else uses it?",
+    "quote": "I asked yes or no. one line is fine."
+  }
+]

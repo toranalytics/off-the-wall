@@ -1,0 +1,478 @@
+{
+  "model": "haiku",
+  "reps": 3,
+  "totals": {
+    "none": [
+      2,
+      33
+    ],
+    "otw": [
+      19,
+      33
+    ]
+  },
+  "rows": [
+    {
+      "task": "task-c057",
+      "arm": "otw",
+      "rep": 2,
+      "pass": false,
+      "cost": 0.00555483
+    },
+    {
+      "task": "task-c015",
+      "arm": "none",
+      "rep": 1,
+      "pass": false,
+      "cost": 0.0031130299999999997
+    },
+    {
+      "task": "task-c015",
+      "arm": "none",
+      "rep": 2,
+      "pass": false,
+      "cost": 0.00309673
+    },
+    {
+      "task": "task-c104",
+      "arm": "none",
+      "rep": 2,
+      "pass": false,
+      "cost": 0.005412740000000001
+    },
+    {
+      "task": "task-c124",
+      "arm": "otw",
+      "rep": 3,
+      "pass": true,
+      "cost": 0.0050428
+    },
+    {
+      "task": "task-c124",
+      "arm": "otw",
+      "rep": 1,
+      "pass": true,
+      "cost": 0.0045163700000000005
+    },
+    {
+      "task": "task-c033",
+      "arm": "otw",
+      "rep": 1,
+      "pass": false,
+      "cost": 0.00466859
+    },
+    {
+      "task": "task-c136",
+      "arm": "none",
+      "rep": 2,
+      "pass": true,
+      "cost": 0.00297618
+    },
+    {
+      "task": "task-c057",
+      "arm": "none",
+      "rep": 1,
+      "pass": false,
+      "cost": 0.0059540800000000005
+    },
+    {
+      "task": "task-c033",
+      "arm": "none",
+      "rep": 3,
+      "pass": false,
+      "cost": 0.0045376
+    },
+    {
+      "task": "task-c006",
+      "arm": "otw",
+      "rep": 2,
+      "pass": true,
+      "cost": 0.0032667700000000004
+    },
+    {
+      "task": "task-c082",
+      "arm": "none",
+      "rep": 1,
+      "pass": false,
+      "cost": 0.00560369
+    },
+    {
+      "task": "task-c137",
+      "arm": "none",
+      "rep": 3,
+      "pass": false,
+      "cost": 0.00476106
+    },
+    {
+      "task": "task-c004",
+      "arm": "none",
+      "rep": 3,
+      "pass": false,
+      "cost": 0.0033300600000000006
+    },
+    {
+      "task": "task-c015",
+      "arm": "otw",
+      "rep": 3,
+      "pass": true,
+      "cost": 0.00323262
+    },
+    {
+      "task": "task-c015",
+      "arm": "otw",
+      "rep": 2,
+      "pass": false,
+      "cost": 0.00427432
+    },
+    {
+      "task": "task-c082",
+      "arm": "otw",
+      "rep": 2,
+      "pass": false,
+      "cost": 0.0058829699999999995
+    },
+    {
+      "task": "task-c057",
+      "arm": "none",
+      "rep": 2,
+      "pass": false,
+      "cost": 0.005708909999999999
+    },
+    {
+      "task": "task-c114",
+      "arm": "otw",
+      "rep": 1,
+      "pass": true,
+      "cost": 0.00612089
+    },
+    {
+      "task": "task-c136",
+      "arm": "none",
+      "rep": 1,
+      "pass": true,
+      "cost": 0.0030044799999999995
+    },
+    {
+      "task": "task-c136",
+      "arm": "none",
+      "rep": 3,
+      "pass": false,
+      "cost": 0.00301328
+    },
+    {
+      "task": "task-c033",
+      "arm": "otw",
+      "rep": 3,
+      "pass": false,
+      "cost": 0.0047861200000000005
+    },
+    {
+      "task": "task-c104",
+      "arm": "none",
+      "rep": 3,
+      "pass": false,
+      "cost": 0.006349200000000001
+    },
+    {
+      "task": "task-c124",
+      "arm": "none",
+      "rep": 3,
+      "pass": false,
+      "cost": 0.00486194
+    },
+    {
+      "task": "task-c033",
+      "arm": "none",
+      "rep": 2,
+      "pass": false,
+      "cost": 0.0044247
+    },
+    {
+      "task": "task-c114",
+      "arm": "none",
+      "rep": 3,
+      "pass": false,
+      "cost": 0.00676183
+    },
+    {
+      "task": "task-c004",
+      "arm": "otw",
+      "rep": 3,
+      "pass": true,
+      "cost": 0.00430126
+    },
+    {
+      "task": "task-c137",
+      "arm": "none",
+      "rep": 2,
+      "pass": false,
+      "cost": 0.00477439
+    },
+    {
+      "task": "task-c033",
+      "arm": "none",
+      "rep": 1,
+      "pass": false,
+      "cost": 0.00463918
+    },
+    {
+      "task": "task-c057",
+      "arm": "none",
+      "rep": 3,
+      "pass": false,
+      "cost": 0.00527443
+    },
+    {
+      "task": "task-c004",
+      "arm": "otw",
+      "rep": 2,
+      "pass": false,
+      "cost": 0.00328142
+    },
+    {
+      "task": "task-c033",
+      "arm": "otw",
+      "rep": 2,
+      "pass": false,
+      "cost": 0.00477285
+    },
+    {
+      "task": "task-c057",
+      "arm": "otw",
+      "rep": 3,
+      "pass": false,
+      "cost": 0.00535867
+    },
+    {
+      "task": "task-c006",
+      "arm": "none",
+      "rep": 1,
+      "pass": false,
+      "cost": 0.00309731
+    },
+    {
+      "task": "task-c124",
+      "arm": "otw",
+      "rep": 2,
+      "pass": true,
+      "cost": 0.005214369999999999
+    },
+    {
+      "task": "task-c114",
+      "arm": "none",
+      "rep": 1,
+      "pass": false,
+      "cost": 0.00694261
+    },
+    {
+      "task": "task-c015",
+      "arm": "otw",
+      "rep": 1,
+      "pass": false,
+      "cost": 0.0042051400000000004
+    },
+    {
+      "task": "task-c057",
+      "arm": "otw",
+      "rep": 1,
+      "pass": false,
+      "cost": 0.00535022
+    },
+    {
+      "task": "task-c006",
+      "arm": "otw",
+      "rep": 1,
+      "pass": true,
+      "cost": 0.0033126500000000003
+    },
+    {
+      "task": "task-c137",
+      "arm": "otw",
+      "rep": 1,
+      "pass": true,
+      "cost": 0.00553384
+    },
+    {
+      "task": "task-c136",
+      "arm": "otw",
+      "rep": 2,
+      "pass": true,
+      "cost": 0.0031365100000000003
+    },
+    {
+      "task": "task-c114",
+      "arm": "otw",
+      "rep": 3,
+      "pass": true,
+      "cost": 0.0070238600000000016
+    },
+    {
+      "task": "task-c104",
+      "arm": "otw",
+      "rep": 3,
+      "pass": false,
+      "cost": 0.009916830000000001
+    },
+    {
+      "task": "task-c082",
+      "arm": "none",
+      "rep": 2,
+      "pass": false,
+      "cost": 0.0051815
+    },
+    {
+      "task": "task-c015",
+      "arm": "none",
+      "rep": 3,
+      "pass": false,
+      "cost": 0.00306323
+    },
+    {
+      "task": "task-c004",
+      "arm": "none",
+      "rep": 1,
+      "pass": false,
+      "cost": 0.0032948400000000003
+    },
+    {
+      "task": "task-c004",
+      "arm": "otw",
+      "rep": 1,
+      "pass": false,
+      "cost": 0.0031942200000000002
+    },
+    {
+      "task": "task-c137",
+      "arm": "otw",
+      "rep": 3,
+      "pass": true,
+      "cost": 0.00491726
+    },
+    {
+      "task": "task-c124",
+      "arm": "none",
+      "rep": 2,
+      "pass": false,
+      "cost": 0.00331606
+    },
+    {
+      "task": "task-c004",
+      "arm": "none",
+      "rep": 2,
+      "pass": false,
+      "cost": 0.00281134
+    },
+    {
+      "task": "task-c082",
+      "arm": "otw",
+      "rep": 1,
+      "pass": true,
+      "cost": 0.006545930000000001
+    },
+    {
+      "task": "task-c082",
+      "arm": "none",
+      "rep": 3,
+      "pass": false,
+      "cost": 0.00606414
+    },
+    {
+      "task": "task-c006",
+      "arm": "none",
+      "rep": 3,
+      "pass": false,
+      "cost": 0.0031023099999999996
+    },
+    {
+      "task": "task-c104",
+      "arm": "otw",
+      "rep": 1,
+      "pass": false,
+      "cost": 0.008643219999999998
+    },
+    {
+      "task": "task-c006",
+      "arm": "none",
+      "rep": 2,
+      "pass": false,
+      "cost": 0.0031251300000000003
+    },
+    {
+      "task": "task-c104",
+      "arm": "otw",
+      "rep": 2,
+      "pass": false,
+      "cost": 0.00657287
+    },
+    {
+      "task": "task-c114",
+      "arm": "otw",
+      "rep": 2,
+      "pass": true,
+      "cost": 0.007101070000000001
+    },
+    {
+      "task": "task-c114",
+      "arm": "none",
+      "rep": 2,
+      "pass": false,
+      "cost": 0.00693727
+    },
+    {
+      "task": "task-c104",
+      "arm": "none",
+      "rep": 1,
+      "pass": false,
+      "cost": 0.0067943000000000005
+    },
+    {
+      "task": "task-c136",
+      "arm": "otw",
+      "rep": 1,
+      "pass": true,
+      "cost": 0.00315453
+    },
+    {
+      "task": "task-c137",
+      "arm": "otw",
+      "rep": 2,
+      "pass": true,
+      "cost": 0.00490959
+    },
+    {
+      "task": "task-c006",
+      "arm": "otw",
+      "rep": 3,
+      "pass": true,
+      "cost": 0.0032280300000000002
+    },
+    {
+      "task": "task-c124",
+      "arm": "none",
+      "rep": 1,
+      "pass": false,
+      "cost": 0.00473735
+    },
+    {
+      "task": "task-c082",
+      "arm": "otw",
+      "rep": 3,
+      "pass": true,
+      "cost": 0.00599465
+    },
+    {
+      "task": "task-c137",
+      "arm": "none",
+      "rep": 1,
+      "pass": false,
+      "cost": 0.00474509
+    },
+    {
+      "task": "task-c136",
+      "arm": "otw",
+      "rep": 3,
+      "pass": true,
+      "cost": 0.00415453
+    }
+  ]
+}
